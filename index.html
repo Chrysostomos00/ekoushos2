@@ -99,7 +99,10 @@
     /* ================= HERO ================ */
     .hero{
       position:relative;
-      padding: clamp(3rem, 10vh, 6rem) 0;
+      padding-top: clamp(3rem, 10vh, 6rem);
+      padding-bottom: clamp(3rem, 10vh, 6rem);
+      padding-left: 0;
+      padding-right: 0;
       display: flex; 
       align-items: center; 
       overflow:hidden;
@@ -268,12 +271,12 @@
     .article-card:hover .article-cover { transform: scale(1.04); }
     .article-cover{aspect-ratio:16/9; background:#DDEBFF center/cover no-repeat; overflow:hidden; transition: transform .35s ease;}
     .article-body{padding:1rem 1.2rem 1.2rem; display:flex; flex-direction: column; flex-grow: 1;}
-    .article-meta{display:flex; gap:.6rem; align-items:center; color:var(--muted); font-size:.9rem; margin:.2rem 0 .5rem}
-    .tag{padding:.2rem .55rem; border-radius:999px; background:#EEF5FF; color:var(--ink-2); border:1px solid var(--line); font-weight:900; font-size:.8rem}
-    .article-title{margin:.2rem 0 .35rem; color:var(--ink-2); font-weight:900; font-size:1.08rem}
+    .article-meta{display:flex; gap:.6rem; align-items:center; color:var(--muted); font-size:.9rem; margin:.2rem 0 .5rem;}
+    .tag{padding:.2rem .55rem; border-radius:999px; background:#EEF5FF; color:var(--ink-2); border:1px solid var(--line); font-weight:900; font-size:.8rem;}
+    .article-title{margin:.2rem 0 .35rem; color:var(--ink-2); font-weight:900; font-size:1.08rem;}
     .article-excerpt{color:var(--ink); opacity:.95; flex-grow: 1;}
-    .article-actions{margin-top:1rem}
-    .btn-link{color:var(--brand-blue); font-weight:900}
+    .article-actions{margin-top:1rem;}
+    .btn-link{color:var(--brand-blue); font-weight:900;}
     .nav-row { display:flex; justify-content:center; gap: 1rem; margin-top: 1.8rem; }
     .nav-row .swiper-button-prev, .nav-row .swiper-button-next {
       position: static; width: 44px; height: 44px;
@@ -296,7 +299,7 @@
     .watch-meta { font-size:.9rem; color:var(--muted); margin:0; }
     .involved-wrap { max-width: 650px; margin: 2rem auto 0; }
     .form{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding: clamp(1.5rem, 4vw, 2rem); box-shadow:var(--shadow); }
-    .form-row{display:flex; flex-direction:column; gap:.35rem; margin-bottom:1rem}
+    .form-row{display:flex; flex-direction:column; gap:.35rem; margin-bottom:1rem;}
     label{font-weight:900; color:var(--ink-2)}
     input, select{ padding:.7rem .8rem; border-radius:10px; border:1px solid var(--line); background:#fff; color:var(--ink); outline:none; font-size: 1rem; transition: all .2s; }
     input:focus, select:focus{border-color:var(--brand-blue); box-shadow:0 0 0 3px rgba(0,70,137,.18)}
@@ -349,6 +352,12 @@
     }
 
     @media (min-width: 961px) {
+      /* === FIX: Adjust padding for desktop to align portrait bottom === */
+      .hero {
+        /* On desktop, remove the hero's overall bottom padding */
+        padding-bottom: 0;
+      }
+      
       .hero-inner {
         display: grid; 
         grid-template-columns: 5fr 4fr; 
@@ -356,12 +365,16 @@
         gap: 2rem;
         text-align: left;
       }
+      
       .hero-text-content {
         align-items: flex-start; 
         max-width: 100%;
         grid-row: 1; 
         grid-column: 1;
+        /* And apply that padding ONLY to the text column */
+        padding-bottom: clamp(3rem, 10vh, 6rem);
       }
+      
       .hero-portrait-link {
         grid-row: 1; 
         grid-column: 2; 
@@ -369,9 +382,8 @@
         width: 100%;
         max-width: 560px;
         margin-left: auto;
-        /* === FIX: This negative margin pulls the image down to counter the hero's bottom padding === */
-        margin-bottom: -clamp(3rem, 10vh, 6rem);
       }
+      
       .hero-cta {
         justify-content: flex-start;
       }
@@ -419,7 +431,7 @@
           </div>
         </div>
         
-        <a href="#about" class="hero-portrait-link" aria-label="Μάθετε περισσότερα για την Έλενα">
+        <a href="#about" class="hero-portrait-link" aria-label="Μάθετε περισσότεра για την Έλενα">
           <img class="hero-portrait" id="heroPortrait" src="portrait-hero.png" alt="Πορτρέτο της Elena Koushou Hadjidemetriou" />
           <span class="portrait-prompt">
             Ποια είναι η Έλενα;
@@ -502,7 +514,7 @@
                 <div class="article-body">
                   <div class="article-meta"><span class="tag">Διαφάνεια</span><time datetime="2025-08-02">2 Αυγ 2025</time></div>
                   <h3 class="article-title">Η Κύπρος μπροστά στον καθρέφτη του κράτους δικαίου</h3>
-                  <p class="article-excerpt">Ανάλυση της Έκθεσης της ΕΕ για το 2025 και οι προκλήσεις για τη δικαιοσύνη.</p>
+                  <p class="article-excerpt">Ανάλυση της Έκθεσης της ΕΕ για το 2025 και οι προκλήσεις για τη δικαιοсύνη.</p>
                   <div class="article-actions"><a href="article-kratos-dikaiou.html" class="btn-link">Διαβάστε το Άρθρο</a></div>
                 </div>
               </article>
@@ -704,7 +716,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.classList.add('enter');
-      const CONTACT = { phone: "+35799123456", email: "elena.campaign@email.com", whatsappText: "Γεια σας! Ενδιαφέρομαι να μάθω περισσότερα για την καμπάνια της Έλενας." };
+      const CONTACT = { phone: "+35799123456", email: "elena.campaign@email.com", whatsappText: "Γεια σας! Ενδιαφέρομαι να μάθω περισσότεра για την καμπάνια της Έλενας." };
       
       const navToggle = document.querySelector('.nav-toggle'), navMenu = document.getElementById('nav-menu');
       if (navToggle) {
