@@ -100,7 +100,7 @@
     .hero{
       position:relative;
       padding-top: clamp(3rem, 10vh, 6rem);
-      padding-bottom: clamp(3rem, 10vh, 6rem);
+      padding-bottom: 0;
       padding-left: 0;
       padding-right: 0;
       display: flex; 
@@ -327,6 +327,7 @@
       gap: 1.5rem;
       width: 100%;
       max-width: 500px;
+      padding-bottom: clamp(2rem, 6vh, 4rem);
     }
     
     @media (max-width: 960px){
@@ -371,7 +372,6 @@
         max-width: 100%;
         grid-row: 1; 
         grid-column: 1;
-        /* And apply that padding ONLY to the text column */
         padding-bottom: clamp(3rem, 10vh, 6rem);
       }
       
