@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Πρόγραμμα: Κράτος Δικαίου & Διαφάνεια — Έλενα Κούσιου Χατζηδημητρίου</title>
-  <meta name="description" content="Οι θέσεις μας για ισχυρούς θεσμούς, λογοδοσία παντού και αποτελεσματική απονομή Δικαιοσύνης. Για ένα κράτος που λειτουργεί για τον πολίτη." />
-  <meta property="og:title" content="Πρόγραμμα: Κράτος Δικαίου & Διαφάνεια" />
-  <meta property="og:description" content="Η δέσμευσή μας για την ταχύτερη απονομή δικαιοσύνης, την καταπολέμηση της διαφθοράς και την ενίσχυση της θεσμικής ανεξαρτησίας." />
+  <title>Πρόγραμμα: Δικαιοσύνη & Θεσμική Μεταρρύθμιση — Έλενα Κούσιου Χατζηδημητρίου</title>
+  <meta name="description" content="Οι θέσεις μας για ένα κράτος δικαίου που λειτουργεί δίκαια, γρήγορα και με διαφάνεια. Προτάσεις για την επιτάχυνση της δικαιοσύνης, την καταπολέμηση της διαφθοράς και την ενίσχυση των θεσμών." />
+  <meta property="og:title" content="Πρόγραμμα: Δικαιοσύνη & Θεσμική Μεταρρύθμιση" />
+  <meta property="og:description" content="Δείτε το σχέδιό μας για ένα σύγχρονο, αξιόπιστο και αποτελεσματικό σύστημα δικαιοσύνης για κάθε πολίτη." />
   <meta property="og:image" content="program-justice-bg.jpg" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
@@ -38,6 +38,8 @@
       --shadow:0 8px 24px rgba(16,50,92,.08);
       --radius:14px;
       --header-height: 89px;
+       /* interactive knobs for hero */
+      --mx:50%; --my:38%; --glow-size: 260px; --twist:0deg;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
@@ -50,7 +52,7 @@
     a{color:var(--brand-blue); text-decoration:none; font-weight: 700;}
     a:hover{text-decoration: underline;}
     .container{width:min(1200px, 92%); margin:0 auto}
-    h1,h2,h3{font-family:"Peridot PE Variable", "Roboto", sans-serif;}
+    h1,h2,h3,h4{font-family:"Peridot PE Variable", "Roboto", sans-serif; color: var(--ink-2); letter-spacing:.2px;}
 
     .scroll-progress{position:fixed; inset:0 0 auto 0; height:4px; z-index:9999}
     .scroll-progress span{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--brand-blue),var(--brand-accent))}
@@ -64,12 +66,19 @@
     .nav{display:flex; align-items:center; justify-content:space-between; padding:.5rem 0; height: var(--header-height);}
     .brand img{height: 72px; width:auto}
     .nav-menu{display:flex; gap:1.1rem; align-items:center}
-    .nav-menu a{padding:.5rem .75rem; border-radius:8px; color:var(--ink-2); font-weight:700; text-decoration: none;}
+    .nav-menu a{padding:.5rem .75rem; border-radius:8px; color:var(--ink-2); font-weight:700; text-decoration: none; transition: background-color .2s ease;}
     .nav-menu a:hover{background:rgba(20,51,90,.06); text-decoration: none;}
     .btn{display:inline-block; padding:.75rem 1.25rem; border-radius:999px; font-weight:800; border:2px solid transparent; transition: all .2s ease; text-decoration: none;}
     .btn-blue{background:var(--brand-blue); color:#fff}
     .btn-blue:hover{filter:brightness(1.07); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,70,137,0.28); text-decoration: none;}
-    .nav-toggle{display:none}
+    .btn-outline{border-color:var(--brand-blue); color:var(--ink-2)}
+    .btn-outline:hover{background:rgba(0,70,137,.12); transform: translateY(-2px); text-decoration: none;}
+    
+    .nav-toggle{display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding: 10px;}
+    .nav-toggle span{width:26px; height:2px; background:var(--ink-2); display:block; transition: transform 0.3s ease, opacity 0.3s ease;}
+    .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
 
     .site-footer{background:var(--brand-blue); color:#EAF2FF; margin-top: clamp(60px, 8vw, 100px);}
     .foot{display:grid; gap:2rem; grid-template-columns:1.2fr 1fr 1fr; padding:3rem 0; align-items: center;}
@@ -78,115 +87,125 @@
     .foot-nav a { text-decoration: none; color: inherit; opacity: 0.92; font-weight: 400;}
     .foot-nav a:hover { opacity: 1; text-decoration: underline;}
     .foot-legal{opacity:.92; text-align: right;}
-    @media (max-width: 960px){
-      .foot{grid-template-columns:1fr; text-align: center; gap: 2.5rem;}
-      .foot-brand, .foot-nav { justify-content: center; }
-      .foot-legal{text-align: center;}
-    }
-     .reveal{opacity:0; transform:translateY(25px); transition:opacity .8s cubic-bezier(.5,0,0,1), transform .8s cubic-bezier(.5,0,0,1)}
+    
+    .reveal{opacity:0; transform:translateY(25px); transition:opacity .8s cubic-bezier(.5,0,0,1), transform .8s cubic-bezier(.5,0,0,1)}
     .reveal.visible{opacity:1; transform:translateY(0)}
 
     /* =====================================================
        PROGRAM PAGE SPECIFIC STYLES
        ===================================================== */
-    .program-header {
-        padding: clamp(60px, 10vw, 120px) 0;
-        text-align: center;
-        background: var(--brand-blue);
-        color: #fff;
-        position: relative;
-        overflow: hidden;
+    .hero {
+      position:relative; overflow:hidden;
+      padding: clamp(60px, 10vw, 120px) 0;
+      background:
+        radial-gradient(var(--glow-size) var(--glow-size) at var(--mx) var(--my),
+          rgba(160,110,164,0.18) 0%,
+          rgba(160,110,164,0.10) 18%,
+          transparent 60%),
+        radial-gradient(900px 700px at 26% 40%,
+          rgba(0,70,137,0.45),
+          transparent 70%),
+        linear-gradient(112deg,
+          color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%,
+          color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%,
+          color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%,
+          color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%);
+      filter: hue-rotate(var(--twist));
     }
-    .program-header::before {
-        content: ''; position: absolute; inset: 0;
-        background-image: url('program-justice-bg.jpg'); 
-        background-size: cover; background-position: center;
-        opacity: 0.12;
-        animation: ken-burns 25s infinite;
+    .hero::after{
+      content:""; position:absolute; inset:0; pointer-events:none;
+      background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
     }
-     @keyframes ken-burns {
-      0% { transform: scale(1.05) rotate(-1deg); }
-      50% { transform: scale(1.15) rotate(1deg); }
-      100% { transform: scale(1.05) rotate(-1deg); }
+    .hero-inner { position: relative; z-index: 2; text-align: center; }
+    .hero-icon {
+        width: 64px; height: 64px; margin: 0 auto 1.5rem; background: rgba(255,255,255,0.1);
+        border-radius: 50%; display: grid; place-items: center; backdrop-filter: blur(4px);
     }
-    .program-header-content { position: relative; z-index: 2; }
-
-    .program-icon {
-        width: 64px; height: 64px; margin: 0 auto 1.5rem;
-        background: rgba(255,255,255,0.1);
-        border-radius: 50%; display: grid; place-items: center;
+    .hero-icon svg { color: #fff; width: 36px; height: 36px; }
+    .hero h1 {
+        font-size: clamp(2.5rem, 5vw, 3.8rem); line-height: 1.1; color: #fff;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3); margin: 0;
     }
-    .program-icon svg { color: #fff; width: 36px; height: 36px; }
-    .program-title {
-        font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.4); margin: 0;
-    }
-    .program-subtitle {
-        font-size: clamp(1.1rem, 2vw, 1.25rem); max-width: 650px;
+    .hero .hero-subtitle {
+        font-size: clamp(1.1rem, 2vw, 1.25rem); max-width: 750px;
         margin: 1rem auto 0; color: var(--paper-3); opacity: 0.95;
     }
     
     .content-body-container {
-        padding: clamp(40px, 6vw, 80px) 0;
-        background: var(--paper); border-bottom: 1px solid var(--line);
+        padding: clamp(40px, 6vw, 80px) 0; background: var(--paper); border-bottom: 1px solid var(--line);
     }
     .content { max-width: 800px; margin: 0 auto; }
-    .content p.intro {
-        font-size: 1.25rem; line-height: 1.8;
-        color: var(--ink-2); margin-bottom: 3rem; font-weight: 400;
+    .content .narrative-block {
+        font-size: 1.2rem; line-height: 1.75; color: var(--ink-2); margin-bottom: 3rem; font-weight: 400;
+        background: var(--paper-2); padding: 1.5rem; border-left: 5px solid var(--brand-blue); border-radius: 0 var(--radius) var(--radius) 0;
     }
     .content h2 {
-        font-size: clamp(1.8rem, 3.5vw, 2.2rem); color: var(--ink-2);
+        font-size: clamp(1.8rem, 3.5vw, 2.2rem);
         margin-top: 3.5rem; margin-bottom: 2rem;
         padding-bottom: 0.5rem; border-bottom: 2px solid var(--line);
     }
+    .content h3 { font-size: 1.5rem; margin-top: 3rem; margin-bottom: 1.5rem; }
     
-    .commitments-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 1.5rem;
-    }
+    .commitments-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
     .commitment-card {
-        background: var(--paper-2);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 1.5rem;
-        transition: transform .2s ease, box-shadow .2s ease;
+        background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem;
+        transition: transform .2s ease, box-shadow .2s ease; display: flex; flex-direction: column;
     }
-    .commitment-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow);
+    .commitment-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .commitment-card h4 {
+        display: flex; align-items: flex-start; gap: 0.75rem;
+        font-size: 1.2rem; margin: 0 0 0.5rem 0;
     }
-    .commitment-card h3 {
-        display: flex; align-items: center; gap: 0.75rem;
-        font-size: 1.2rem; color: var(--ink-2);
-        margin: 0 0 0.5rem 0;
-    }
-    .commitment-card h3 svg { width: 24px; height: 24px; color: var(--brand-blue); flex-shrink: 0; }
-    .commitment-card p { font-size: 1rem; line-height: 1.65; margin-bottom: 0; }
+    .commitment-card h4 svg { width: 24px; height: 24px; color: var(--brand-blue); flex-shrink: 0; margin-top: 3px; }
+    .commitment-card p { font-size: 1rem; line-height: 1.65; margin:0; flex-grow: 1; }
     
-    .other-priorities-nav { text-align: center; margin-top: 4rem; padding: 2rem 0; background-color: var(--paper-2); border-radius: var(--radius);}
-    .other-priorities-nav h3 { color: var(--ink-2); margin-top:0; }
-    .priorities-tags {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem;
-    }
-    .priority-tag {
-        display: inline-block; padding: 0.5rem 1rem;
-        background: var(--paper); border: 1px solid var(--line);
-        border-radius: 999px; color: var(--ink);
-        font-weight: 700; transition: background .2s ease, transform .2s ease, border-color .2s ease, color .2s ease;
-    }
-    .priority-tag:hover {
-        transform: translateY(-2px);
-        background: var(--paper-3);
-        text-decoration: none;
-    }
-    .priority-tag.active {
-      background: var(--brand-blue);
-      color: #fff; border-color: var(--brand-blue);
-    }
+    .vision-list { list-style: none; padding: 0; display: grid; gap: 1rem; }
+    .vision-list li { display: flex; align-items: flex-start; gap: 1rem; background-color: var(--paper-2); padding: 1.2rem; border-radius: var(--radius); font-size: 1.05rem; line-height: 1.6; }
+    .vision-list svg { color: var(--brand-blue); width: 24px; height: 24px; flex-shrink: 0; margin-top: 3px; }
 
-    .back-to-program { text-align: center; margin: 4rem auto 0; }
+    .examples-list { list-style: none; padding: 0; margin-top: 1.5rem; display: grid; gap: 1.5rem; }
+    .example-item { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; box-shadow: 0 4px 15px rgba(16,50,92,.05); }
+    .example-header { display: flex; align-items: center; gap: .75rem; margin-bottom: .75rem; }
+    .example-header::before {
+      content: ''; display: block; width: 8px; height: 8px;
+      border-radius: 50%; background-color: var(--brand-accent);
+    }
+    .example-item h4 { font-size: 1.3rem; margin: 0; }
+    .example-item p { margin: 0; font-size: 1rem; color: var(--muted); }
+
+    .slogan-box {
+        text-align: center; margin: 4rem auto; padding: 2.5rem;
+        border-top: 3px solid var(--brand-blue); border-bottom: 3px solid var(--brand-blue);
+    }
+    .slogan-box p { font-family: "Peridot PE Variable", sans-serif; font-size: 1.8rem; font-weight: 700; margin: 0; }
+    
+    .other-priorities-nav { text-align: center; margin-top: 4rem; padding: 2.5rem; background-color: var(--paper-2); border-radius: var(--radius); border: 1px solid var(--line); }
+    .other-priorities-nav h3 { margin:0 0 1.5rem; }
+    .priorities-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+    .priority-tag {
+        display: inline-block; padding: 0.5rem 1.1rem; background: var(--paper); border: 1px solid var(--line);
+        border-radius: 999px; color: var(--ink); font-weight: 700; transition: all .2s ease;
+    }
+    .priority-tag:hover { transform: translateY(-2px); background: var(--paper-3); text-decoration: none; }
+    .priority-tag.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); }
+    
+    @media (max-width: 960px){
+      .nav-toggle{display:flex}
+      .nav-menu{
+        position:fixed; left: 1rem; right: 1rem; top: calc(var(--header-height, 89px) + 0.5rem); background:#fff;
+        border:1px solid var(--line); border-radius:12px; padding:.8rem; flex-direction:column; gap:.35rem; box-shadow:var(--shadow);
+        width: calc(100% - 2rem);
+        transform: translateY(-20px) scale(0.98); opacity: 0; pointer-events: none;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+      .nav-menu a{color:var(--ink-2); display:block; width:100%; padding: .8rem;}
+      .nav-menu .btn-outline { text-align: center; }
+      .nav-menu.show{transform: translateY(0) scale(1); opacity: 1; pointer-events: auto;}
+      
+      .foot{grid-template-columns:1fr; text-align: center; gap: 2.5rem;}
+      .foot-brand, .foot-nav { justify-content: center; }
+      .foot-legal{text-align: center;}
+    }
   </style>
 </head>
 <body>
@@ -196,52 +215,129 @@
       <a class="brand" href="index.html">
         <img src="logo.png" alt="Λογότυπο Έλενας Κούσιου Χατζηδημητρίου" />
       </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Άνοιγμα μενού">
+        <span></span><span></span><span></span>
+      </button>
       <nav id="nav-menu" class="nav-menu" role="navigation">
         <a href="index.html#about">Σχετικά</a>
         <a href="index.html#program">Θέσεις</a>
         <a href="index.html#articles">Άρθρα</a>
         <a href="index.html#watch">Watch</a>
-        <a href="index.html#get-involved" class="btn btn-blue">Συμμετοχή</a>
+        <a href="index.html#get-involved" class="btn btn-outline">Συμμετοχή</a>
       </nav>
     </div>
   </header>
-<main>
-    <section class="program-header reveal">
-        <div class="program-header-content container">
-            <div class="program-icon">
+
+  <main>
+    <section class="hero" id="hero-subpage">
+        <div class="hero-inner container">
+            <div class="hero-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
             </div>
-            <h1 class="program-title">Κράτος Δικαίου & Διαφάνεια</h1>
-            <p class="program-subtitle">Χτίζουμε μια σχέση εμπιστοσύνης μεταξύ πολίτη και κράτους, με θεσμούς που λογοδοτούν και δικαιοσύνη που απονέμεται έγκαιρα.</p>
+            <h1>Δικαιοσύνη & Θεσμική Μεταρρύθμιση</h1>
+            <p class="hero-subtitle">Για ένα κράτος δικαίου που λειτουργεί δίκαια, γρήγορα και με διαφάνεια, ενισχύοντας την εμπιστοσύνη του πολίτη στους θεσμούς.</p>
         </div>
     </section>
+    
     <div class="content-body-container">
-        <div class="content container">
-            <p class="intro reveal">Το Κράτος Δικαίου δεν είναι μια αφηρημένη έννοια. Είναι η καθημερινή βεβαιότητα του πολίτη ότι οι νόμοι ισχύουν για όλους, ότι οι θεσμοί λειτουργούν με διαφάνεια και ότι η δικαιοσύνη είναι προσβάσιμη και αποτελεσματική. Οι χρόνιες καθυστερήσεις στην απονομή της δικαιοσύνης και τα φαινόμενα διαφθοράς υπονομεύουν την εμπιστοσύνη των πολιτών και εμποδίζουν την ανάπτυξη. Δεσμεύομαι προσωπικά για βαθιές τομές που θα ενισχύσουν την ανεξαρτησία των θεσμών, θα επιταχύνουν τις διαδικασίες και θα εγγυηθούν πλήρη λογοδοσία σε κάθε επίπεδο της δημόσιας ζωής.</p>
-            <h2 class="reveal">Οι δεσμεύσεις μας</h2>
-            <div class="commitments-grid">
-                <div class="commitment-card reveal"><h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>Επιτάχυνση της Δικαιοσύνης</h3><p>Ενισχύουμε τους θεσμούς της διαμεσολάβησης, ψηφιοποιούμε πλήρως τις δικαστικές διαδικασίες (e-justice) και στελεχώνουμε τα δικαστήρια για να μειωθεί ο χρόνος εκδίκασης υποθέσεων.</p></div>
-                <div class="commitment-card reveal"><h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>Πλήρης Διαφάνεια</h3><p>Εφαρμόζουμε την αρχή των "ανοικτών δεδομένων" για όλες τις κρατικές δαπάνες και αποφάσεις. Καθιερώνουμε αυστηρούς κανόνες για το lobbying και το "πόθεν έσχες" των αξιωματούχων.</p></div>
-                <div class="commitment-card reveal"><h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 1S10 1 6 6s5 9.05 5 9.05 5-4.05 9.05-9.05C24.05 6 19.1 1 15.05 1z"/><path d="M16 17a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/></svg>Ανεξάρτητη Αρχή κατά της Διαφθοράς</h3><p>Παρέχουμε στην Αρχή πλήρη λειτουργική αυτονομία, τα απαραίτητα εργαλεία και τους πόρους για να ερευνά σε βάθος και να φέρνει αποτελέσματα, χωρίς πολιτικές παρεμβάσεις.</p></div>
-                <div class="commitment-card reveal"><h3><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>Προστασία Μαρτύρων Δημοσίου Συμφέροντος</h3><p>Θεσμοθετούμε ένα ισχυρό και αξιόπιστο πλαίσιο για την προστασία των πολιτών και των δημοσίων υπαλλήλων που αποκαλύπτουν υποθέσεις διαφθοράς.</p></div>
+      <div class="content container">
+        
+        <div class="narrative-block reveal">
+            <p><strong>Η δικαιοсύνη είναι η βάση κάθε δημοκρατίας.</strong> Στην Κύπρο όμως, οι πολίτες έρχονται αντιμέτωποι με ένα σύστημα που καθυστερεί υπερβολικά, ενώ η διαφθορά και η αίσθηση ατιμωρησίας έχουν κλονίσει την εμπιστοсύνη τους. Υποθέσεις εκκρεμούν για χρόνια, στερώντας από τους πολίτες την αποτελεσματική δικαστική προστασία, ενώ η έλλειψη λογοδοσίας δημιουργεί ένα αίσθημα αδικίας. Χρειαζόμαστε τολμηρές παρεμβάσεις για ένα σύστημα που θα είναι ανεξάρτητο, διαφανές, γρήγορο και προσβάσιμο σε όλους.</p>
+        </div>
+
+        <h2 class="reveal">Το Όραμά μας</h2>
+        <ul class="vision-list">
+            <li class="reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Ένα κράτος δικаίου όπου κανείς δεν είναι υπεράνω του νόμου.</span></li>
+            <li class="reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Ταχεία απονομή δικαιοсύνης, χωρίς πολυετείς καθυστερήσεις.</span></li>
+            <li class="reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Ισχυροί, ανεξάρτητοι θεσμοί ελέγχου με πραγματικές εξουσίες.</span></li>
+            <li class="reveal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Προστασία του παιδιού σε οικογενειακές διαφορές και δίκαιη επίλυση διαφορών.</span></li>
+        </ul>
+        
+        <h2 class="reveal">Συγκεκριμένες Προτάσεις</h2>
+        
+        <h3 class="reveal">Επιτάχυνση & Εκσυγχρονισμός</h3>
+        <div class="commitments-grid">
+            <div class="commitment-card reveal">
+                <h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><div>Ενίσχυση & Ψηφιοποίηση</div></h4>
+                <p>Νέες προσλήψεις δικαστικών λειτουργών, πλήρης ηλεκτρονική διαχείριση υποθέσεων (e-justice) και ψηφιακές ακροάσεις για μείωση του φόρτου και των καθυστερήσεων.</p>
             </div>
-            
-            <div class="back-to-program reveal"><a href="index.html#program" class="btn btn-blue">← Επιστροφή σε όλες τις Θέσεις</a></div>
-            
-            <div class="other-priorities-nav reveal">
-                <h3>Εξερευνήστε τις υπόλοιπες θέσεις μας</h3>
-                <div class="priorities-tags">
-                    <a href="program-education.html" class="priority-tag">Παιδεία</a>
-                    <a href="program-economy.html" class="priority-tag">Οικονομία</a>
-                    <a href="program-health.html" class="priority-tag">Υγεία</a>
-                    <a href="program-justice.html" class="priority-tag active">Κράτος Δικαίου</a>
-                    <a href="program-seniors.html" class="priority-tag">Τρίτη Ηλικία</a>
-                    <a href="program-cities.html" class="priority-tag">Βιώσιμες Πόλεις</a>
-                </div>
+            <div class="commitment-card reveal">
+                <h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg><div>Εξειδίκευση Δικαστηρίων</div></h4>
+                <p>Δημιουργία ή ενίσχυση ειδικευμένων τμημάτων (π.χ. εμπορικό, ναυτικό, ιατρικής αμέλειας) για ταхύτερη και ποιοτικότερη εκδίκαση πολύπλοκων υποθέσεων.</p>
             </div>
         </div>
+
+        <h3 class="reveal">Διαфάνεια & Λογοδοσία</h3>
+        <div class="commitments-grid">
+            <div class="commitment-card reveal">
+                <h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg><div>Διαфάνεια στις Δημόσιες Συμβάσεις</div></h4>
+                <p>Όλα τα έργα και οι συμβάσεις αναρτώνται σε ψηφιακή πλατφόρμα, προσβάσιμη σε όλους, με πλήρη στοιχεία για το κόστος, τους αναδόχους και τις προθεσμίες.</p>
+            </div>
+             <div class="commitment-card reveal">
+                <h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><div>Ανεξάρτητοι Θεσμοί</div></h4>
+                <p>Σαφής διαχωρισμός αρμοδιοτήτων Γενικού Εισαγγελέα & Ελεγκτή, και ενίσχυση της Ανεξάρτητης Αρχής κατά της Διαφθοράς με πραγματικές ερευνητικές αρμοδιότητες.</p>
+            </div>
+             <div class="commitment-card reveal">
+                <h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><div>Προστασία Whistleblowers</div></h4>
+                <p>Δημιουργία ασφαλούς πλατφόρμας για ανώνυμες καταγγελίες και πλήρης νομική προστασία των μαρτύρων δημοσίου συμφέροντος από αντίποινα.</p>
+            </div>
+             <div class="commitment-card reveal">
+                <h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg><div>Έλεγχος "Πόθεν Έσχες"</div></h4>
+                <p>Ετήσια δήλωση περιουσιακών στοιχείων πολιτικών με ουσιαστικό έλεγχο από ανεξάρτητη επιτροπή εμπειρογνωμόνων και δημοσιοποίηση των πορισμάτων.</p>
+            </div>
+        </div>
+        
+        <h3 class="reveal">Δικαιοсύνη για τον Πολίτη</h3>
+         <div class="commitments-grid">
+            <div class="commitment-card reveal">
+                <h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><div>Υποχρεωτική Διαμεσολάβηση</div></h4>
+                <p>Καθιερώνουμε την υποχρεωτική διαμεσολάβηση στο Οικογενειακό Δίκαιο πριν την προσφυγή στο δικαστήριο, με ειδικευμένους διαμεσολαβητές για την προστασία του παιδιού.</p>
+            </div>
+            <div class="commitment-card reveal">
+                <h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg><div>Αρχή Ιατρικής Αμέλειας</div></h4>
+                <p>Δημιουργούμε επίσημο, ανεξάρτητο φορέα όπου ο ασθενής μπορεί να καταθέσει την υπόθεσή του και να λάβει γρήγορη, αξιόπιστη απάντηση από επιτροπή ειδικών.</p>
+            </div>
+             <div class="commitment-card reveal">
+                <h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg><div>Εθνικό Κέντρο Διαιτησίας</div></h4>
+                <p>Ιδρύουμε κεντρικό φορέα διαιτησίας για εμπορικές και επαγγελματικές διαφορές, προσφέροντας γρήγορη και οικονομική λύση με αποφάσεις που έχουν ισχύ δικαστηρίου.</p>
+            </div>
+        </div>
+
+        <h2 class="reveal">Παραδείγματα / Καλές Πρακτικές</h2>
+        <ul class="examples-list">
+            <li class="example-item reveal">
+                <div class="example-header"><h4>Δανία & Νορβηγία</h4></div>
+                <p>Η πλήρης ψηφιοποίηση του συστήματος δικαιοсύνης (e-Justice) και η επαρκής στελέχωση έχουν οδηγήσει σε ταχύτατους χρόνους απονομής δικαιοсύνης.</p>
+            </li>
+            <li class="example-item reveal">
+                <div class="example-header"><h4>Ελλάδα & Εσθονία</h4></div>
+                <p>Οι πλατφόρμες «Διαύγεια» και η πλήρης ψηφιοποίηση των δημοσίων δαπανών και συμβάσεων ενισχύουν δραστικά τη διαфάνεια και την πρόσβαση των πολιτών.</p>
+            </li>
+            <li class="example-item reveal">
+                <div class="example-header"><h4>Ιταλία & Ην. Βασίλειο</h4></div>
+                <p>Η υποχρεωτική διαμεσολάβηση (Mediation) σε οικογενειακές και πολλές εμπορικές διαφορές έχει μειώσει δραματικά τον φόρτο των δικαστηρίων και το κόστος για τους πολίτες.</p>
+            </li>
+        </ul>
+
+        <div class="slogan-box reveal">
+            <p>«Δικαιοсύνη για Όλους: Όχι Καθυστερήσεις, αλλά Αξιοπιστία.»</p>
+        </div>
+
+        <div class="other-priorities-nav reveal">
+            <h3>Εξερευνήστε τις υπόλοιπες θέσεις μας</h3>
+            <div class="priorities-tags">
+                 <a href="program-justice.html" class="priority-tag active">Δικαιοσύνη</a>
+                 <a href="program-health.html" class="priority-tag">Υγεία & Πρόνοια</a>
+                 <a href="program-development.html" class="priority-tag">Ανάπτυξη</a>
+                 <a href="program-education.html" class="priority-tag">Παιδεία</a>
+                 <a href="program-admin.html" class="priority-tag">Δημόσια Διοίκηση</a>
+                 <a href="program-housing.html" class="priority-tag">Στέγαση & Οικογένεια</a>
+            </div>
+        </div>
+      </div>
     </div>
-</main>
+  </main>
   
 <footer class="site-footer">
     <div class="container foot">
@@ -262,32 +358,79 @@
     </div>
   </footer>
 
-
   <script>
   document.addEventListener('DOMContentLoaded', () => {
+    // --- Mobile Nav Toggle ---
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+            const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+            navToggle.setAttribute('aria-expanded', !isExpanded);
+            navMenu.classList.toggle('show');
+        });
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 960) {
+                    navToggle.setAttribute('aria-expanded', 'false');
+                    navMenu.classList.remove('show');
+                }
+            });
+        });
+    }
+
+    // --- Scroll Progress Bar ---
     const bar = document.querySelector('.scroll-progress span');
     if (bar) {
         window.addEventListener('scroll', () => {
             const h = document.documentElement;
-            bar.style.width = `${(h.scrollTop / (h.scrollHeight - h.clientHeight) * 100)}%`;
+            const st = h.scrollTop || document.body.scrollTop;
+            const sh = h.scrollHeight || document.body.scrollHeight;
+            bar.style.width = `${(st / (sh - h.clientHeight)) * 100}%`;
         }, { passive: true });
     }
 
+    // --- Reveal on Scroll ---
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          if (entry.target.parentElement.classList.contains('commitments-grid')) {
-              const items = Array.from(entry.target.parentElement.children);
+          const parent = entry.target.parentElement;
+          if (parent && (parent.classList.contains('commitments-grid') || parent.classList.contains('examples-list') || parent.classList.contains('vision-list'))) {
+              const items = Array.from(parent.children);
               const index = items.indexOf(entry.target);
-              entry.target.style.transitionDelay = `${index * 100}ms`;
+              entry.target.style.transitionDelay = `${index * 80}ms`;
           }
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      
+    // ===== HERO INTERACTION =====
+    const hero = document.getElementById('hero-subpage');
+    if (hero) {
+      const root = document.documentElement;
+      let target = { x: 0.5, y: 0.38 }, current = { x: 0.5, y: 0.38 };
+      function tick(){
+        current.x += (target.x - current.x) * 0.08;
+        current.y += (target.y - current.y) * 0.08;
+        root.style.setProperty('--mx', `${(current.x * 100).toFixed(2)}%`);
+        root.style.setProperty('--my', `${(current.y * 100).toFixed(2)}%`);
+        const dx = current.x - 0.5;
+        const dist = Math.hypot(dx, current.y - 0.38);
+        root.style.setProperty('--twist', `${(dx * 10).toFixed(2)}deg`);
+        root.style.setProperty('--glow-size', `${(260 + dist * 80).toFixed(2)}px`);
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      const moveTo = (x,y)=>{ const r=hero.getBoundingClientRect(); target.x=(x-r.left)/r.width; target.y=(y-r.top)/r.height; };
+      const onPointer = e => { const p = e.touches ? e.touches[0] : e; moveTo(p.clientX, p.clientY); };
+      hero.addEventListener('mousemove', onPointer, {passive:true});
+      hero.addEventListener('touchstart', onPointer, {passive:true});
+      hero.addEventListener('touchmove', onPointer, {passive:true});
+      hero.addEventListener('mouseleave', ()=>{ target.x=0.5; target.y=0.38; });
+    }
   });
 </script>
 </body>
