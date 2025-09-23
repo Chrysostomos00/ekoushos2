@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="el" data-theme="sky">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Βιογραφικό — Έλενα Κούσιου Χατζηδημητρίου</title>
+  <meta name="description" content="Γνωρίστε την Έλενα Κούσιου Χατζηδημητρίου. Δικηγόρος, Διαμεσολαβήτρια και Πρόεδρος του ΚΟΑΓ, με πολυετή εμπειρία και ενεργό κοινωνική δράση." />
+  <meta property="og:title" content="Βιογραφικό — Έλενα Κούσιου Χατζηδημητρίου" />
+  <meta property="og:description" content="Ανακαλύψτε το επαγγελματικό και ακαδημαϊκό υπόβαθρο, καθώς και τη δημόσια προσφορά της Έλενας." />
+  <meta property="og:image" content="portrait.png" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <style>
+    @font-face{
+      font-family:"Peridot PE Variable";
+      src:url("assets/fonts/PeridotPE-Variable.woff2") format("woff2");
+      font-weight:100 900; font-style:normal; font-display:swap;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  
+  <style>
+    /* SHARED STYLES */
+    :root{
+      --brand-plum:#723766; --brand-blue:#004689; --brand-accent:#A06EA4;
+      --ink:#0A2244; --ink-2:#14335A; --muted:#5A6F90; --paper:#FFFFFF;
+      --paper-2:#F7FAFF; --paper-3:#EDF4FF; --line:#D9E7FF; --shadow:0 8px 24px rgba(16,50,92,.08);
+      --radius:14px; --header-height: 89px; --mx:50%; --my:38%; --glow-size: 260px; --twist:0deg;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; color:var(--ink); background-color: var(--paper);
+      font:400 18px/1.7 "Roboto", system-ui, sans-serif;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    .container{width:min(1200px, 92%); margin:0 auto}
+    h1,h2,h3,h4{font-family:"Peridot PE Variable", "Roboto", sans-serif; color: var(--ink-2); letter-spacing:.2px;}
+    
+    .scroll-progress{position:fixed; inset:0 0 auto 0; height:4px; z-index:9999}
+    .scroll-progress span{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--brand-blue),var(--brand-accent))}
+    
+    .site-header{
+      position:sticky; top:0; z-index:1000;
+      background:rgba(255,255,255,.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:.5rem 0; height: var(--header-height);}
+    .brand img{height: 72px; width:auto}
+    .nav-menu{display:flex; gap:1.1rem; align-items:center}
+    .nav-menu a{padding:.5rem .75rem; border-radius:8px; color:var(--ink-2); font-weight:700; text-decoration: none; transition: background-color .2s ease;}
+    .nav-menu a:hover{background:rgba(20,51,90,.06); text-decoration: none;}
+    .btn{display:inline-block; padding:.75rem 1.25rem; border-radius:999px; font-weight:800; border:2px solid transparent; transition: all .2s ease; text-decoration: none;}
+    .btn-blue{background:var(--brand-blue); color:#fff}
+    .btn-blue:hover{filter:brightness(1.07); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,70,137,0.28); text-decoration: none;}
+    .btn-outline{border-color:var(--brand-blue); color:var(--ink-2)}
+    .btn-outline:hover{background:rgba(0,70,137,.12); transform: translateY(-2px); text-decoration: none;}
+    .nav-toggle{display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding: 10px;}
+    .nav-toggle span{width:26px; height:2px; background:var(--ink-2); display:block; transition: transform 0.3s ease, opacity 0.3s ease;}
+    .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+    .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+    .site-footer{
+      color:#fff;
+      background: linear-gradient(112deg, color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%, color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%, color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%, color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }    
+    .foot{display:grid; gap:2rem; grid-template-columns:1.2fr 1fr 1fr; padding:3rem 0; align-items:center;}
+    .foot a { color: #fff; opacity: 0.92; transition: opacity .2s; text-decoration:none; }
+    .foot a:hover { opacity: 1; text-decoration: underline; }
+    .foot-brand{display:flex; gap:.7rem; align-items:center} .foot-brand img{width:44px; height:44px}
+    .foot-nav{display:flex; gap:1rem; flex-wrap:wrap} .foot-legal{opacity:.92; text-align: right;}
+    
+    .reveal{opacity:0; transform:translateY(25px); transition:opacity .8s cubic-bezier(.5,0,0,1), transform .8s cubic-bezier(.5,0,0,1)} .reveal.visible{opacity:1; transform:translateY(0)}
+
+    /* BIO PAGE STYLES */
+    .bio-hero {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        min-height: 50vh;
+        padding: 4rem 0;
+        background: radial-gradient(var(--glow-size) var(--glow-size) at var(--mx) var(--my), rgba(160,110,164,0.18) 0%, rgba(160,110,164,0.10) 18%, transparent 60%), radial-gradient(900px 700px at 26% 40%, rgba(0,70,137,0.45), transparent 70%), linear-gradient(112deg, color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%, color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%, color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%, color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%);
+        filter: hue-rotate(var(--twist));
+    }
+    .bio-hero::after {
+        content: ""; position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
+    }
+    .bio-header { position: relative; z-index: 2; }
+    .bio-header h1 {
+        font-size: clamp(2.8rem, 6vw, 4.5rem);
+        line-height: 1.1;
+        color: #fff;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        margin: 0;
+    }
+    .bio-header p.subtitle {
+        font-family: "Roboto", sans-serif;
+        font-size: clamp(1.1rem, 2vw, 1.25rem);
+        font-weight: 500;
+        color: var(--paper-3);
+        opacity: 0.95;
+        margin: 1rem 0 0;
+        max-width: 50ch;
+    }
+
+    .main-content {
+      background-color: var(--paper);
+      padding: clamp(3rem, 6vw, 5rem) 0;
+    }
+    .bio-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .bio-section {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-bottom: 2.5rem;
+    }
+    .bio-icon {
+      flex-shrink: 0;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--paper-3);
+      color: var(--brand-blue);
+      display: grid;
+      place-items: center;
+    }
+    .bio-icon svg { width: 24px; height: 24px; }
+    .bio-text h2 { margin: .5rem 0 1rem; font-size: 1.8rem; }
+    .bio-text p { margin: 0; color: var(--muted); }
+    .bio-text p + p { margin-top: 1rem; }
+    
+    .highlight-box {
+      margin: 3rem 0;
+      padding: 1.5rem;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--brand-blue);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .highlight-box h3 { margin-top: 0; }
+    .highlight-box ul {
+      list-style: none; padding: 0;
+      color: var(--muted);
+    }
+    .highlight-box li { display: flex; align-items: center; gap: .75rem; }
+    .highlight-box li + li { margin-top: .5rem; }
+    .highlight-box svg { flex-shrink: 0; width: 18px; height: 18px; color: var(--brand-accent); }
+    
+    /* Responsive Styles */
+    @media (max-width: 960px){
+      .nav-toggle{display:flex}
+      .nav-menu{
+        position:fixed; left: 1rem; right: 1rem; top: calc(var(--header-height, 89px) + 0.5rem); background:#fff;
+        border:1px solid var(--line); border-radius:12px; padding:.8rem; flex-direction:column; gap:.35rem; box-shadow:var(--shadow);
+        width: calc(100% - 2rem);
+        transform: translateY(-20px) scale(0.98); opacity: 0; pointer-events: none;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+      .nav-menu a{color:var(--ink-2); display:block; width:100%; padding: .8rem;}
+      .nav-menu .btn-outline { text-align: center; }
+      .nav-menu.show{transform: translateY(0) scale(1); opacity: 1; pointer-events: auto;}
+      
+      .foot{grid-template-columns:1fr; text-align: center; gap: 2.5rem;}
+      .foot-brand, .foot-nav { justify-content: center; }
+      .foot-legal{text-align: center;}
+    }
+
+     @media (max-width: 768px){
+      .bio-section { flex-direction: column; align-items: center; text-align: center; }
+     }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <header class="site-header" role="banner">
+    <div class="nav container">
+      <a class="brand" href="index.html">
+        <img src="logo.png" alt="Λογότυπο Έλενας Κούσιου Χατζηδημητρίου" />
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Άνοιγμα μενού">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="nav-menu" class="nav-menu" role="navigation">
+        <a href="index.html#about">Σχετικά</a>
+        <a href="index.html#program">Θέσεις</a>
+        <a href="index.html#articles">Άρθρα</a>
+        <a href="index.html#watch">Watch</a>
+        <a href="index.html#get-involved" class="btn btn-outline">Συμμεтоχή</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="bio-hero" id="bio-hero">
+      <div class="container">
+          <div class="bio-header reveal">
+              <h1>Έλενα Κούσιου Χατζηδημητρίου</h1>
+              <p class="subtitle">Δικηγóρος, Διαμεσολαβήτρια, Πρόεδρος ΚΟΑΓ</p>
+          </div>
+      </div>
+    </section>
+
+    <div class="main-content">
+      <div class="bio-content container">
+          <div class="bio-section reveal">
+              <div class="bio-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg></div>
+              <div class="bio-text">
+                  <h2>Νομική Εμπειρογνωμοσύνη</h2>
+                  <p>Η Έλενα Κούσιου Χατζηδημητρίου ήταν συνέταιρος στη δικηγορική εταιρεία Koushos Korfiotis Papacharalambous LLC με εκτεταμένη εμπειρία στη μάχιμη δικηγορία, και στην επίλυση διαφορών. Διαθέτει ισχυρό υπόβαθρο στο Ποινικό, Ιατρικό και το Εργατικό Δίκαιο, έχοντας διαχειριστεί με επιτυχία σύνθετες δικαστικές υποθέσεις και παρέχοντας στρατηγική νομική καθοδήγηση σε ιδιώτες και οργανισμούς. Έχει επίσης διατελέσει Υπεύθυνη Συμμόρφωσης της εταιρείας, παρέχοντας συμβουλευτικές υπηρεσίες για ζητήματα καταπολέμησης ξεπλύματος χρήματος και χρηματοδότησης της τρομοκρατίας και παρενόχλησης στην εργασία .</p>
+              </div>
+          </div>
+
+          <div class="bio-section reveal">
+            <div class="bio-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+              <div class="bio-text">
+                  <h2>Εξειδίκευση στη Επίλυση Διαφορών</h2>
+                  <p>Είναι πιστοποιημένη διαμεσολαβήτρια και διαιτητής, καθώς και Εκπαιδεύτρια επιπέδου 5, συνδυάζοντας τη νομική της εμπειρογνωμοσύνη με εναλλακτικές μεθόδους επίλυσης διαφορών. Η Έλενα έχει συμμετάσχει σε διαμεσολαβήσεις ενώπιον του Τμήματος Εργασίας καθώς και σε διεθνείς διαιτησίες, ενισχύοντας περαιτέρω το προφίλ της ως πολύπλευρη νομικός. Στο ακαδημαϊκό της υπόβαθρο περιλαμβάνεται μεταπτυχιακό (LL.M) στο Medical Law and Ethics από το Queen Mary University of London, πτυχίο Νομικής από το University of Leicester, καθώς και εξειδικευμένα διπλώματα στη διαιτησία και τη διαμεσολάβηση.</p>
+              </div>
+          </div>
+          
+          <div class="bio-section reveal">
+             <div class="bio-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+              <div class="bio-text">
+                  <h2>Κοινωνική Συμβολή & Δημόσια Δράση</h2>
+                   <p>Πέρα από την επαγγελματική της δραστηριότητα, η Έλενα συμμετέχει ενεργά στην κοινωνία και στη δημόσια ζωή.</p>
+                  <div class="highlight-box">
+                      <h3>Ενεργοί Ρόλοι</h3>
+                      <ul>
+                          <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg><span>Πρόεδρος του Δ.Σ. του Κυπριακού Οργανισμού Αναπτύξεως Γης (ΚΟΑΓ) από το 2021</span></li>
+                          <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg><span>Μέλος του Συμβουλίου του Δικηγορικού Συλλόγου Αμμοχώστου από το 2023</span></li>
+                           <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg><span>Μέλος του Παγκύπριου Δικηγορικού Συλλόγου από το 2008</span></li>
+                           <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg><span>Μέλος του ACAMS και του Κυπριακού Εμπορικού και Βιομηχανικού Επιμελητηρίου (ΚΕΒΕ)</span></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+          
+      </div>
+    </div>
+  </main>
+  
+<footer class="site-footer">
+    <div class="container foot">
+        <div class="foot-brand"><img src="mono.png" alt="Μονόχρωμο λογότυπο Έλενας Κούσιου Χατζηδημητρίου" /><div><strong>Έλενα Κούσιου Χατζηδημητρίου</strong><br />Βουλευτικές Εκλογές 2026</div></div>
+        <nav class="foot-nav" aria-label="Footer"><a href="index.html#about">Σχετικά</a><a href="index.html#program">Πρόγραμμα</a><a href="index.html#articles">Άρθρα</a><a href="index.html#get-involved">Συμμεтоχή</a></nav>
+        <div class="foot-legal">© 2025</div>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Mobile Nav Toggle ---
+        const navToggle = document.querySelector('.nav-toggle'), navMenu = document.getElementById('nav-menu');
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', () => { const isExpanded = navToggle.getAttribute('aria-expanded') === 'true'; navToggle.setAttribute('aria-expanded', !isExpanded); navMenu.classList.toggle('show'); });
+            navMenu.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { if (window.innerWidth < 960) { navToggle.setAttribute('aria-expanded', 'false'); navMenu.classList.remove('show'); } }); });
+        }
+        // --- Scroll Progress Bar ---
+        const bar = document.querySelector('.scroll-progress span');
+        if (bar) { window.addEventListener('scroll', () => { const h = document.documentElement, st = h.scrollTop || document.body.scrollTop, sh = h.scrollHeight || document.body.scrollHeight; bar.style.width = `${(st / (sh - h.clientHeight)) * 100}%`; }, { passive: true }); }
+        // --- Reveal on Scroll ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ===== HERO INTERACTION =====
+        const hero = document.getElementById('bio-hero');
+        if (hero) {
+            const root = document.documentElement; let target = { x: 0.5, y: 0.38 }, current = { x: 0.5, y: 0.38 };
+            function tick() { current.x += (target.x - current.x) * 0.08; current.y += (target.y - current.y) * 0.08; root.style.setProperty('--mx', `${(current.x * 100).toFixed(2)}%`); root.style.setProperty('--my', `${(current.y * 100).toFixed(2)}%`); const dx = current.x - 0.5; const dist = Math.hypot(dx, current.y - 0.38); root.style.setProperty('--twist', `${(dx * 10).toFixed(2)}deg`); root.style.setProperty('--glow-size', `${(260 + dist * 80).toFixed(2)}px`); requestAnimationFrame(tick); }
+            requestAnimationFrame(tick);
+            const moveTo = (x, y) => { const r = hero.getBoundingClientRect(); target.x = (x - r.left) / r.width; target.y = (y - r.top) / r.height; };
+            const onPointer = e => { const p = e.touches ? e.touches[0] : e; moveTo(p.clientX, p.clientY); };
+            hero.addEventListener('mousemove', onPointer, { passive: true }); hero.addEventListener('touchstart', onPointer, { passive: true });
+            hero.addEventListener('touchmove', onPointer, { passive: true }); hero.addEventListener('mouseleave', () => { target.x = 0.5; target.y = 0.38; });
+        }
+    });
+</script>
+</body>
+</html>
