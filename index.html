@@ -9,6 +9,8 @@
   <meta property="og:description" content="Μαζί για μια δίκαιη, σύγχρονη Κύπρο. Δες προτάσεις, άρθρα & δήλωσε συμμετοχή." />
   <meta property="og:image" content="portrait.png" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <!-- Local variable font -->
   <style>
     @font-face{
       font-family:"Peridot PE Variable";
@@ -18,18 +20,22 @@
       font-display:swap;
     }
   </style>
+
+  <!-- External CSS deps -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+  <!-- Preloads -->
   <link rel="preload" as="image" href="logo-hero.png">
   <link rel="preload" as="image" href="slogan-hero.png">
-  <link rel="preload" as="image" href="portrait-hero.png">
   <link rel="preload" as="image" href="portrait.png">
   <link rel="preload" as="image" href="party-logo.png">
+
   <style>
     :root{
-      --brand-plum:#723766;
-      --brand-blue:#004689;
+      --brand-plum:#723666;
+      --brand-blue:#004588;
       --brand-accent:#A06EA4;
       --ink:#0A2244;
       --ink-2:#14335A;
@@ -40,13 +46,15 @@
       --line:#D9E7FF;
       --shadow:0 8px 24px rgba(16,50,92,.08);
       --radius:14px;
-      --header-height: 89px;
-      /* interactive knobs */
+      --header-height: 96px;
+
+      /* hero interaction */
       --mx:50%;
       --my:38%;
       --glow-size: 260px;
       --twist:0deg;
     }
+
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
@@ -60,12 +68,16 @@
     a{color:inherit; text-decoration:none}
     .container{width:min(1200px, 92%); margin:0 auto}
     .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
     h1,h2,h3,.h-section,.hero-title{
       font-family:"Peridot PE Variable","Roboto",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
       letter-spacing:.2px;
     }
+
+    /* ===== Global UI bits ===== */
     .scroll-progress{position:fixed; inset:0 0 auto 0; height:4px; z-index:9999}
     .scroll-progress span{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--brand-blue),var(--brand-accent))}
+
     .site-header{
       position:fixed; top:0; left:0; right:0; z-index:1000;
       background:rgba(255,255,255,.9);
@@ -76,36 +88,34 @@
       transition: transform .35s ease, opacity .35s ease;
     }
     .site-header.is-visible{transform:none; opacity:1; pointer-events:auto;}
+
     .nav{display:flex; align-items:center; justify-content:space-between; padding:.5rem 0; height: var(--header-height);}
-    .brand img{height: 72px; width:auto}
+    .brand img{height: 80px; width:auto}
     .nav-menu{display:flex; gap:1.1rem; align-items:center}
     .nav-menu a{padding:.5rem .75rem; border-radius:8px; color:var(--ink-2); font-weight:700; transition: background-color .2s ease;}
     .nav-menu a:hover{background:rgba(20,51,90,.06)}
-    .btn{display:inline-block; padding:.75rem 1.25rem; border-radius:999px; font-weight:800; border:2px solid transparent; transition: all .2s ease; text-align: center;}
-    .btn-blue{background:var(--brand-blue); color:#fff}
-    .btn-blue:hover{filter:brightness(1.07); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,70,137,0.28);}
-    .btn-outline{border-color:var(--brand-blue); color:var(--ink-2)}
-    .btn-outline:hover{background:rgba(0,70,137,.12); transform: translateY(-2px);}
-    .btn-white{background:#fff; color:var(--brand-blue); border:2px solid rgba(0,70,137,.18)}
-    .btn-white:hover{transform: translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.08)}
-    .btn{ display:inline-flex; align-items:center; justify-content:center; min-height:46px; }
     .nav-toggle{display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding: 10px;}
     .nav-toggle span{width:26px; height:2px; background:var(--ink-2); display:block; transition: transform 0.3s ease, opacity 0.3s ease;}
     .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
     .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
     .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+    .btn{display:inline-block; padding:.75rem 1.25rem; border-radius:999px; font-weight:900; border:2px solid transparent; transition: all .2s ease; text-align: center; min-height:46px; display:inline-flex; align-items:center; justify-content:center;}
+    .btn-blue{background:var(--brand-blue); color:#fff}
+    .btn-blue:hover{filter:brightness(1.07); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,69,136,0.28);}
+    .btn-outline{border-color:var(--brand-blue); color:var(--ink-2)}
+    .btn-outline:hover{background:rgba(0,69,136,.12); transform: translateY(-2px);}
+    .btn-white{background:#fff; color:var(--brand-blue); border:2px solid rgba(0,69,136,.18)}
+    .btn-white:hover{transform: translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.08)}
+
     .election-ribbon{text-align:center; padding:.5rem 1rem; background:linear-gradient(90deg, var(--brand-blue), var(--brand-accent)); color:#fff; font-weight:900; letter-spacing:.02em}
-    
+
     /* ================= HERO ================ */
     .hero{
       position:relative;
       padding-top: clamp(3rem, 10vh, 6rem);
       padding-bottom: 0;
-      padding-left: 0;
-      padding-right: 0;
-      display: flex; 
-      align-items: center; 
-      overflow:hidden;
+      display: flex; align-items: center; overflow:hidden;
       background:
         radial-gradient(var(--glow-size) var(--glow-size) at var(--mx) var(--my),
           rgba(160,110,164,0.18) 0%,
@@ -125,56 +135,32 @@
       content:""; position:absolute; inset:0; pointer-events:none;
       background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
     }
-
     .hero-inner{
       position:relative; z-index:2;
       width:min(1200px, 92%); margin:0 auto;
-      display:flex;
-      flex-direction:column; 
-      align-items:center; 
-      gap: 1.5rem; 
+      display:flex; flex-direction:column; align-items:center; gap: 1.5rem;
     }
     .hero-logo,
     .hero-slogan,
     .hero-portrait-link,
-    .hero-cta {
-      max-width: 500px;
-      width: 100%;
-    }
-    
-    .hero-logo{
-      will-change: transform, filter, opacity;
-      transform: translateY(8px) scale(.985);
-      opacity:0;
-      filter: blur(6px) drop-shadow(0 10px 30px rgba(0,0,0,.12));
-    }
-    .hero-slogan{
-      will-change: transform, filter, opacity;
-      transform: translateY(8px) scale(.99);
-      opacity:0;
-      filter: blur(6px) drop-shadow(0 8px 20px rgba(0,0,0,.1));
-      animation: floaty 6s ease-in-out infinite 1.1s;
-    }
+    .hero-cta { max-width: 500px; width: 100%; }
+
+    .hero-logo{ will-change: transform, filter, opacity; transform: translateY(8px) scale(.985); opacity:0; filter: blur(6px) drop-shadow(0 10px 30px rgba(0,0,0,.12)); }
+    .hero-slogan{ will-change: transform, filter, opacity; transform: translateY(8px) scale(.99); opacity:0; filter: blur(6px) drop-shadow(0 8px 20px rgba(0,0,0,.1)); animation: floaty 6s ease-in-out infinite 1.1s; }
     @keyframes floaty{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
-    .hero-cta{
-      display:flex; gap:.75rem; align-items:center;
-      justify-content: center; 
-      flex-wrap:wrap;
-      opacity:0; transform: translateY(10px);
-    }
-    
+    .hero-cta{ display:flex; gap:.75rem; align-items:center; justify-content: center; flex-wrap:wrap; opacity:0; transform: translateY(10px); }
+
     .enter .hero-logo{ animation: logoIn .8s cubic-bezier(.2,.7,.2,1) .05s forwards; }
     .enter .hero-slogan{ animation: sloganIn .9s cubic-bezier(.2,.7,.2,1) .18s forwards; }
     .enter .hero-cta{ animation: ctaIn .7s cubic-bezier(.2,.7,.2,1) .32s forwards; }
     .enter .hero-portrait-link { animation: portraitIn 1.1s cubic-bezier(.2,.8,.2,1) .25s forwards; }
-    
+
     @keyframes logoIn{ to{ opacity:1; transform: translateY(0) scale(1); filter: blur(0) drop-shadow(0 10px 30px rgba(0,0,0,.12)); } }
     @keyframes sloganIn{ to{ opacity:1; transform: translateY(0) scale(1); filter: blur(0) drop-shadow(0 8px 20px rgba(0,0,0,.1)); } }
     @keyframes ctaIn{ to{ opacity:1; transform: translateY(0); } }
     @keyframes portraitIn { to { transform: translateX(0) scale(1); opacity: 1; } }
-    
+
     .hero h1 { position:absolute; inset:auto auto 12px 50%; transform:translateX(-50%); }
-    .hero .sr-only{ position:absolute; }
     .party-logo{
       position:absolute;
       left: max(20px, calc(env(safe-area-inset-left) + 12px));
@@ -183,71 +169,37 @@
       height: auto; z-index:4; pointer-events:none;
       filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
     }
-    
-    .hero-portrait-link {
-      z-index: 3;
-      display: block;
-      position: relative;
-      /* For intro animation */
-      transform: translateX(40px) scale(1.05);
-      opacity: 0;
-    }
-    .hero-portrait{
-      width: 100%;
-      transform-origin: bottom center;
-      border-radius: 12px;
-      filter: drop-shadow(0 18px 40px rgba(10,34,68,.18));
-      will-change: transform, opacity, filter;
-      transition: filter 0.4s ease, transform 0.4s ease;
-    }
-    .hero-portrait-link:hover .hero-portrait {
-      transform: scale(1.02);
-      filter: drop-shadow(0 20px 45px rgba(10,34,68,.22)) blur(2px) brightness(1.1);
-    }
+
+    .hero-portrait-link { z-index: 3; display: block; position: relative; transform: translateX(40px) scale(1.05); opacity: 0; }
+    .hero-portrait{ width: 100%; transform-origin: bottom center; border-radius: 12px; filter: drop-shadow(0 18px 40px rgba(10,34,68,.18)); will-change: transform, opacity, filter; transition: filter 0.4s ease, transform 0.4s ease; }
+    .hero-portrait-link:hover .hero-portrait { transform: scale(1.02); filter: drop-shadow(0 20px 45px rgba(10,34,68,.22)) brightness(1.05); }
+
     .portrait-prompt {
-      position: absolute;
-      bottom: 12%;
-      left: 50%;
+      position: absolute; bottom: 12%; left: 50%;
       transform: translateX(-50%) translateY(15px);
-      color: #fff;
-      background: rgba(10, 34, 68, 0.7);
+      color: #fff; background: rgba(10, 34, 68, 0.7);
       backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      padding: 0.6rem 1.1rem;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      white-space: nowrap;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      padding: 0.6rem 1.1rem; border-radius: 999px;
+      font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease;
     }
-    .hero-portrait-link:hover .portrait-prompt {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-    .portrait-prompt svg {
-      animation: prompt-arrow-bounce 2s infinite ease-in-out;
-    }
-    @keyframes prompt-arrow-bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-    
+    .hero-portrait-link:hover .portrait-prompt { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .portrait-prompt svg { animation: prompt-arrow-bounce 2s infinite ease-in-out; }
+    @keyframes prompt-arrow-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
     /* Sections */
     .section{padding: clamp(60px, 8vw, 100px) 0; position:relative}
     .section-bg-paper { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .h-section{ color:var(--ink-2); font:900 clamp(28px, 4vw, 44px)/1.1 inherit; margin:0 0 .7rem; }
     .h-section + .section-subtitle { font-size: 1.05rem; color: var(--muted); max-width: 700px; margin: -0.3rem auto 2.2rem; }
     .center{text-align:center}
+
     .grid-2{display:grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; grid-template-columns:1fr 1fr}
+
     .about-card{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:clamp(1.5rem, 4vw, 2.5rem); box-shadow:var(--shadow); }
     .portrait{ width:100%; max-width:460px; margin:0 auto; border-radius:12px; transition: transform .3s ease, box-shadow .3s ease; }
     .portrait:hover { transform: scale(1.02); box-shadow: 0 14px 34px rgba(16,50,92,.12); }
-    .quote { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .quote .container { text-align: center; }
+
+    .quote { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center;}
     .quote blockquote{
       font-family:"Peridot PE Variable","Roboto",sans-serif;
       font-weight:900;
@@ -256,6 +208,7 @@
       padding:2.2rem 1rem; max-width: 1000px; margin: 1.2rem auto 0;
     }
     .quote-animation { width: clamp(110px, 14vw, 160px); height: auto; margin: 0 auto; }
+
     .program-cards{display:grid; gap:1.5rem; grid-template-columns:repeat(3, 1fr); margin-top:3rem}
     .program-card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:1.5rem; transition:transform .25s ease, box-shadow .25s ease; color:var(--ink); box-shadow:var(--shadow); }
     .program-card h3{ color:var(--ink-2); margin: .7rem 0 .35rem; display:flex; align-items:center; gap:.75rem; }
@@ -264,6 +217,8 @@
     .program-card p { margin-bottom: 1rem; flex-grow: 1; }
     .program-card .read-more-prompt { color: var(--brand-blue); font-weight: 900; }
     .program-card .read-more-prompt::after { content: ' →'; }
+
+    /* Articles carousel */
     .articles .swiper { overflow: hidden; }
     .articles .swiper-slide { height: auto; display: flex; }
     .article-card{ background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; width: 100%; transition: transform .3s ease, box-shadow .3s ease; }
@@ -277,6 +232,8 @@
     .article-excerpt{color:var(--ink); opacity:.95; flex-grow: 1;}
     .article-actions{margin-top:1rem;}
     .btn-link{color:var(--brand-blue); font-weight:900;}
+
+    /* Swiper nav buttons */
     .nav-row { display:flex; justify-content:center; gap: 1rem; margin-top: 1.8rem; }
     .nav-row .swiper-button-prev, .nav-row .swiper-button-next {
       position: static; width: 44px; height: 44px;
@@ -287,6 +244,8 @@
     .nav-row .swiper-button-prev:hover, .nav-row .swiper-button-next:hover { background-color: var(--paper-3); }
     .nav-row .swiper-button-prev::after, .nav-row .swiper-button-next::after { font-size: 18px; font-weight: 900; }
     .nav-row .swiper-button-disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Watch/Media carousel */
     .watch-carousel { width: min(1200px, 92%); margin: 0 auto; overflow: hidden; padding: 5px; }
     .watch-carousel .swiper-slide { height: auto; display: flex; flex-direction: column; }
     .watch-card { display:flex; flex-direction:column; height:100%; border-radius:16px; overflow:hidden; background:var(--paper); box-shadow:0 5px 15px rgba(16,50,92,.07); transition: transform .3s ease, box-shadow .3s ease; }
@@ -297,35 +256,76 @@
     .watch-info { padding: 1rem; margin-top:auto; }
     .watch-title { font-weight:900; font-size:1rem; color:var(--ink-2); margin:0 0 .25rem 0; }
     .watch-meta { font-size:.9rem; color:var(--muted); margin:0; }
+	
+	/* Platform badge overlay (hover) */
+.platform-badge{
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%) scale(.94);
+  opacity:0;
+  transition: transform .3s ease, opacity .3s ease;
+  pointer-events:none;       /* click goes to the card link */
+}
+.platform-badge img,
+.platform-badge svg{
+  width:56px; height:56px; display:block;
+  opacity:.72;              /* semi-transparent */
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+}
+
+/* Slightly smaller for YouTube play */
+.platform-badge.youtube svg{
+  width:46px; height:46px; opacity:.68;
+}
+
+.watch-card:hover .platform-badge{
+  opacity:.75;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+    /* Get involved */
     .involved-wrap { max-width: 650px; margin: 2rem auto 0; }
     .form{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding: clamp(1.5rem, 4vw, 2rem); box-shadow:var(--shadow); }
     .form-row{display:flex; flex-direction:column; gap:.35rem; margin-bottom:1rem;}
     label{font-weight:900; color:var(--ink-2)}
     input, select{ padding:.7rem .8rem; border-radius:10px; border:1px solid var(--line); background:#fff; color:var(--ink); outline:none; font-size: 1rem; transition: all .2s; }
-    input:focus, select:focus{border-color:var(--brand-blue); box-shadow:0 0 0 3px rgba(0,70,137,.18)}
+    input:focus, select:focus{border-color:var(--brand-blue); box-shadow:0 0 0 3px rgba(0,69,136,.18)}
     .form .btn-blue{margin-top:.4rem; width: 100%; padding: 1rem; font-size: 1.05rem;}
     .form-msg{min-height:1.2em; color:var(--ink-2); margin-top:.5rem; font-weight: 700;}
+
+    /* Contact bubbles */
     .contact-bubbles { text-align: center; margin-top: 2.5rem; }
     .contact-bubbles p { color: var(--muted); font-weight: 700; margin-bottom: 1.2rem; }
     .bubble-wrapper { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
     .bubble { display:flex; align-items:center; gap:.6rem; background:#fff; padding:.8rem 1.5rem; border-radius:999px; box-shadow:0 5px 15px rgba(16,50,92,.1); border:1px solid var(--line); font-weight:900; color:var(--ink-2); transition: transform .2s ease, box-shadow .2s ease; }
     .bubble:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(16,50,92,.14); }
-    .bubble img { width: 24px; height: 24px; }
+    .bubble img { width: 24px; height: 24px; display:block; }
+
+    /* Footer */
     .site-footer{
-    color:#fff;
-    background: linear-gradient(112deg, color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%, color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%, color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%, color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%);
-    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      color:#fff;
+      background: linear-gradient(112deg, color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%, color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%, color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%, color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
     }    
-    .foot{display:grid; gap:2rem; grid-template-columns:1.2fr 1fr 1fr; padding:3rem 0; align-items:center;}
+    .foot{display:grid; gap:2rem; grid-template-columns:1fr auto 1fr; padding:3rem 0; align-items:center;}
     .foot a { color: #fff; opacity: 0.92; transition: opacity .2s; }
     .foot a:hover { opacity: 1; }
+
     .foot-brand{display:flex; gap:.7rem; align-items:center}
     .foot-brand img{width:44px; height:44px}
-    .foot-nav{display:flex; gap:1rem; flex-wrap:wrap}
+
+    .foot-socials { display: flex; justify-content: center; gap: .75rem; align-items: center; }
+    .foot-socials a { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); }
+    .foot-socials a:hover { background: rgba(255,255,255,.18); }
+    .foot-socials img { width:22px; height:22px; display:block; }
+
     .foot-legal{opacity:.92; text-align: right;}
+
+    /* Reveal */
     .reveal{opacity:0; transform:translateY(22px); transition:opacity .75s cubic-bezier(.5,0,0,1), transform .75s cubic-bezier(.5,0,0,1)}
     .reveal.visible{opacity:1; transform:translateY(0)}
 
+    /* Hero text stack */
     .hero-text-content {
       display: flex;
       flex-direction: column;
@@ -335,11 +335,16 @@
       max-width: 500px;
       padding-bottom: clamp(2rem, 6vh, 4rem);
     }
-    
+
+    /* MEDIA heading bigger (≈2×) */
+    #media .h-section { font-size: clamp(37px, 5.5vw, 50px); line-height: 1.05; }
+    #media .h-section-arrow { width: clamp(28px, 6vw, 42px); height: auto; color: var(--brand-blue); }
+
+    /* Responsive */
     @media (max-width: 960px){
       .nav-toggle{display:flex}
       .nav-menu{
-        position:fixed; left: 1rem; right: 1rem; top: calc(var(--header-height, 89px) + 0.5rem); background:#fff;
+        position:fixed; left: 1rem; right: 1rem; top: calc(var(--header-height, 96px) + 0.5rem); background:#fff;
         border:1px solid var(--line); border-radius:12px; padding:.8rem;
         flex-direction:column; gap:.35rem; box-shadow:var(--shadow);
         width: calc(100% - 2rem);
@@ -348,62 +353,38 @@
       }
       .nav-menu a{color:var(--ink-2); display:block; padding: .8rem;}
       .nav-menu.show{display:flex; transform: translateY(0) scale(1); opacity: 1; pointer-events: auto;}
+
       .grid-2{grid-template-columns:1fr; gap: 2.2rem; text-align: center;}
       .grid-2 > div:first-child { order: 2; }
       .grid-2 > div:last-child { order: 1; }
       .about-card { text-align: left; }
       .portrait { margin: 0 auto; }
-      .foot{grid-template-columns:1fr; text-align: center; gap: 2rem;}
-      .foot-brand, .foot-nav { justify-content: center; }
+
+      .foot{grid-template-columns:1fr; text-align: center; gap: 2.5rem;}
+      .foot-brand, .foot-socials { justify-content: center; }
+      .foot-socials { order: -1; }
       .foot-legal{text-align: center;}
     }
 
     @media (min-width: 961px) {
-      /* === FIX: Adjust padding for desktop to align portrait bottom === */
-      .hero {
-        /* On desktop, remove the hero's overall bottom padding */
-        padding-bottom: 0;
-      }
-      
-      .hero-inner {
-        display: grid; 
-        grid-template-columns: 5fr 4fr; 
-        align-items: center;
-        gap: 2rem;
-        text-align: left;
-      }
-      
-      .hero-text-content {
-        align-items: flex-start; 
-        max-width: 100%;
-        grid-row: 1; 
-        grid-column: 1;
-        padding-bottom: clamp(3rem, 10vh, 6rem);
-      }
-      
-      .hero-portrait-link {
-        grid-row: 1; 
-        grid-column: 2; 
-        align-self: end;
-        width: 100%;
-        max-width: 560px;
-        margin-left: auto;
-      }
-      
-      .hero-cta {
-        justify-content: flex-start;
-      }
+      .hero-inner { display: grid; grid-template-columns: 5fr 4fr; align-items: center; gap: 2rem; text-align: left; }
+      .hero-text-content { align-items: center; /* keep text centered in its column */ max-width: 100%; grid-row: 1; grid-column: 1; padding-bottom: clamp(3rem, 10vh, 6rem); }
+      .hero-portrait-link { grid-row: 1; grid-column: 2; align-self: end; width: 100%; max-width: 560px; margin-left: auto; }
+      /* ✅ keep CTA centered under the slogan on desktop */
+      .hero-cta { justify-content: center; }
     }
 
     @media (max-width: 768px){
       .program-cards{grid-template-columns:1fr}
     }
-    
     @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
   </style>
 </head>
 <body>
+  <!-- Progress bar -->
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+  <!-- Header -->
   <header class="site-header" role="banner" id="siteHeader">
     <div class="nav container">
       <a class="brand" href="#top">
@@ -416,17 +397,21 @@
         <a href="#about">Σχετικά</a>
         <a href="#program">Θέσεις</a>
         <a href="#articles">Άρθρα</a>
-        <a href="#watch">Watch</a>
+        <a href="#media">Media</a>
         <a href="#get-involved" class="btn btn-outline" style="width:100%; text-align:center;">Συμμετοχή</a>
       </nav>
     </div>
   </header>
+
+  <!-- Main -->
   <main id="top" tabindex="-1">
     <div class="election-ribbon" aria-hidden="true">Βουλευτικές Εκλογές • 24 Μαΐου 2026</div>
+
+    <!-- HERO -->
     <section class="hero" id="hero">
       <h1 class="sr-only">Elena Koushou Hadjidemetriou — Βουλευτικές Εκλογές 2026</h1>
       <img class="party-logo" src="party-logo.png" alt="Λογότυπο πολιτικού φορέα" />
-      
+
       <div class="hero-inner">
         <div class="hero-text-content">
           <img class="hero-logo" src="logo-hero.png" alt="Λογότυπο καμπάνιας" />
@@ -436,9 +421,9 @@
             <a href="#get-involved" class="btn btn-blue">Δήλωσε Συμμετοχή</a>
           </div>
         </div>
-        
-        <a href="#about" class="hero-portrait-link" aria-label="Μάθετε περισσότεра για την Έλενα">
-          <img class="hero-portrait" id="heroPortrait" src="portrait-hero.png" alt="Πορτρέτο της Elena Koushou Hadjidemetriou" />
+
+        <a href="#about" class="hero-portrait-link" aria-label="Μάθετε περισσότερα για την Έλενα">
+          <img class="hero-portrait" id="heroPortrait" src="portrait.png" alt="Πορτρέτο της Elena Koushou Hadjidemetriou" />
           <span class="portrait-prompt">
             Ποια είναι η Έλενα;
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m0 0l-6-6m6 6l6-6"></path></svg>
@@ -446,97 +431,130 @@
         </a>
       </div>
     </section>
-    
+
+    <!-- ABOUT -->
     <section id="about" class="section about">
       <div class="container grid-2">
         <div>
           <picture>
-            <source srcset="portrait.png" type="image/png">
-            <img class="portrait" id="aboutPortrait" src="portrait.png" alt="Πορτρέτο της Elena Koushou Hadjidemetriou" width="920" height="1200" loading="eager" decoding="async" />
+            <source srcset="Elena_2.png" type="image/png">
+            <img class="portrait" id="aboutPortrait" src="Elena_2.png" alt="Πορτρέτο της Elena Koushou Hadjidemetriou" width="920" height="1200" loading="eager" decoding="async" />
           </picture>
         </div>
         <div class="about-card reveal">
-          <h2 class="h-section">Μια Δύναμη για την Κύπρο</h2>
-          <p>Η Elena Koushou Hadjidemetriou είναι εταίρος στη δικηγορική εταιρεία Koushos Korfiotis Papacharalambous LLC, έμπειρη δικηγόρος, διαμεσολαβήτρια και Πρόεδρος του ΚΟΑΓ. Με βαθιά γνώση σε θέματα συμμόρφωσης (AML) και πάθος για την προσιτή στέγαση, εργάζεται καθημερινά για ρεαλιστικές λύσεις που βελτιώνουν τη ζωή των πολιτών.</p>
+          <h2 class="h-section">Με Δυναμική. <br> Για Εμάς.<br></h2>
+          <p>Ξεκινώ αυτή τη διαδρομή πιστεύοντας ότι τίποτα δεν αλλάζει χωρίς εσένα. Θέλω να σε ακούσω, να ανταλλάξουμε ιδέες και να βρούμε λύσεις στα καθημερινά μας ζητήματα. Η ενασχόλησή μου με την πολιτική θα είναι λειτούργημα και ευθύνη απέναντί σου.</p>
+          <p>Μαζί, με θέληση, πίστη και θάρρος, ας φέρουμε τις αλλαγές που χρειάζονται. Είμαι εδώ, για εμάς.</p>
           <a href="bio.html" class="btn btn-outline" style="margin-top: 1rem;">Αναλυτικό Βιογραφικό</a>
+
         </div>
       </div>
     </section>
-    
+
+    <!-- QUOTE -->
     <section class="section quote">
       <div class="container">
         <img src="vote-elections.gif" alt="Animation of a hand dropping a vote into a ballot box" class="quote-animation reveal" id="voteAnimationGif" />
         <blockquote class="reveal">«Η ψήφος σου είναι η φωνή σου. Στις 24 Μαΐου 2026, ας τη μετατρέψουμε σε πράξη για μια δίκαιη, σύγχρονη Κύπρο.»</blockquote>
       </div>
     </section>
-    
+
+    <!-- PROGRAM -->
     <section id="program" class="section">
       <div class="container">
         <h2 class="h-section center reveal">Θέσεις & Πρόγραμμα</h2>
         <p class="section-subtitle center reveal">Οι προτεραιότητές μας για μια Κύπρο που προχωρά μπροστά, με ασφάλεια και ευκαιρίες για όλους.</p>
+
         <div class="program-cards">
           <a href="program-justice.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>Δικαιοσύνη & Θεσμική Μεταρρύθμιση</h3>
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+              Δικαιοσύνη & Θεσμική Μεταρρύθμιση
+            </h3>
             <p>Για ένα κράτος δικαίου που λειτουργεί δίκαια, γρήγορα και με διαφάνεια.</p>
             <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
           </a>
+
           <a href="program-health.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>Υγεία, Πρόνοια & Τρίτη Ηλικία</h3>
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+              Υγεία, Πρόνοια & Τρίτη Ηλικία
+            </h3>
             <p>Για ποιοτικές υπηρεσίες υγείας, προστασία των ευάλωτων και αξιοπρέπεια για όλους.</p>
             <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
           </a>
+
           <a href="program-development.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>Ανάπτυξη & Καινοτομία</h3>
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              Ανάπτυξη & Καινοτομία
+            </h3>
             <p>Για μια οικονομία που δημιουργεί ευκαιρίες, στηρίζει τις ΜμΕ και κρατά τους νέους στην Κύπρο.</p>
             <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
           </a>
+
           <a href="program-education.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 5 4 5 6 5s6-0 6-5v-5"></path></svg>Παιδεία & Εκπαίδευση</h3>
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 5 4 5 6 5s6-0 6-5v-5"></path></svg>
+              Παιδεία & Εκπαίδευση
+            </h3>
             <p>Για σχολεία που προετοιμάζουν το μέλλον, με ίσες ευκαιρίες και στήριξη σε κάθε παιδί.</p>
             <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
           </a>
+
           <a href="program-admin.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>Δημόσια Διοίκηση & Διαφάνεια</h3>
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              Δημόσια Διοίκηση & Διαφάνεια
+            </h3>
             <p>Για ένα κράτος που λειτουργεί με υπευθυνότητα, αξιολόγηση και λογοδοσία.</p>
             <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
           </a>
+
           <a href="program-housing.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>Στέγαση, Κόστος Ζωής & Στήριξη Οικογένειας</h3>
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              Στέγαση, Κόστος Ζωής & Στήριξη Οικογένειας
+            </h3>
             <p>Για λύσεις στη στέγαση, μείωση του κόστους ζωής και πραγματική ενίσχυση της οικογένειας.</p>
             <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
           </a>
         </div>
       </div>
     </section>
-    
+
+    <!-- ARTICLES -->
     <section id="articles" class="section section-bg-paper articles">
       <div class="container">
         <h2 class="h-section center reveal">Άρθρα & Παρεμβάσεις</h2>
+
         <div class="swiper articles-carousel reveal">
           <div class="swiper-wrapper">
-             <div class="swiper-slide">
+            <div class="swiper-slide">
               <article class="article-card">
                 <div class="article-cover" style="background-image:url('article-1.jpg')"></div>
-                <div class="article-body">
+                <div class="article-body">  
                   <div class="article-meta"><span class="tag">Διαφάνεια</span><time datetime="2025-08-02">2 Αυγ 2025</time></div>
                   <h3 class="article-title">Η Κύπρος μπροστά στον καθρέφτη του κράτους δικαίου</h3>
-                  <p class="article-excerpt">Ανάλυση της Έκθεσης της ΕΕ για το 2025 και οι προκλήσεις για τη δικαιοсύνη.</p>
+                  <p class="article-excerpt">Ανάλυση της Έκθεσης της ΕΕ για το 2025 και οι προκλήσεις για τη δικαιοσύνη.</p>
                   <div class="article-actions"><a href="article-kratos-dikaiou.html" class="btn-link">Διαβάστε το Άρθρο</a></div>
                 </div>
               </article>
             </div>
+
             <div class="swiper-slide">
               <article class="article-card">
                 <div class="article-cover" style="background-image:url('article-2.jpg')"></div>
                 <div class="article-body">
-                  <div class="article-meta"><span class="tag">Οικονομία</span><time datetime="2025-08-02">2 Αυγ 2025</time></div>
-                  <h3 class="article-title">ΜΜΕ & καινοτομία: ρεαλιστική στήριξη για ανάπτυξη</h3>
-                  <p class="article-excerpt">Απλούστευση διαδικασιών, πρόσβαση σε ρευστότητα & δίκτυα για εξωστρέφεια.</p>
-                  <div class="article-actions"><a href="#" class="btn-link">Διαβάστε το Άρθρο</a></div>
+                  <div class="article-meta"><span class="tag">Στεγαστικό</span><time datetime="2025-08-02">2 Αυγ 2025</time></div>
+                  <h3 class="article-title">Στεγαστική Κρίση</h3>
+                  <p class="article-excerpt">Από την Παγκόσμια Πρόκληση στις Κυπριακές Λύσεις.</p>
+                  <div class="article-actions"><a href="article-stegastiki-krisi.html" class="btn-link">Διαβάστε το Άρθρο</a></div>
                 </div>
               </article>
             </div>
-            <div class="swiper-slide">
+
+            <!-- <div class="swiper-slide">
               <article class="article-card">
                 <div class="article-cover" style="background-image:url('article-3.jpg')"></div>
                 <div class="article-body">
@@ -547,6 +565,7 @@
                 </div>
               </article>
             </div>
+
             <div class="swiper-slide">
               <article class="article-card">
                 <div class="article-cover" style="background-image:url('article-4.jpg')"></div>
@@ -558,6 +577,7 @@
                 </div>
               </article>
             </div>
+
             <div class="swiper-slide">
               <article class="article-card">
                 <div class="article-cover" style="background-image:url('article-5.jpg')"></div>
@@ -569,6 +589,7 @@
                 </div>
               </article>
             </div>
+
             <div class="swiper-slide">
               <article class="article-card">
                 <div class="article-cover" style="background-image:url('article-6.jpg')"></div>
@@ -579,21 +600,23 @@
                   <div class="article-actions"><a href="#" class="btn-link">Διαβάστε το Άρθρο</a></div>
                 </div>
               </article>
-            </div>
+            </div> -->
           </div>
         </div>
+
         <div class="nav-row">
           <div class="swiper-button-prev articles-prev"></div>
           <div class="swiper-button-next articles-next"></div>
         </div>
       </div>
     </section>
-    
-    <section id="watch" class="section">
+
+    <!-- MEDIA / WATCH -->
+    <section id="media" class="section">
       <div class="container">
         <div class="h-section-wrapper reveal" style="display:flex;align-items:center;gap:.75rem;">
-          <svg class="h-section-arrow" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;color:var(--brand-blue)"><path d="M16 8L0 15.7942L0 0.205771L16 8Z" fill="currentColor"/></svg>
-          <h2 class="h-section">Watch</h2>
+          <svg class="h-section-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" fill="currentColor"/></svg>
+          <h2 class="h-section">Media</h2>
         </div>
         <p class="section-subtitle reveal">Δείτε ομιλίες, συνεντεύξεις και παρεμβάσεις της Έλενας.</p>
       </div>
@@ -603,41 +626,51 @@
           <div class="swiper-slide">
             <a href="https://www.instagram.com/p/DOyQLCmDPqI/" target="_blank" rel="noopener" class="watch-card">
               <div class="watch-thumbnail" style="background-image: url('video-thumb-1.jpg');">
-                <div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg></div>
-              </div>
+<div class="platform-badge instagram">
+        <img src="si-instagram.svg" alt="" aria-hidden="true">
+      </div>              </div>
               <div class="watch-info">
-                <h3 class="watch-title">Πέρα από τους τίτλους, είμαι απλά η Έλενα: γυναίκα, μαμά, σύζυγος, κόρη, επαγγελματίας, φίλη.</h3>
+                <h3 class="watch-title">Πέρα από τους τίτλους...</h3>
                 <p class="watch-meta">Instagram Reel</p>
               </div>
             </a>
           </div>
+
           <div class="swiper-slide">
             <a href="https://www.instagram.com/p/DOi4y8ajCET/" target="_blank" rel="noopener" class="watch-card">
               <div class="watch-thumbnail" style="background-image: url('video-thumb-2.jpg');">
-                <div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg></div>
-              </div>
+<div class="platform-badge instagram">
+        <img src="si-instagram.svg" alt="" aria-hidden="true">
+      </div>              </div>
               <div class="watch-info">
-                <h3 class="watch-title">Προσιτό ενοίκιο σημαίνει στήριξη στα άτομα που το έχουν πραγματικά ανάγκη.</h3>
+                <h3 class="watch-title">Προσιτό ενοίκιο...</h3>
                 <p class="watch-meta">Instagram Reel</p>
               </div>
             </a>
           </div>
+
           <div class="swiper-slide">
             <a href="https://www.instagram.com/p/DObms2hDHKw/" target="_blank" rel="noopener" class="watch-card">
               <div class="watch-thumbnail" style="background-image: url('video-thumb-3.jpg');">
-                <div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg></div>
-              </div>
+<div class="platform-badge instagram">
+        <img src="si-instagram.svg" alt="" aria-hidden="true">
+      </div>              </div>
               <div class="watch-info">
                 <h3 class="watch-title">Νέα πνοή στη στέγαση.</h3>
                 <p class="watch-meta">Instagram Reel</p>
               </div>
             </a>
           </div>
+
           <div class="swiper-slide">
             <a href="https://www.youtube.com/watch?v=6gOvvM-5HO8&t=578s" target="_blank" rel="noopener" class="watch-card">
               <div class="watch-thumbnail" style="background-image: url('video-thumb-4.jpg');">
-                <div class="play-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
-              </div>
+<div class="platform-badge youtube">
+        <!-- minimalist play triangle -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+      </div>              </div>
               <div class="watch-info">
                 <h3 class="watch-title">Συνέντευξη για το Κράτος Δικαίου</h3>
                 <p class="watch-meta">YouTube Video</p>
@@ -646,76 +679,119 @@
           </div>
         </div>
       </div>
+
       <!-- Watch nav buttons -->
       <div class="nav-row">
         <div class="swiper-button-prev watch-prev"></div>
         <div class="swiper-button-next watch-next"></div>
       </div>
     </section>
-    
+
+    <!-- GET INVOLVED -->
     <section id="get-involved" class="section section-bg-paper">
       <div class="container">
         <h2 class="h-section center reveal">Γίνε Μέρος της Αλλαγής</h2>
         <p class="section-subtitle center reveal">Η δύναμή μας είναι οι άνθρωποί μας. Συμπλήρωσε τη φόρμα για να γίνεις εθελοντής ή επικοινώνησε μαζί μας.</p>
         <div class="involved-wrap">
-          <form class="form reveal" aria-label="Φόρμα εθελοντισμού" novalidate>
-            <div class="form-row">
-              <label for="name">Ονοματεπώνυμο</label>
-              <input id="name" name="name" type="text" autocomplete="name" required />
-            </div>
-            <div class="form-row">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required />
-            </div>
-            <div class="form-row">
-              <label for="interest">Πως θέλεις να βοηθήσεις;</label>
-              <select id="interest" name="interest">
-                <option>Εθελοντισμός στην περιοχή μου</option>
-                <option>Φιλοξενία οικιακής συγκέντρωσης</option>
-                <option>Βοήθεια στα social media</option>
-                <option>Οτιδήποτε χρειαστεί</option>
-              </select>
-            </div>
-            <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY_HERE" style="margin: 1rem 0; transform:scale(0.9); transform-origin:0 0;"></div>
-            <button type="submit" class="btn btn-blue">Δήλωσε Συμμετοχή</button>
-            <p class="form-msg" role="status" aria-live="polite"></p>
-          </form>
+          <form id="involvedForm"
+      class="form reveal"
+      aria-label="Φόρμα εθελοντισμού"
+      action="https://script.google.com/macros/s/AKfycbxuPg-YzS3v7pCcsGABwiUb28vF3j0-xWj5mFifv7ZK3xhFm9pf33COg0FCOoRVwPEp/exec"
+      method="POST"
+      novalidate>
+  <div class="form-row">
+    <label for="name">Ονοματεπώνυμο</label>
+    <input id="name" name="name" type="text" autocomplete="name" required />
+  </div>
+  <div class="form-row">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="email" required />
+  </div>
+  <div class="form-row">
+    <label for="interest">Πως θέλεις να βοηθήσεις;</label>
+    <select id="interest" name="interest">
+      <option>Εθελοντισμός στην περιοχή μου</option>
+      <option>Φιλοξενία οικιακής συγκέντρωσης</option>
+      <option>Βοήθεια στα social media</option>
+      <option>Οτιδήποτε χρειαστεί</option>
+    </select>
+  </div>
+
+  <!-- Honeypot για bots -->
+  <input type="text" name="website" tabindex="-1" autocomplete="off"
+         style="position:absolute;left:-9999px;height:0;width:0;padding:0;margin:0;border:0;"/>
+
+  <!-- reCAPTCHA v2 -->
+  <div class="g-recaptcha"
+       data-sitekey="6LdlEtsrAAAAAKeDNpAlvfmdV3GymiW0PcieOzR2"
+       style="margin: 1rem 0; transform:scale(0.9); transform-origin:0 0;"></div>
+
+  <button type="submit" class="btn btn-blue" id="involvedSubmitBtn">Δήλωσε Συμμετοχή</button>
+  <p class="form-msg" role="status" aria-live="polite"></p>
+</form>
+
+
           <div class="contact-bubbles reveal">
             <p>Ή επικοινώνησε απευθείας με την ομάδα:</p>
             <div class="bubble-wrapper">
-              <a class="bubble reveal" id="whatsappBubble" target="_blank" rel="noopener"><img src="wa.png" alt="WhatsApp Icon" />WhatsApp</a>
-              <a class="bubble reveal" id="viberBubble" target="_blank" rel="noopener"><img src="v.png" alt="Viber Icon" />Viber</a>
-              <a class="bubble reveal" id="emailBubble" rel="noopener"><svg viewBox="0 0 24 24"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>Email</a>
+              <a class="bubble reveal" id="whatsappBubble" target="_blank" rel="noopener">
+                <img src="icon-whatsapp.svg" alt="" aria-hidden="true" /><span>WhatsApp</span>
+              </a>
+              <a class="bubble reveal" id="viberBubble" target="_blank" rel="noopener">
+                <img src="icon-viber.svg" alt="" aria-hidden="true" /><span>Viber</span>
+              </a>
+              <a class="bubble reveal" id="emailBubble" rel="noopener">
+                <img src="icon-email.svg" alt="" aria-hidden="true" /><span>Email</span>
+              </a>
             </div>
           </div>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container foot">
       <div class="foot-brand">
-        <img src="mono.png" alt="" />
+        <img src="mono.png" alt="Έλενα Κούσιου Χατζηδημητρίου μονόγραμμα" />
         <div><strong>Elena Koushou Hadjidemetriou</strong><br />Βουλευτικές Εκλογές 2026</div>
       </div>
-      <nav class="foot-nav" aria-label="Footer">
-        <a href="#about">Σχετικά</a>
-        <a href="#program">Πρόγραμμα</a>
-        <a href="#articles">Άρθρα</a>
-        <a href="#get-involved">Συμμετοχή</a>
-      </nav>
+
+      <!-- Socials (use your URLs) -->
+      <div class="foot-socials">
+        <a href="#" aria-label="Facebook" target="_blank" rel="noopener"><img src="si-facebook.svg" alt="" /></a>
+        <a href="#" aria-label="X (Twitter)" target="_blank" rel="noopener"><img src="si-x.png" alt="" /></a>
+        <a href="#" aria-label="Instagram" target="_blank" rel="noopener"><img src="si-instagram.svg" alt="" /></a>
+        <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener"><img src="si-linkedin.svg" alt="" /></a>
+        <a href="#" aria-label="TikTok" target="_blank" rel="noopener"><img src="si-tiktok.svg" alt="" /></a>
+      </div>
+
       <div class="foot-legal">© 2025</div>
     </div>
   </footer>
-  
+
+  <!-- JS deps -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+  <!-- App JS -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.classList.add('enter');
-      const CONTACT = { phone: "+35799123456", email: "elena.campaign@email.com", whatsappText: "Γεια σας! Ενδιαφέρομαι να μάθω περισσότεра για την καμπάνια της Έλενας." };
-      
-      const navToggle = document.querySelector('.nav-toggle'), navMenu = document.getElementById('nav-menu');
+
+	  const ENABLE_PORTRAIT_MORPH = false;
+      /* ===== Contact details (edit once here) ===== */
+      const CONTACT = {
+        phone: "+35799123456",
+        email: "elena.campaign@email.com",
+        whatsappText: "Γεια σας! Ενδιαφέρομαι να μάθω περισσότερα για την καμπάνια της Έλενας."
+      };
+
+      /* ===== Nav toggle ===== */
+      const navToggle = document.querySelector('.nav-toggle'),
+            navMenu   = document.getElementById('nav-menu');
+
       if (navToggle) {
         navToggle.addEventListener('click', () => {
           const open = navToggle.getAttribute('aria-expanded') === 'true';
@@ -729,7 +805,8 @@
           navToggle.setAttribute('aria-expanded', 'false');
         });
       });
-      
+
+      /* ===== Smooth anchors (account for sticky header) ===== */
       document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', e => {
           const id = a.getAttribute('href');
@@ -742,13 +819,15 @@
           window.scrollTo({ top: offsetTop, behavior: 'smooth' });
         });
       });
-      
+
+      /* ===== Scroll progress ===== */
       const bar = document.querySelector('.scroll-progress span');
       window.addEventListener('scroll', () => {
         const h = document.documentElement;
         bar.style.width = `${(h.scrollTop / (h.scrollHeight - h.clientHeight) * 100).toFixed(2)}%`;
       }, { passive: true });
-      
+
+      /* ===== Reveal-on-scroll ===== */
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -762,31 +841,83 @@
         });
       }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-      
-      new Swiper('.articles-carousel', { loop: false, watchOverflow: true, spaceBetween: 24, navigation: { nextEl: '.articles-next', prevEl: '.articles-prev' }, breakpoints: { 320:{slidesPerView:1}, 640:{slidesPerView:2}, 1024:{slidesPerView:3} } });
-      new Swiper('.watch-carousel', { loop: false, watchOverflow: true, spaceBetween: 24, navigation: { nextEl: '.watch-next', prevEl: '.watch-prev' }, breakpoints: { 320:{slidesPerView:1.2, centeredSlides: true}, 500:{slidesPerView:2}, 900:{slidesPerView:3}, 1200:{slidesPerView:4} } });
-      
-      const form = document.querySelector('.form');
-      if (form) {
-        form.addEventListener('submit', (e) => {
-          e.preventDefault();
-          const msg = form.querySelector('.form-msg');
-          const data = Object.fromEntries(new FormData(form).entries());
-          if (!data.name || !data.email) { msg.textContent = 'Παρακαλώ συμπληρώστε το όνομα και το email σας.'; msg.style.color = '#D93025'; return; }
-          msg.textContent = 'Ευχαριστούμε για τη συμμετοχή! Θα επικοινωνήσουμε σύντομα.'; msg.style.color = 'var(--brand-blue)';
-          setTimeout(() => { form.reset(); msg.textContent = ''; }, 4000);
-        });
+
+      /* ===== Carousels ===== */
+      new Swiper('.articles-carousel', {
+        loop: false, watchOverflow: true, spaceBetween: 24,
+        navigation: { nextEl: '.articles-next', prevEl: '.articles-prev' },
+        breakpoints: { 320:{slidesPerView:1}, 640:{slidesPerView:2}, 1024:{slidesPerView:3} }
+      });
+      new Swiper('.watch-carousel', {
+        loop: false, watchOverflow: true, spaceBetween: 24,
+        navigation: { nextEl: '.watch-next', prevEl: '.watch-prev' },
+        breakpoints: { 320:{slidesPerView:1.2, centeredSlides: true}, 500:{slidesPerView:2}, 900:{slidesPerView:3}, 1200:{slidesPerView:4} }
+      });
+
+      /* ===== Real form submit to Apps Script + reCAPTCHA ===== */
+const form = document.getElementById('involvedForm');
+if (form) {
+  const msg   = form.querySelector('.form-msg');
+  const btn   = document.getElementById('involvedSubmitBtn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.style.color = 'var(--ink-2)';
+    msg.textContent = 'Αποστολή...';
+    btn.disabled = true;
+
+    const data = Object.fromEntries(new FormData(form).entries());
+    if (!data.name || !data.email) {
+      msg.textContent = 'Παρακαλώ συμπληρώστε το όνομα και το email σας.';
+      msg.style.color = '#D93025';
+      btn.disabled = false;
+      return;
+    }
+
+    try {
+      // Στέλνουμε τα FormData όπως είναι, για να περιέχουν και το g-recaptcha-response
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form)
+      });
+
+      // Αν ο browser κόψει CORS, δεν θα έχουμε JSON. Προσπαθούμε… αλλιώς δίνουμε generic μήνυμα.
+      let data = {};
+      try { data = await res.json(); } catch(_) {}
+
+      if (res.ok && (data.ok === true || Object.keys(data).length === 0)) {
+        msg.textContent = 'Ευχαριστούμε! Θα επικοινωνήσουμε σύντομα.';
+        msg.style.color = 'var(--brand-blue)';
+        form.reset();
+        if (window.grecaptcha) grecaptcha.reset();
+      } else {
+        msg.textContent = 'Αποτυχία επαλήθευσης ή σφάλμα διακομιστή. Δοκιμάστε ξανά.';
+        msg.style.color = '#D93025';
+        if (window.grecaptcha) grecaptcha.reset();
       }
-      
+    } catch (err) {
+      msg.textContent = 'Σφάλμα δικτύου. Παρακαλώ δοκιμάστε ξανά.';
+      msg.style.color = '#D93025';
+      if (window.grecaptcha) grecaptcha.reset();
+    } finally {
+      btn.disabled = false;
+    }
+  });
+}
+
+
+      /* ===== Quick contact bubbles ===== */
       const setupContactLink = (id, url) => { const el = document.getElementById(id); if (el) el.href = url; };
       setupContactLink('whatsappBubble', `https://wa.me/${CONTACT.phone.replace(/\D/g,'')}?text=${encodeURIComponent(CONTACT.whatsappText)}`);
-      setupContactLink('viberBubble', `viber://chat?number=%2B${CONTACT.phone.replace(/\D/g,'')}`);
-      setupContactLink('emailBubble', `mailto:${CONTACT.email}?subject=${encodeURIComponent('Επικοινωνία για την καμπάνια 2026')}`);
-      
-      const siteHeader = document.getElementById('siteHeader'), hero = document.getElementById('hero');
+      setupContactLink('viberBubble',    `viber://chat?number=%2B${CONTACT.phone.replace(/\D/g,'')}`);
+      setupContactLink('emailBubble',    `mailto:${CONTACT.email}?subject=${encodeURIComponent('Επικοινωνία για την καμπάνια 2026')}`);
+
+      /* ===== Sticky header shows after hero ===== */
+      const siteHeader = document.getElementById('siteHeader'),
+            hero       = document.getElementById('hero');
       new IntersectionObserver(([e]) => siteHeader.classList.toggle('is-visible', !e.isIntersecting), { threshold: 0.2 }).observe(hero);
-      
-      // ===== HERO INTERACTION (ENHANCED) =====
+
+      /* ===== HERO background interaction ===== */
       const root = document.documentElement;
       let target = { x: 0.5, y: 0.38 }, current = { x: 0.5, y: 0.38 };
       function tick(){
@@ -808,10 +939,11 @@
       hero.addEventListener('touchstart', onPointer, {passive:true});
       hero.addEventListener('touchmove', onPointer, {passive:true});
       hero.addEventListener('mouseleave', ()=>{ target.x=0.5; target.y=0.38; });
-      
-      // ===== HERO→ABOUT Portrait Morph =====
+      const r = hero.getBoundingClientRect(); moveTo(r.left + r.width*0.5, r.top + r.height*0.38);
+
+      /* ===== HERO → ABOUT portrait morph (restored) ===== */
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!prefersReduced) {
+      if (ENABLE_PORTRAIT_MORPH && !prefersReduced) {
         const heroPortrait  = document.getElementById('heroPortrait');
         const aboutPortrait = document.getElementById('aboutPortrait');
         const aboutSection  = document.getElementById('about');
@@ -820,6 +952,7 @@
         const lerp = (a,b,t) => a + (b-a)*t;
         const ease = t => t<0.5 ? 2*t*t : -1+(4-2*t)*t;
         let startBox, endBox, startAt, endAt;
+
         function computeMorphFrames(){
           heroPortrait.style.transform = '';
           heroPortrait.style.opacity   = '1';
@@ -833,25 +966,25 @@
           endAt   = aboutTop   - headerH + window.innerHeight * 0.10;
           onScrollMorph();
         }
+
         function onScrollMorph(){
           const y = window.scrollY;
           const p = clamp01((y - startAt) / Math.max(1,(endAt - startAt)));
-          
           const pe = ease(p);
           const dx = (endBox.left - startBox.left);
           const dy = (endBox.top  - startBox.top);
           const sx = endBox.width  / Math.max(1,startBox.width);
           const sy = endBox.height / Math.max(1,startBox.height);
-          
+
           if(p > 0) {
             heroPortrait.style.transform = `translate(${dx * pe}px, ${dy * pe}px) scale(${lerp(1, sx, pe)}, ${lerp(1, sy, pe)})`;
-            heroPortrait.parentElement.style.transform = ''; 
+            heroPortrait.parentElement.style.transform = '';
             heroPortrait.style.filter = `drop-shadow(0 ${lerp(18,10,pe)}px ${lerp(40,26,pe)}px rgba(10,34,68,${lerp(.18,.10,pe)}))`;
           } else {
             heroPortrait.style.transform = '';
             heroPortrait.style.filter = '';
           }
-          
+
           const fadeStart = 0.50, fadeEnd = 0.60;
           if (p <= fadeStart) { heroPortrait.style.opacity = '1'; aboutPortrait.style.opacity = '0'; }
           else if (p >= fadeEnd){ heroPortrait.style.opacity = '0'; aboutPortrait.style.opacity = '1'; }
@@ -861,14 +994,12 @@
             aboutPortrait.style.opacity = String(t);
           }
         }
+
         const recalc = () => { setTimeout(() => {computeMorphFrames(); onScrollMorph();}, 50) };
         ['load','resize','orientationchange'].forEach(evt => window.addEventListener(evt, recalc, { passive:true }));
         Promise.allSettled(Array.from(document.images).map(img => img.complete ? Promise.resolve() : new Promise(res => img.onload = res))).then(recalc);
         window.addEventListener('scroll', onScrollMorph, { passive:true });
       }
-
-      const r = hero.getBoundingClientRect();
-      moveTo(r.left + r.width*0.5, r.top + r.height*0.38);
     });
   </script>
 </body>
