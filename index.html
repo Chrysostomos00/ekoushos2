@@ -388,7 +388,7 @@
   <header class="site-header" role="banner" id="siteHeader">
     <div class="nav container">
       <a class="brand" href="#top">
-        <img src="logo.png" alt="Λογότυπο Έλενας Κούσιου Χατζηδημητρίου" />
+        <img src="logo.svg" alt="Λογότυπο Έλενας Κούσιου Χατζηδημητρίου" width="120" height="80" decoding="async">
       </a>
       <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Άνοιγμα μενού">
         <span></span><span></span><span></span>
@@ -415,7 +415,7 @@
 
       <div class="hero-inner">
         <div class="hero-text-content">
-          <img class="hero-logo" src="logo-hero.png" alt="Λογότυπο καμπάνιας" />
+          <img class="hero-logo" src="logo.svg" alt="Λογότυπο καμπάνιας" />
           <img class="hero-slogan" src="slogan-hero.png" alt="Σλόγκαν καμπάνιας" />
           <div class="hero-cta">
             <a href="#program" class="btn btn-white">Δες το Πρόγραμμα</a>
@@ -424,7 +424,21 @@
         </div>
 
         <a href="#about" class="hero-portrait-link" aria-label="Μάθετε περισσότερα για την Έλενα">
-          <img class="hero-portrait" id="heroPortrait" src="portrait.png" alt="Πορτρέτο της Elena Koushou Hadjidemetriou" />
+          <picture>
+    <source srcset="portrait.avif" type="image/avif">
+    <source srcset="portrait.webp" type="image/webp">
+    <img
+      class="hero-portrait"
+      id="heroPortrait"
+      src="portrait.jpg"
+      alt="Πορτρέτο της Elena Koushou Hadjidemetriou"
+      fetchpriority="high"
+      decoding="async"
+      loading="eager"
+      style="max-width:100%;height:auto"
+      width="1600" height="2053"
+    >
+  </picture>
           <span class="portrait-prompt">
             Ποια είναι η Έλενα;
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m0 0l-6-6m6 6l6-6"></path></svg>
@@ -439,7 +453,7 @@
         <div>
           <picture>
             <source srcset="Elena_2.png" type="image/png">
-            <img class="portrait" id="aboutPortrait" src="Elena_2.png" alt="Πορτρέτο της Elena Koushou Hadjidemetriou" width="920" height="1200" loading="eager" decoding="async" />
+            <img class="portrait" id="aboutPortrait" src="Elena_2.png" alt="Πορτρέτο της Elena Koushou Hadjidemetriou" width="920" height="1200" loading="lazy" decoding="async" />
           </picture>
         </div>
         <div class="about-card reveal">
@@ -455,7 +469,14 @@
     <!-- QUOTE -->
     <section class="section quote">
       <div class="container">
-        <img src="vote-elections.gif" alt="Animation of a hand dropping a vote into a ballot box" class="quote-animation reveal" id="voteAnimationGif" />
+        <video class="quote-animation reveal" id="voteAnimation"
+       autoplay muted loop playsinline
+       width="160" height="160"
+       poster="vote-poster.jpg"
+       preload="metadata">
+  <source src="vote-elections.webm" type="video/webm">
+  <source src="vote-elections.mp4"  type="video/mp4">
+</video>
         <blockquote class="reveal">«Η ψήφος σου είναι η φωνή σου. Στις 24 Μαΐου 2026, ας τη μετατρέψουμε σε πράξη για μια δίκαιη, σύγχρονη Κύπρο.»</blockquote>
       </div>
     </section>
