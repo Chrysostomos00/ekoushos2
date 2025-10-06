@@ -379,6 +379,19 @@
     }
     @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
   </style>
+	<noscript>
+  <style>
+    /* If JS is blocked, show the hero content immediately */
+    .hero-logo,
+    .hero-slogan,
+    .hero-cta,
+    .hero-portrait-link {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+  </style>
+</noscript>
 </head>
 <body>
   <!-- Progress bar -->
