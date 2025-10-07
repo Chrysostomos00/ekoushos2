@@ -818,7 +818,7 @@
       /* ===== Contact details (edit once here) ===== */
       const CONTACT = {
         phone: "+35799123456",
-        email: "elena.campaign@email.com",
+        email: "vote@elenakoushos.com",
         whatsappText: "Γεια σας! Ενδιαφέρομαι να μάθω περισσότερα για την καμπάνια της Έλενας."
       };
 
@@ -946,7 +946,10 @@ if (form) {
   'viberBubble',
   'https://invite.viber.com/?g2=AQA7hC17s8htQFTqDMRpIDf0wq%2Fr6fAwxmPSoCNvKRbge4MZTbH3llaX3DjjqTdI'
 );
-      setupContactLink('emailBubble',    `mailto:${CONTACT.email}?subject=${encodeURIComponent('Επικοινωνία για την καμπάνια 2026')}`);
+setupContactLink(
+  'emailBubble',
+  'mailto:vote@elenakoushos.com?subject=' + encodeURIComponent('Επικοινωνία για την καμπάνια 2026')
+);
 
       /* ===== Sticky header shows after hero ===== */
       const siteHeader = document.getElementById('siteHeader'),
