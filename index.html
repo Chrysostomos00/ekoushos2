@@ -336,6 +336,127 @@
       padding-bottom: clamp(2rem, 6vh, 4rem);
     }
 
+    /* ================== BRAND GRADIENT (matches footer/hero tone) ================== */
+:root{
+  /* reuse the same gradient logic you already use in footer */
+  --brand-gradient:
+    linear-gradient(112deg,
+      color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%,
+      color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%,
+      color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%,
+      color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%
+    );
+}
+
+/* unify footer to use the variable (visual parity with new section) */
+.site-footer{
+  background: var(--brand-gradient);
+}
+
+/* ================== HERO: ghost CTA to match site buttons ================== */
+.btn-ghost-cta{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:.45rem; padding:.72rem 1.15rem; min-height:46px;
+  border-radius:999px; font-weight:900; letter-spacing:.01em;
+  text-decoration:none; transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+}
+.btn-ghost-cta.is-glass{
+  color:#fff; opacity:.98;
+  background: rgba(255,255,255,.10);
+  border: 2px solid rgba(255,255,255,.28);
+  backdrop-filter: blur(12px) saturate(120%); -webkit-backdrop-filter: blur(12px) saturate(120%);
+  box-shadow: 0 6px 16px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.30);
+}
+.btn-ghost-cta.is-glass:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.16);
+  border-color: rgba(255,255,255,.42);
+  box-shadow: 0 10px 24px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.42);
+}
+
+/* ================== SHARE YOUR VOICE SECTION ================== */
+/* gradient background that truly mirrors the footer/hero family */
+.brand-gradient-bg{
+  position:relative; background: var(--brand-gradient); color:#fff; isolation:isolate;
+}
+.brand-gradient-bg::before{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  /* gentle lights/shadows so the glass card pops */
+  background:
+    radial-gradient(70% 60% at 75% 18%, rgba(255,255,255,.12), transparent 60%),
+    radial-gradient(100% 80% at 10% 90%, rgba(0,0,0,.20), transparent 60%);
+}
+
+.section-gnomi{ padding: clamp(60px, 8vw, 100px) 0; scroll-margin-top: 80px; }
+.gnomi-container{ width:min(1200px, 92%); margin:0 auto; position:relative; z-index:1; }
+
+/* glass card that matches your radii & shadows */
+.glass-card{
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.28);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  box-shadow: 0 8px 24px rgba(16,50,92,.18), inset 0 1px 0 rgba(255,255,255,.25);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+/* type hierarchy = same feel as .h-section on dark bg */
+#gnomi .eyebrow{
+  display:inline-block;
+  font: 900 .78rem/1 "Peridot PE Variable","Roboto",sans-serif;
+  letter-spacing:.12em; text-transform:uppercase;
+  color:#fff; opacity:.95;
+  padding:.35rem .7rem; border-radius:999px;
+  background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.30);
+}
+#gnomi h2{
+  margin: .75rem 0 1rem 0;
+  font-family: "Peridot PE Variable","Roboto",sans-serif;
+  font-weight: 900;
+  /* mirror .h-section sizing */
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.1;
+  color:#fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,.25);
+}
+#gnomi .lead{
+  font-size: 1.08rem; line-height: 1.65; opacity:.97;
+  color:#fff;
+}
+#gnomi p{ margin:.65rem 0; }
+#gnomi .subtle{ opacity:.92; }
+
+/* button styled like your system buttons, but glassy on gradient */
+#gnomi .cta-row{ margin-top:.4rem; }
+.btn-form{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:.78rem 1.15rem; min-height:46px; border-radius:999px;
+  font-weight:900; letter-spacing:.01em; text-decoration:none; white-space:nowrap;
+  color: var(--brand-blue);
+  background: #fff;
+  border: 2px solid rgba(0,69,136,.18);
+  box-shadow: 0 6px 16px rgba(0,0,0,.12);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+.btn-form:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+  box-shadow: 0 10px 24px rgba(0,0,0,.16);
+}
+
+/* give the card a breathing layout on narrow screens */
+@media (max-width: 640px){
+  .glass-card{ padding: 1.25rem; }
+  #gnomi h2{ font-size: clamp(24px, 6vw, 34px); }
+}
+
+/* entrance animation consistent with your .reveal system */
+@media (prefers-reduced-motion: no-preference){
+  .glass-card.reveal{ opacity:0; transform: translateY(18px); }
+  .glass-card.reveal.visible{ opacity:1; transform:none; transition:opacity .7s cubic-bezier(.5,0,0,1), transform .7s cubic-bezier(.5,0,0,1); }
+}
+
     /* MEDIA heading bigger (≈2×) */
     #media .h-section { font-size: clamp(37px, 5.5vw, 50px); line-height: 1.05; }
     #media .h-section-arrow { width: clamp(28px, 6vw, 42px); height: auto; color: var(--brand-blue); }
@@ -378,6 +499,36 @@
       .program-cards{grid-template-columns:1fr}
     }
     @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+
+    /* Center-align the "Share Your Voice" section */
+.section-gnomi .gnomi-container{
+  display: grid;
+  place-items: center;
+}
+
+#gnomi .glass-card{
+  width: min(920px, 100%);
+  margin-inline: auto;
+  text-align: center;
+}
+
+#gnomi .eyebrow{ margin-inline: auto; }
+
+#gnomi .lead,
+#gnomi .subtle{
+  max-width: 72ch;
+  margin-inline: auto;
+}
+
+#gnomi .cta-row{
+  display: flex;
+  justify-content: center;
+  margin-top: .6rem;
+}
+
+/* (already centered on most viewports, but just in case) */
+.hero-cta{ justify-content: center; }
+
   </style>
 	<noscript>
   <style>
@@ -433,6 +584,9 @@
           <div class="hero-cta">
             <a href="#program" class="btn btn-white">Δες το Πρόγραμμα</a>
             <a href="#get-involved" class="btn btn-blue">Δήλωσε Συμμετοχή</a>
+            <a href="#gnomi" class="btn-ghost-cta is-glass" aria-label="Μοιράσου τη γνώμη σου" title="Μοιράσου τη γνώμη σου">
+  Μοιράσου τη γνώμη σου
+</a>
           </div>
         </div>
 
@@ -735,6 +889,35 @@
         <div class="swiper-button-next watch-next"></div>
       </div>
     </section>
+
+<!-- ===== Share Your Voice (Brand gradient + glass card) ===== -->
+<section id="gnomi" class="brand-gradient-bg section-gnomi" aria-labelledby="gnomi-heading">
+  <div class="gnomi-container">
+    <div class="glass-card reveal">
+      <span class="eyebrow">Η γνώμη σου μετρά</span>
+      <h2 id="gnomi-heading">Μοιράσου τη γνώμη σου</h2>
+
+      <p class="lead">
+        Στόχος αυτού του ερωτηματολογίου είναι να ακούσω τη δική σας φωνή, να κατανοήσω
+        τις ανάγκες και τις προτεραιότητές σας και να διαμορφώσω πολιτικές προτάσεις
+        που απαντούν σε πραγματικά προβλήματα.
+      </p>
+
+      <div class="cta-row">
+        <a class="btn-form"
+           href="https://docs.google.com/forms/d/e/1FAIpQLSexwEYiNsY_tZa_Hr37djOBaCDfz6q3MRatPjfZjaxEU0wEug/viewform"
+           target="_blank" rel="noopener noreferrer">
+          Συμπλήρωσε το ερωτηματολόγιο
+        </a>
+      </div>
+
+      <p class="subtle">
+        Οι δικές σας απαντήσεις θα έχουν μεγάλη βαρύτητα και αξία για εμένα.
+      </p>
+    </div>
+  </div>
+</section>
+
 
     <!-- GET INVOLVED -->
     <section id="get-involved" class="section section-bg-paper">
