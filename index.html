@@ -118,28 +118,35 @@
 
     /* ================= NEW: BALLOT RIBBON (#7) ================= */
     .ballot-ribbon {
-      position: absolute; /* Moves with Hero */
-      top: -200px; /* Start hidden above */
-      right: clamp(20px, 8%, 100px); /* Position within hero */
+      position: absolute; 
+      top: -200px; 
+      
+      /* CHANGED: Position moved to the Left */
+      left: clamp(20px, 8%, 100px); 
+      right: auto; 
+
       z-index: 10;
       
       width: clamp(70px, 9vw, 90px);
       height: clamp(110px, 14vw, 140px);
       
-      background: var(--brand-gradient);
+      /* CHANGED: Solid Brand Blue */
+      background: var(--brand-blue);
+      
       color: #fff;
       display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
       padding-top: 18px;
       
       /* Formal Banner Shape */
       clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
+      
       /* Deep 3D Shadow */
       filter: drop-shadow(0 15px 25px rgba(0,25,60,0.5));
       
       /* Smooth Entry Animation */
       transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
       will-change: transform;
-      overflow: hidden; /* For shine effect */
+      overflow: hidden;
     }
 
     .ballot-ribbon.dropped {
@@ -171,7 +178,13 @@
 
     /* Mobile adjustment */
     @media (max-width: 768px) {
-      .ballot-ribbon { right: 20px; width: 60px; height: 100px; padding-top: 12px; }
+      .ballot-ribbon { 
+        /* Ensure it stays left on mobile */
+        left: 20px; 
+        right: auto;
+        
+        width: 60px; height: 100px; padding-top: 12px; 
+      }
       .ribbon-number { font-size: 3.2rem; }
     }
 
