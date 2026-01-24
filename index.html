@@ -49,7 +49,10 @@
       --header-height: 96px;
 
       /* Brand gradient definition */
-      --brand-gradient: linear-gradient(112deg, color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%, color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%, color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%, color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%);
+      --brand-gradient: linear-gradient(135deg,
+          var(--brand-blue) 0%,
+          #4a2c5a 50%,
+          var(--brand-accent) 100%);
 
       /* hero interaction */
       --mx:50%;
@@ -113,43 +116,63 @@
 
     .election-ribbon{text-align:center; padding:.5rem 1rem; background:linear-gradient(90deg, var(--brand-blue), var(--brand-accent)); color:#fff; font-weight:900; letter-spacing:.02em}
 
-    /* ================= BALLOT RIBBON (#7) ================= */
+    /* ================= NEW: BALLOT RIBBON (#7) ================= */
     .ballot-ribbon {
-      position: fixed;
-      top: 0;
-      right: clamp(20px, 5vw, 60px); /* Responsive right position */
-      z-index: 1100; /* Above nav */
-      width: clamp(50px, 8vw, 70px);
-      height: clamp(80px, 12vw, 110px);
+      position: absolute; /* Moves with Hero */
+      top: -200px; /* Start hidden above */
+      right: clamp(20px, 8%, 100px); /* Position within hero */
+      z-index: 10;
+      
+      width: clamp(70px, 9vw, 90px);
+      height: clamp(110px, 14vw, 140px);
+      
       background: var(--brand-gradient);
       color: #fff;
       display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-      padding-top: 12px;
-      /* Shape with point at bottom */
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
-      /* Filters for shadow since clip-path cuts box-shadow */
-      filter: drop-shadow(0 5px 15px rgba(0,45,100,0.4));
+      padding-top: 18px;
       
-      /* Animation state hidden */
-      transform: translateY(-120%);
-      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      /* Formal Banner Shape */
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%);
+      /* Deep 3D Shadow */
+      filter: drop-shadow(0 15px 25px rgba(0,25,60,0.5));
+      
+      /* Smooth Entry Animation */
+      transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
       will-change: transform;
+      overflow: hidden; /* For shine effect */
     }
-    .ballot-ribbon.dropped { transform: translateY(0); }
-    .ribbon-label {
-      font-size: 0.75rem; text-transform: uppercase; font-weight: 700; opacity: 0.9;
-      letter-spacing: 0.05em; margin-bottom: -2px;
+
+    .ballot-ribbon.dropped {
+      transform: translateY(200px); /* Drop down into view */
     }
+
     .ribbon-number {
       font-family: "Peridot PE Variable", serif;
       font-weight: 900;
-      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-size: clamp(3.5rem, 5vw, 4.5rem);
       line-height: 1;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.25);
     }
-    @media (max-width: 960px) {
-      .ballot-ribbon { right: 70px; height: 85px; width: 45px; } /* Adjust so it doesn't hide hamburger */
-      .ribbon-label { font-size: 0.6rem; }
-      .ribbon-number { font-size: 1.8rem; }
+
+    /* Shine Effect on Hover */
+    .ballot-ribbon::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -150%;
+      width: 100%; height: 100%;
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+      transform: skewX(-25deg);
+      transition: none;
+    }
+    .ballot-ribbon:hover::after {
+      left: 150%;
+      transition: left 0.7s ease;
+    }
+
+    /* Mobile adjustment */
+    @media (max-width: 768px) {
+      .ballot-ribbon { right: 20px; width: 60px; height: 100px; padding-top: 12px; }
+      .ribbon-number { font-size: 3.2rem; }
     }
 
     /* ================= HERO ================ */
@@ -158,6 +181,7 @@
       padding-top: clamp(3rem, 10vh, 6rem);
       padding-bottom: 0;
       display: flex; align-items: center; overflow:hidden;
+      /* Ensures ribbon is contained relative to this section */
       background:
         radial-gradient(var(--glow-size) var(--glow-size) at var(--mx) var(--my),
           rgba(160,110,164,0.18) 0%,
@@ -300,32 +324,17 @@
     .watch-meta { font-size:.9rem; color:var(--muted); margin:0; }
 	
 	/* Platform badge overlay (hover) */
-.platform-badge{
-  position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%) scale(.94);
-  opacity:0;
-  transition: transform .3s ease, opacity .3s ease;
-  pointer-events:none;       /* click goes to the card link */
-}
-.platform-badge img,
-.platform-badge svg{
-  width:56px; height:56px; display:block;
-  opacity:.72;              /* semi-transparent */
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
-}
+    .platform-badge{
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.94); opacity:0;
+      transition: transform .3s ease, opacity .3s ease; pointer-events:none;
+    }
+    .platform-badge img, .platform-badge svg{
+      width:56px; height:56px; display:block; opacity:.72; filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+    }
+    .platform-badge.youtube svg{ width:46px; height:46px; opacity:.68; }
+    .watch-card:hover .platform-badge{ opacity:.75; transform:translate(-50%,-50%) scale(1); }
 
-/* Slightly smaller for YouTube play */
-.platform-badge.youtube svg{
-  width:46px; height:46px; opacity:.68;
-}
-
-.watch-card:hover .platform-badge{
-  opacity:.75;
-  transform:translate(-50%,-50%) scale(1);
-}
-
-    /* Get involved (UPDATED with Calendar Grid) */
+    /* Get involved - RESTRUCTURED LAYOUT */
     .involved-wrap { max-width: 100%; margin: 0; }
     
     .action-grid {
@@ -336,7 +345,7 @@
       align-items: start;
     }
     
-    .form{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding: clamp(1.5rem, 4vw, 2rem); box-shadow:var(--shadow); height: 100%; }
+    .form{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding: clamp(1.5rem, 4vw, 2rem); box-shadow:var(--shadow); }
     .form-row{display:flex; flex-direction:column; gap:.35rem; margin-bottom:1rem;}
     label{font-weight:900; color:var(--ink-2)}
     input, select{ padding:.7rem .8rem; border-radius:10px; border:1px solid var(--line); background:#fff; color:var(--ink); outline:none; font-size: 1rem; transition: all .2s; }
@@ -344,25 +353,25 @@
     .form .btn-blue{margin-top:.4rem; width: 100%; padding: 1rem; font-size: 1.05rem;}
     .form-msg{min-height:1.2em; color:var(--ink-2); margin-top:.5rem; font-weight: 700;}
 
-    /* Calendar Wrapper */
+    /* Calendar & Subheaders */
+    .h-sub { font-family: "Peridot PE Variable", sans-serif; font-size: 1.5rem; color: var(--brand-blue); margin-bottom: 1rem; }
     .calendar-wrapper {
       background: #fff;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       padding: 0.5rem;
       box-shadow: var(--shadow);
-      height: 480px; /* Fixed height to match form approx */
+      height: 500px; /* Fixed height for clean layout */
       overflow: hidden;
     }
-    .h-sub { font-family: "Peridot PE Variable", sans-serif; font-size: 1.5rem; color: var(--brand-blue); margin-bottom: 1rem; }
 
-    /* Contact bubbles */
-    .contact-bubbles { text-align: left; margin-top: 1.5rem; }
-    .contact-bubbles p { color: var(--muted); font-weight: 700; margin-bottom: 0.8rem; }
+    /* Contact bubbles (Moved) */
+    .contact-bubbles { text-align: left; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .contact-bubbles p { color: var(--muted); font-weight: 700; margin-bottom: 0.8rem; font-size: 0.95rem; }
     .bubble-wrapper { display: flex; justify-content: flex-start; gap: 1rem; flex-wrap: wrap; }
-    .bubble { display:flex; align-items:center; gap:.6rem; background:#fff; padding:.8rem 1.5rem; border-radius:999px; box-shadow:0 5px 15px rgba(16,50,92,.1); border:1px solid var(--line); font-weight:900; color:var(--ink-2); transition: transform .2s ease, box-shadow .2s ease; }
-    .bubble:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(16,50,92,.14); }
-    .bubble img { width: 24px; height: 24px; display:block; }
+    .bubble { display:flex; align-items:center; gap:.6rem; background:var(--paper-2); padding:.6rem 1.2rem; border-radius:999px; box-shadow: none; border:1px solid var(--line); font-weight:900; color:var(--ink-2); transition: transform .2s ease, box-shadow .2s ease; font-size: 0.9rem; }
+    .bubble:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(16,50,92,.1); background: #fff; }
+    .bubble img { width: 20px; height: 20px; display:block; }
 
     /* Footer */
     .site-footer{
@@ -400,125 +409,122 @@
     }
 
     /* ================== BRAND GRADIENT (matches footer/hero tone) ================== */
-:root{
-  /* reuse the same gradient logic you already use in footer */
-  --brand-gradient:
-    linear-gradient(112deg,
-      color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%,
-      color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%,
-      color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%,
-      color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%
-    );
-}
+    :root{
+      /* reuse the same gradient logic you already use in footer */
+      --brand-gradient:
+        linear-gradient(112deg,
+          color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%,
+          color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%,
+          color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%,
+          color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%
+        );
+    }
 
-/* unify footer to use the variable (visual parity with new section) */
-.site-footer{
-  background: var(--brand-gradient);
-}
+    /* unify footer to use the variable (visual parity with new section) */
+    .site-footer{
+      background: var(--brand-gradient);
+    }
 
-/* ================== HERO: ghost CTA to match site buttons ================== */
-.btn-ghost-cta{
-  display:inline-flex; align-items:center; justify-content:center;
-  gap:.45rem; padding:.72rem 1.15rem; min-height:46px;
-  border-radius:999px; font-weight:900; letter-spacing:.01em;
-  text-decoration:none; transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
-}
-.btn-ghost-cta.is-glass{
-  color:#fff; opacity:.98;
-  background: rgba(255,255,255,.10);
-  border: 2px solid rgba(255,255,255,.28);
-  backdrop-filter: blur(12px) saturate(120%); -webkit-backdrop-filter: blur(12px) saturate(120%);
-  box-shadow: 0 6px 16px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.30);
-}
-.btn-ghost-cta.is-glass:hover{
-  transform: translateY(-2px);
-  background: rgba(255,255,255,.16);
-  border-color: rgba(255,255,255,.42);
-  box-shadow: 0 10px 24px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.42);
-}
+    /* ================== HERO: ghost CTA to match site buttons ================== */
+    .btn-ghost-cta{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:.45rem; padding:.72rem 1.15rem; min-height:46px;
+      border-radius:999px; font-weight:900; letter-spacing:.01em;
+      text-decoration:none; transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+    }
+    .btn-ghost-cta.is-glass{
+      color:#fff; opacity:.98;
+      background: rgba(255,255,255,.10);
+      border: 2px solid rgba(255,255,255,.28);
+      backdrop-filter: blur(12px) saturate(120%); -webkit-backdrop-filter: blur(12px) saturate(120%);
+      box-shadow: 0 6px 16px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.30);
+    }
+    .btn-ghost-cta.is-glass:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.16);
+      border-color: rgba(255,255,255,.42);
+      box-shadow: 0 10px 24px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.42);
+    }
 
-/* ================== SHARE YOUR VOICE SECTION ================== */
-/* gradient background that truly mirrors the footer/hero family */
-.brand-gradient-bg{
-  position:relative; background: var(--brand-gradient); color:#fff; isolation:isolate;
-}
-.brand-gradient-bg::before{
-  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
-  /* gentle lights/shadows so the glass card pops */
-  background:
-    radial-gradient(70% 60% at 75% 18%, rgba(255,255,255,.12), transparent 60%),
-    radial-gradient(100% 80% at 10% 90%, rgba(0,0,0,.20), transparent 60%);
-}
+    /* ================== SHARE YOUR VOICE SECTION ================== */
+    .brand-gradient-bg{
+      position:relative; background: var(--brand-gradient); color:#fff; isolation:isolate;
+    }
+    .brand-gradient-bg::before{
+      content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+      background:
+        radial-gradient(70% 60% at 75% 18%, rgba(255,255,255,.12), transparent 60%),
+        radial-gradient(100% 80% at 10% 90%, rgba(0,0,0,.20), transparent 60%);
+    }
 
-.section-gnomi{ padding: clamp(60px, 8vw, 100px) 0; scroll-margin-top: 80px; }
-.gnomi-container{ width:min(1200px, 92%); margin:0 auto; position:relative; z-index:1; }
+    .section-gnomi{ padding: clamp(60px, 8vw, 100px) 0; scroll-margin-top: 80px; }
+    .gnomi-container{ width:min(1200px, 92%); margin:0 auto; position:relative; z-index:1; }
 
-/* glass card that matches your radii & shadows */
-.glass-card{
-  border-radius: var(--radius);
-  background: rgba(255,255,255,.10);
-  border: 1px solid rgba(255,255,255,.28);
-  backdrop-filter: blur(14px) saturate(120%);
-  -webkit-backdrop-filter: blur(14px) saturate(120%);
-  box-shadow: 0 8px 24px rgba(16,50,92,.18), inset 0 1px 0 rgba(255,255,255,.25);
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-}
+    /* glass card that matches your radii & shadows */
+    .glass-card{
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.28);
+      backdrop-filter: blur(14px) saturate(120%);
+      -webkit-backdrop-filter: blur(14px) saturate(120%);
+      box-shadow: 0 8px 24px rgba(16,50,92,.18), inset 0 1px 0 rgba(255,255,255,.25);
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+    }
 
-/* type hierarchy = same feel as .h-section on dark bg */
-#gnomi .eyebrow{
-  display:inline-block;
-  font: 900 .78rem/1 "Peridot PE Variable","Roboto",sans-serif;
-  letter-spacing:.12em; text-transform:uppercase;
-  color:#fff; opacity:.95;
-  padding:.35rem .7rem; border-radius:999px;
-  background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.30);
-}
-#gnomi h2{
-  margin: .75rem 0 1rem 0;
-  font-family: "Peridot PE Variable","Roboto",sans-serif;
-  font-weight: 900;
-  /* mirror .h-section sizing */
-  font-size: clamp(28px, 4vw, 44px);
-  line-height: 1.1;
-  color:#fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,.25);
-}
-#gnomi .lead{
-  font-size: 1.08rem; line-height: 1.65; opacity:.97;
-  color:#fff;
-}
-#gnomi p{ margin:.65rem 0; }
-#gnomi .subtle{ opacity:.92; }
+    /* type hierarchy = same feel as .h-section on dark bg */
+    #gnomi .eyebrow{
+      display:inline-block;
+      font: 900 .78rem/1 "Peridot PE Variable","Roboto",sans-serif;
+      letter-spacing:.12em; text-transform:uppercase;
+      color:#fff; opacity:.95;
+      padding:.35rem .7rem; border-radius:999px;
+      background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.30);
+    }
+    #gnomi h2{
+      margin: .75rem 0 1rem 0;
+      font-family: "Peridot PE Variable","Roboto",sans-serif;
+      font-weight: 900;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.1;
+      color:#fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,.25);
+    }
+    #gnomi .lead{
+      font-size: 1.08rem; line-height: 1.65; opacity:.97;
+      color:#fff;
+    }
+    #gnomi p{ margin:.65rem 0; }
+    #gnomi .subtle{ opacity:.92; }
 
-/* button styled like your system buttons, but glassy on gradient */
-#gnomi .cta-row{ margin-top:.4rem; }
-.btn-form{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:.78rem 1.15rem; min-height:46px; border-radius:999px;
-  font-weight:900; letter-spacing:.01em; text-decoration:none; white-space:nowrap;
-  color: var(--brand-blue);
-  background: #fff;
-  border: 2px solid rgba(0,69,136,.18);
-  box-shadow: 0 6px 16px rgba(0,0,0,.12);
-  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
-}
-.btn-form:hover{
-  transform: translateY(-2px);
-  filter: brightness(1.04);
-  box-shadow: 0 10px 24px rgba(0,0,0,.16);
-}
+    /* button styled like your system buttons, but glassy on gradient */
+    #gnomi .cta-row{ margin-top:.4rem; }
+    .btn-form{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:.78rem 1.15rem; min-height:46px; border-radius:999px;
+      font-weight:900; letter-spacing:.01em; text-decoration:none; white-space:nowrap;
+      color: var(--brand-blue);
+      background: #fff;
+      border: 2px solid rgba(0,69,136,.18);
+      box-shadow: 0 6px 16px rgba(0,0,0,.12);
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .btn-form:hover{
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+      box-shadow: 0 10px 24px rgba(0,0,0,.16);
+    }
 
-/* give the card a breathing layout on narrow screens */
-@media (max-width: 640px){
-  .glass-card{ padding: 1.25rem; }
-  #gnomi h2{ font-size: clamp(24px, 6vw, 34px); }
-}
+    /* give the card a breathing layout on narrow screens */
+    @media (max-width: 640px){
+      .glass-card{ padding: 1.25rem; }
+      #gnomi h2{ font-size: clamp(24px, 6vw, 34px); }
+    }
 
-/* entrance animation consistent with your .reveal system */
-@media (prefers-reduced-motion: no-preference){
-  .glass-card.reveal{ opacity:0; transform: translateY(18px); }
-  .glass-card.reveal.visible{ opacity:1; transform:none; transition:opacity .7s cubic-bezier(.5,0,0,1), transform .7s cubic-bezier(.5,0,0,1); }
-}
+    /* entrance animation consistent with your .reveal system */
+    @media (prefers-reduced-motion: no-preference){
+      .glass-card.reveal{ opacity:0; transform: translateY(18px); }
+      .glass-card.reveal.visible{ opacity:1; transform:none; transition:opacity .7s cubic-bezier(.5,0,0,1), transform .7s cubic-bezier(.5,0,0,1); }
+    }
 
     /* MEDIA heading bigger (≈2×) */
     #media .h-section { font-size: clamp(37px, 5.5vw, 50px); line-height: 1.05; }
@@ -549,10 +555,11 @@
       .foot-socials { order: -1; }
       .foot-legal{text-align: center;}
       
-      /* New grid adjustments for mobile */
-      .action-grid { grid-template-columns: 1fr; gap: 4rem; }
-      .contact-bubbles { text-align: center !important; }
-      .bubble-wrapper { justify-content: center !important; }
+      /* Mobile layout for Action Grid */
+      .action-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .involved-col, .calendar-col { width: 100%; }
+      .contact-bubbles { text-align: center; }
+      .bubble-wrapper { justify-content: center; }
     }
 
     @media (min-width: 961px) {
@@ -569,33 +576,33 @@
     @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
 
     /* Center-align the "Share Your Voice" section */
-.section-gnomi .gnomi-container{
-  display: grid;
-  place-items: center;
-}
+    .section-gnomi .gnomi-container{
+      display: grid;
+      place-items: center;
+    }
 
-#gnomi .glass-card{
-  width: min(920px, 100%);
-  margin-inline: auto;
-  text-align: center;
-}
+    #gnomi .glass-card{
+      width: min(920px, 100%);
+      margin-inline: auto;
+      text-align: center;
+    }
 
-#gnomi .eyebrow{ margin-inline: auto; }
+    #gnomi .eyebrow{ margin-inline: auto; }
 
-#gnomi .lead,
-#gnomi .subtle{
-  max-width: 72ch;
-  margin-inline: auto;
-}
+    #gnomi .lead,
+    #gnomi .subtle{
+      max-width: 72ch;
+      margin-inline: auto;
+    }
 
-#gnomi .cta-row{
-  display: flex;
-  justify-content: center;
-  margin-top: .6rem;
-}
+    #gnomi .cta-row{
+      display: flex;
+      justify-content: center;
+      margin-top: .6rem;
+    }
 
-/* (already centered on most viewports, but just in case) */
-.hero-cta{ justify-content: center; }
+    /* (already centered on most viewports, but just in case) */
+    .hero-cta{ justify-content: center; }
 
 /* ================= PROPOSALS SECTION ================= */
     .proposals-grid {
@@ -686,12 +693,6 @@
 </head>
 <body>
   
-  <!-- Ballot Number Ribbon -->
-  <div class="ballot-ribbon" id="ballotRibbon">
-    <span class="ribbon-label">Αρ.</span>
-    <span class="ribbon-number">7</span>
-  </div>
-
   <!-- Progress bar -->
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
@@ -721,6 +722,12 @@
 
     <!-- HERO -->
     <section class="hero" id="hero">
+      
+      <!-- Ballot Number Ribbon (Embedded in Hero for proper scrolling behavior) -->
+      <div class="ballot-ribbon" id="ballotRibbon">
+        <span class="ribbon-number">7</span>
+      </div>
+
       <h1 class="sr-only">Elena Koushou Hadjidemetriou — Βουλευτικές Εκλογές 2026</h1>
       <img class="party-logo" src="party-logo.png" alt="Λογότυπο πολιτικού φορέα" />
 
@@ -975,54 +982,6 @@
                 </div>
               </article>
             </div>
-
-            <!-- <div class="swiper-slide">
-              <article class="article-card">
-                <div class="article-cover" style="background-image:url('article-3.jpg')"></div>
-                <div class="article-body">
-                  <div class="article-meta"><span class="tag">Υγεία</span><time datetime="2025-09-14">14 Σεπ 2025</time></div>
-                  <h3 class="article-title">ΓεΣΥ με επίκεντρο τον πολίτη: δείκτες ποιότητας</h3>
-                  <p class="article-excerpt">Μετρήσιμη βελτίωση στην πρωτοβάθμια, ώστε τα νοσοκομεία να ανασάνουν.</p>
-                  <div class="article-actions"><a href="#" class="btn-link">Διαβάστε το Άρθρο</a></div>
-                </div>
-              </article>
-            </div>
-
-            <div class="swiper-slide">
-              <article class="article-card">
-                <div class="article-cover" style="background-image:url('article-4.jpg')"></div>
-                <div class="article-body">
-                  <div class="article-meta"><span class="tag">Διαφάνεια</span><time datetime="2025-10-01">1 Οκτ 2025</time></div>
-                  <h3 class="article-title">Ανοικτά δεδομένα & λογοδοσία στην πράξη</h3>
-                  <p class="article-excerpt">Ένα διαφανές κράτος χτίζει εμπιστοσύνη και μειώνει τη γραφειοκρατία.</p>
-                  <div class="article-actions"><a href="#" class="btn-link">Διαβάστε το Άρθρο</a></div>
-                </div>
-              </article>
-            </div>
-
-            <div class="swiper-slide">
-              <article class="article-card">
-                <div class="article-cover" style="background-image:url('article-5.jpg')"></div>
-                <div class="article-body">
-                  <div class="article-meta"><span class="tag">Πόλεις</span><time datetime="2025-11-20">20 Νοε 2025</time></div>
-                  <h3 class="article-title">Βιώσιμες πόλεις: σκίαση, πράσινο και προσβασιμότητα</h3>
-                  <p class="article-excerpt">Απλές παρεμβάσεις που αλλάζουν την καθημερινότητα σε κάθε γειτονιά.</p>
-                  <div class="article-actions"><a href="#" class="btn-link">Διαβάστε το Άρθρο</a></div>
-                </div>
-              </article>
-            </div>
-
-            <div class="swiper-slide">
-              <article class="article-card">
-                <div class="article-cover" style="background-image:url('article-6.jpg')"></div>
-                <div class="article-body">
-                  <div class="article-meta"><span class="tag">Παιδεία</span><time datetime="2025-12-05">5 Δεκ 2025</time></div>
-                  <h3 class="article-title">Διαφάνεια στα σχολεία: συμμετοχή γονέων & μαθητών</h3>
-                  <p class="article-excerpt">Ανοικτές πρακτικές που ενισχύουν εμπιστοσύνη και αποτελεσματικότητα.</p>
-                  <div class="article-actions"><a href="#" class="btn-link">Διαβάστε το Άρθρο</a></div>
-                </div>
-              </article>
-            </div> -->
           </div>
         </div>
 
@@ -1239,16 +1198,16 @@
 </section>
 
 
-    <!-- GET INVOLVED (Updated Layout with Calendar) -->
+    <!-- GET INVOLVED + CALENDAR SECTION -->
     <section id="get-involved" class="section section-bg-paper">
       <div class="container">
         <h2 class="h-section center reveal">Γίνε Μέρος της Δυναμικής μας</h2>
         <p class="section-subtitle center reveal">Ενημερώσου για τις δράσεις μας ή έλα να βοηθήσεις ενεργά την προσπάθεια.</p>
         
-        <!-- NEW ACTION GRID -->
+        <!-- NEW GRID LAYOUT: LEFT FORM / RIGHT CALENDAR -->
         <div class="action-grid reveal">
           
-          <!-- Column 1: Form -->
+          <!-- Column 1: Form + Contact -->
           <div class="involved-col">
              <h3 class="h-sub">Δήλωση Συμμετοχής</h3>
              <form id="involvedForm"
@@ -1287,25 +1246,27 @@
                 <button type="submit" class="btn btn-blue" id="involvedSubmitBtn">Δήλωσε Συμμετοχή</button>
                 <p class="form-msg" role="status" aria-live="polite"></p>
              </form>
+
+             <!-- Contact Bubbles MOVED HERE -->
+             <div class="contact-bubbles">
+                <p>Ή επικοινώνησε απευθείας με την ομάδα:</p>
+                <div class="bubble-wrapper">
+                  <a class="bubble" id="viberBubble" target="_blank" rel="noopener">
+                    <img src="icon-viber.svg" alt="" aria-hidden="true" /><span>Viber</span>
+                  </a>
+                  <a class="bubble" id="emailBubble" rel="noopener">
+                    <img src="icon-email.svg" alt="" aria-hidden="true" /><span>Email</span>
+                  </a>
+                </div>
+             </div>
           </div>
 
           <!-- Column 2: Calendar -->
           <div class="calendar-col">
-            <h3 class="h-sub">Επερχόμενες Εκδηλώσεις</h3>
+            <h3 class="h-sub">Επερχόμενες Δράσεις</h3>
             <div class="calendar-wrapper">
-              <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FShanghai&showPrint=0&src=eHNpcmltaXMueHNAZ21haWwuY29t&src=MDE2ZDQxMGUxZWM2YjI5YTU4NTIwZGM1ZDBlYWE3YWVmMjk3NTI0Y2JiNWJmMmU0OWIzMDVlZDMwNmNkNjAyNEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZWwuY3kjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZmFtaWx5MDk2OTk2NzAzOTAyMzE0NDE0NDhAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23039be5&color=%23a79b8e&color=%230b8043&color=%23ad1457" style="border:0; width:100%; height:100%;" frameborder="0" scrolling="no"></iframe>
-            </div>
-            
-            <div class="contact-bubbles">
-              <p>Ή επικοινώνησε απευθείας με την ομάδα:</p>
-              <div class="bubble-wrapper">
-                <a class="bubble" id="viberBubble" target="_blank" rel="noopener">
-                  <img src="icon-viber.svg" alt="" aria-hidden="true" /><span>Viber</span>
-                </a>
-                <a class="bubble" id="emailBubble" rel="noopener">
-                  <img src="icon-email.svg" alt="" aria-hidden="true" /><span>Email</span>
-                </a>
-              </div>
+              <!-- Provided Calendar iFrame with width adjustments -->
+              <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FShanghai&showPrint=0&src=eHNpcmltaXMueHNAZ21haWwuY29t&src=MDE2ZDQxMGUxZWM2YjI5YTU4NTIwZGM1ZDBlYWE3YWVmMjk3NTI0Y2JiNWJmMmU0OWIzMDVlZDMwNmNkNjAyNEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZWwuY3kjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZmFtaWx5MDk2OTk2NzAzOTAyMzE0NDE0NDhAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23039be5&color=%23a79b8e&color=%230b8043&color=%23ad1457" style="border:0; width:100%; height:100%;" frameborder="0" scrolling="no"></iframe> 
             </div>
           </div>
 
@@ -1322,7 +1283,7 @@
         <div><strong>Elena Koushou Hadjidemetriou</strong><br />Βουλευτικές Εκλογές 2026</div>
       </div>
 
-      <!-- Socials (use your URLs) -->
+      <!-- Socials -->
       <div class="foot-socials">
         <a href="https://www.facebook.com/ekoushos/" aria-label="Facebook" target="_blank" rel="noopener"><img src="si-facebook.svg" alt="" /></a>
         <a href="https://x.com/elenakoushos" aria-label="X (Twitter)" target="_blank" rel="noopener"><img src="si-x.png" alt="" /></a>
@@ -1330,7 +1291,6 @@
         <a href="https://www.linkedin.com/in/elena-koushos-hadjidemetriou-b98a7446/" aria-label="LinkedIn" target="_blank" rel="noopener"><img src="si-linkedin.svg" alt="" /></a>
         <a href="https://www.tiktok.com/@elenakoushoshd?lang=en" aria-label="TikTok" target="_blank" rel="noopener"><img src="si-tiktok.svg" alt="" /></a>
         <a href="#" aria-label="Youtube" target="_blank" rel="noopener"><img src="si-youtube.svg" alt="" /></a>
-
       </div>
 
       <div class="foot-legal">© 2025</div>
@@ -1345,8 +1305,9 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.classList.add('enter');
-      
-      // Ballot Ribbon Animation
+
+      // --- NEW: Ballot Ribbon Animation ---
+      // Triggers shortly after page load to animate down
       setTimeout(() => {
         const ribbon = document.getElementById('ballotRibbon');
         if(ribbon) ribbon.classList.add('dropped');
@@ -1427,67 +1388,54 @@
       });
 
       /* ===== Real form submit to Apps Script + reCAPTCHA ===== */
-const form = document.getElementById('involvedForm');
-if (form) {
-  const msg   = form.querySelector('.form-msg');
-  const btn   = document.getElementById('involvedSubmitBtn');
+      const form = document.getElementById('involvedForm');
+      if (form) {
+        const msg   = form.querySelector('.form-msg');
+        const btn   = document.getElementById('involvedSubmitBtn');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    msg.style.color = 'var(--ink-2)';
-    msg.textContent = 'Αποστολή...';
-    btn.disabled = true;
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          msg.style.color = 'var(--ink-2)';
+          msg.textContent = 'Αποστολή...';
+          btn.disabled = true;
 
-    const data = Object.fromEntries(new FormData(form).entries());
-    if (!data.name || !data.email) {
-      msg.textContent = 'Παρακαλώ συμπληρώστε το όνομα και το email σας.';
-      msg.style.color = '#D93025';
-      btn.disabled = false;
-      return;
-    }
+          const data = Object.fromEntries(new FormData(form).entries());
+          if (!data.name || !data.email) {
+            msg.textContent = 'Παρακαλώ συμπληρώστε το όνομα και το email σας.';
+            msg.style.color = '#D93025';
+            btn.disabled = false;
+            return;
+          }
 
-    try {
-      // Στέλνουμε τα FormData όπως είναι, για να περιέχουν και το g-recaptcha-response
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form)
-      });
+          try {
+            const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+            let data = {};
+            try { data = await res.json(); } catch(_) {}
 
-      // Αν ο browser κόψει CORS, δεν θα έχουμε JSON. Προσπαθούμε… αλλιώς δίνουμε generic μήνυμα.
-      let data = {};
-      try { data = await res.json(); } catch(_) {}
-
-      if (res.ok && (data.ok === true || Object.keys(data).length === 0)) {
-        msg.textContent = 'Ευχαριστούμε! Θα επικοινωνήσουμε σύντομα.';
-        msg.style.color = 'var(--brand-blue)';
-        form.reset();
-        if (window.grecaptcha) grecaptcha.reset();
-      } else {
-        msg.textContent = 'Αποτυχία επαλήθευσης ή σφάλμα διακομιστή. Δοκιμάστε ξανά.';
-        msg.style.color = '#D93025';
-        if (window.grecaptcha) grecaptcha.reset();
+            if (res.ok && (data.ok === true || Object.keys(data).length === 0)) {
+              msg.textContent = 'Ευχαριστούμε! Θα επικοινωνήσουμε σύντομα.';
+              msg.style.color = 'var(--brand-blue)';
+              form.reset();
+              if (window.grecaptcha) grecaptcha.reset();
+            } else {
+              msg.textContent = 'Αποτυχία επαλήθευσης ή σφάλμα διακομιστή.';
+              msg.style.color = '#D93025';
+              if (window.grecaptcha) grecaptcha.reset();
+            }
+          } catch (err) {
+            msg.textContent = 'Σφάλμα δικτύου. Παρακαλώ δοκιμάστε ξανά.';
+            msg.style.color = '#D93025';
+            if (window.grecaptcha) grecaptcha.reset();
+          } finally {
+            btn.disabled = false;
+          }
+        });
       }
-    } catch (err) {
-      msg.textContent = 'Σφάλμα δικτύου. Παρακαλώ δοκιμάστε ξανά.';
-      msg.style.color = '#D93025';
-      if (window.grecaptcha) grecaptcha.reset();
-    } finally {
-      btn.disabled = false;
-    }
-  });
-}
-
 
       /* ===== Quick contact bubbles ===== */
       const setupContactLink = (id, url) => { const el = document.getElementById(id); if (el) el.href = url; };
-      setupContactLink(
-  'viberBubble',
-  'https://invite.viber.com/?g2=AQA7hC17s8htQFTqDMRpIDf0wq%2Fr6fAwxmPSoCNvKRbge4MZTbH3llaX3DjjqTdI'
-);
-setupContactLink(
-  'emailBubble',
-  'mailto:vote@elenakoushos.com?subject=' + encodeURIComponent('Επικοινωνία για την καμπάνια 2026')
-);
+      setupContactLink('viberBubble', 'https://invite.viber.com/?g2=AQA7hC17s8htQFTqDMRpIDf0wq%2Fr6fAwxmPSoCNvKRbge4MZTbH3llaX3DjjqTdI');
+      setupContactLink('emailBubble', 'mailto:vote@elenakoushos.com?subject=' + encodeURIComponent('Επικοινωνία για την καμπάνια 2026'));
 
       /* ===== Sticky header shows after hero ===== */
       const siteHeader = document.getElementById('siteHeader'),
