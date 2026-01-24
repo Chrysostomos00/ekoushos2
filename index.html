@@ -113,8 +113,6 @@
     .btn-white{background:#fff; color:var(--brand-blue); border:2px solid rgba(0,69,136,.18)}
     .btn-white:hover{transform: translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.08)}
 
-    /* Removed .election-ribbon as requested */
-
     /* ================= HERO ================ */
     .hero{
       position:relative;
@@ -141,21 +139,30 @@
       background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
     }
     
-    /* Ballot Number Image (#7) - Right aligned */
+    /* FIX: Precise Ballot Number Positioning */
     .hero-number-img {
       position: absolute;
-      top: 2px; 
-      /* Positioning to the right */
+      top: clamp(20px, 5vh, 40px); /* Gives breathing room from very top */
       right: clamp(20px, 8vw, 80px); 
       left: auto;
       
-      width: clamp(70px, 11vw, 110px);
+      width: clamp(70px, 12vw, 120px); /* Slightly larger max size for better visibility */
       height: auto;
       z-index: 10;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
+      
+      filter: drop-shadow(0 6px 14px rgba(0,25,60,0.3)); /* Refined shadow */
       transition: transform 0.3s ease;
     }
-    .hero-number-img:hover { transform: scale(1.05); }
+    .hero-number-img:hover { transform: scale(1.05) rotate(2deg); }
+
+    /* Mobile tweak for number */
+    @media (max-width: 768px) {
+        .hero-number-img {
+            top: 25px;
+            right: 20px;
+            width: 75px; /* Fixed size on mobile to not be too small/large */
+        }
+    }
 
     .hero-inner{
       position:relative; z-index:2;
@@ -272,16 +279,27 @@
 	
 	/* Platform badge overlay (hover) */
     .platform-badge{
-      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.94); opacity:0;
-      transition: transform .3s ease, opacity .3s ease; pointer-events:none;
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%) scale(.94);
+      opacity:0;
+      transition: transform .3s ease, opacity .3s ease;
+      pointer-events:none;
     }
-    .platform-badge img, .platform-badge svg{
-      width:56px; height:56px; display:block; opacity:.72; filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+    .platform-badge img,
+    .platform-badge svg{
+      width:56px; height:56px; display:block;
+      opacity:.72; filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
     }
-    .platform-badge.youtube svg{ width:46px; height:46px; opacity:.68; }
-    .watch-card:hover .platform-badge{ opacity:.75; transform:translate(-50%,-50%) scale(1); }
+    .platform-badge.youtube svg{
+      width:46px; height:46px; opacity:.68;
+    }
+    .watch-card:hover .platform-badge{
+      opacity:.75;
+      transform:translate(-50%,-50%) scale(1);
+    }
 
-    /* Get involved (UPDATED STACKED LAYOUT) */
+    /* Get involved - NEW COMPACT LAYOUT */
     .involved-wrapper-stack { max-width: 650px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem; }
     
     .form{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding: clamp(1.5rem, 4vw, 2rem); box-shadow:var(--shadow); }
@@ -292,7 +310,7 @@
     .form .btn-blue{margin-top:.4rem; width: 100%; padding: 1rem; font-size: 1.05rem;}
     .form-msg{min-height:1.2em; color:var(--ink-2); margin-top:.5rem; font-weight: 700;}
 
-    /* Contact bubbles INSIDE FORM */
+    /* Contact bubbles style */
     .contact-bubbles { text-align: center; margin-top: 1.8rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
     .contact-bubbles p { color: var(--muted); font-weight: 700; margin-bottom: 1rem; font-size: 0.95rem; }
     .bubble-wrapper { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
@@ -300,7 +318,7 @@
     .bubble:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(16,50,92,.1); background: #fff; }
     .bubble img { width: 20px; height: 20px; display:block; }
 
-    /* Calendar */
+    /* Calendar Wrapper */
     .calendar-container {
       background: #fff;
       border: 1px solid var(--line);
@@ -586,7 +604,7 @@
       <h1 class="sr-only">Elena Koushou Hadjidemetriou — Βουλευτικές Εκλογές 2026</h1>
       <img class="party-logo" src="party-logo.png" alt="Λογότυπο πολιτικού φορέα" />
       
-      <!-- Ballot Number (Image based - RIGHT SIDE) -->
+      <!-- Ballot Number (Image based - RIGHT SIDE with spacing fix) -->
       <img src="7.png" alt="Αριθμός 7" class="hero-number-img" />
 
       <div class="hero-inner">
@@ -1044,7 +1062,7 @@
 
           <!-- Calendar (Stacked below form) -->
           <div class="calendar-container">
-            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FNicosia&showPrint=0&src=Y19lYjNhZTk3ZTI4NmVlMDQzYzU5OGFlMWM5YTU0NmZiODQzNmYzZGQ2YTM1ZGQwYzQ1Mzc1Yzk5OGJjOTNjYWFiQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23f6bf26" style="border:0; width:100%; height:500px;" frameborder="0" scrolling="no"></iframe>
+            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FNicosia&showPrint=0&src=eHNpcmltaXMueHNAZ21haWwuY29t&src=MDE2ZDQxMGUxZWM2YjI5YTU4NTIwZGM1ZDBlYWE3YWVmMjk3NTI0Y2JiNWJmMmU0OWIzMDVlZDMwNmNkNjAyNEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZWwuY3kjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZmFtaWx5MDk2OTk2NzAzOTAyMzE0NDE0NDhAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23039be5&color=%23a79b8e&color=%230b8043&color=%23ad1457" style="border:0; width:100%; height:500px;" frameborder="0" scrolling="no"></iframe>
           </div>
 
         </div>
@@ -1063,11 +1081,11 @@
       <!-- Socials -->
       <div class="foot-socials">
         <a href="https://www.facebook.com/ekoushos/" aria-label="Facebook" target="_blank" rel="noopener"><img src="si-facebook.svg" alt="" /></a>
+        <a href="https://x.com/elenakoushos" aria-label="X (Twitter)" target="_blank" rel="noopener"><img src="si-x.png" alt="" /></a>
         <a href="https://www.instagram.com/elena_koushou_dem/" aria-label="Instagram" target="_blank" rel="noopener"><img src="si-instagram.svg" alt="" /></a>
         <a href="https://www.linkedin.com/in/elena-koushos-hadjidemetriou-b98a7446/" aria-label="LinkedIn" target="_blank" rel="noopener"><img src="si-linkedin.svg" alt="" /></a>
-        <a href="https://www.tiktok.com/@elenakoushos_7?_r=1&_t=ZN-93LUATaTH6c" aria-label="TikTok" target="_blank" rel="noopener"><img src="si-tiktok.svg" alt="" /></a>
-        <a href="https://m.youtube.com/@%CE%88%CE%BB%CE%B5%CE%BD%CE%B1%CE%9A%CE%BF%CF%8D%CF%83%CE%B9%CE%BF%CF%85%CE%A7%CE%B1%CF%84%CE%B6%CE%B7%CE%B4%CE%B7%CE%BC%CE%B7%CF%84%CF%81%CE%AF%CE%BF%CF%85" aria-label="Youtube" target="_blank" rel="noopener"><img src="si-youtube.svg" alt="" /></a>
-        <a href="https://x.com/elenakoushos" aria-label="X (Twitter)" target="_blank" rel="noopener"><img src="si-x.png" alt="" /></a>
+        <a href="https://www.tiktok.com/@elenakoushoshd?lang=en" aria-label="TikTok" target="_blank" rel="noopener"><img src="si-tiktok.svg" alt="" /></a>
+        <a href="#" aria-label="Youtube" target="_blank" rel="noopener"><img src="si-youtube.svg" alt="" /></a>
       </div>
 
       <div class="foot-legal">© 2025</div>
