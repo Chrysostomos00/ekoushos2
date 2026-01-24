@@ -31,6 +31,8 @@
   <link rel="preload" as="image" href="slogan-hero.png">
   <link rel="preload" as="image" href="portrait.avif">
   <link rel="preload" as="image" href="party-logo.png">
+  <!-- Preload the number image -->
+  <link rel="preload" as="image" href="7.png">
 
   <style>
     :root{
@@ -53,6 +55,9 @@
       --my:38%;
       --glow-size: 260px;
       --twist:0deg;
+      
+      /* Brand gradient definition */
+      --brand-gradient: linear-gradient(112deg, color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%, color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%, color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%, color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%);
     }
 
     *{box-sizing:border-box}
@@ -108,7 +113,7 @@
     .btn-white{background:#fff; color:var(--brand-blue); border:2px solid rgba(0,69,136,.18)}
     .btn-white:hover{transform: translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.08)}
 
-    .election-ribbon{text-align:center; padding:.5rem 1rem; background:linear-gradient(90deg, var(--brand-blue), var(--brand-accent)); color:#fff; font-weight:900; letter-spacing:.02em}
+    /* Removed .election-ribbon as requested */
 
     /* ================= HERO ================ */
     .hero{
@@ -135,6 +140,23 @@
       content:""; position:absolute; inset:0; pointer-events:none;
       background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
     }
+    
+    /* Ballot Number Image (#7) - Right aligned */
+    .hero-number-img {
+      position: absolute;
+      top: 2px; 
+      /* Positioning to the right */
+      right: clamp(20px, 8vw, 80px); 
+      left: auto;
+      
+      width: clamp(70px, 11vw, 110px);
+      height: auto;
+      z-index: 10;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
+      transition: transform 0.3s ease;
+    }
+    .hero-number-img:hover { transform: scale(1.05); }
+
     .hero-inner{
       position:relative; z-index:2;
       width:min(1200px, 92%); margin:0 auto;
@@ -199,16 +221,7 @@
     .portrait{ width:100%; max-width:460px; margin:0 auto; border-radius:12px; transition: transform .3s ease, box-shadow .3s ease; }
     .portrait:hover { transform: scale(1.02); box-shadow: 0 14px 34px rgba(16,50,92,.12); }
 
-    .quote { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center;}
-    .quote blockquote{
-      font-family:"Peridot PE Variable","Roboto",sans-serif;
-      font-weight:900;
-      font-size: clamp(26px, 3.6vw, 42px);
-      line-height:1.25; color:#082c54;
-      padding:2.2rem 1rem; max-width: 1000px; margin: 1.2rem auto 0;
-    }
-    .quote-animation { width: clamp(110px, 14vw, 160px); height: auto; margin: 0 auto; }
-
+    /* Program Cards */
     .program-cards{display:grid; gap:1.5rem; grid-template-columns:repeat(3, 1fr); margin-top:3rem}
     .program-card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:1.5rem; transition:transform .25s ease, box-shadow .25s ease; color:var(--ink); box-shadow:var(--shadow); }
     .program-card h3{ color:var(--ink-2); margin: .7rem 0 .35rem; display:flex; align-items:center; gap:.75rem; }
@@ -258,33 +271,19 @@
     .watch-meta { font-size:.9rem; color:var(--muted); margin:0; }
 	
 	/* Platform badge overlay (hover) */
-.platform-badge{
-  position:absolute;
-  top:50%; left:50%;
-  transform:translate(-50%,-50%) scale(.94);
-  opacity:0;
-  transition: transform .3s ease, opacity .3s ease;
-  pointer-events:none;       /* click goes to the card link */
-}
-.platform-badge img,
-.platform-badge svg{
-  width:56px; height:56px; display:block;
-  opacity:.72;              /* semi-transparent */
-  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
-}
+    .platform-badge{
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.94); opacity:0;
+      transition: transform .3s ease, opacity .3s ease; pointer-events:none;
+    }
+    .platform-badge img, .platform-badge svg{
+      width:56px; height:56px; display:block; opacity:.72; filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+    }
+    .platform-badge.youtube svg{ width:46px; height:46px; opacity:.68; }
+    .watch-card:hover .platform-badge{ opacity:.75; transform:translate(-50%,-50%) scale(1); }
 
-/* Slightly smaller for YouTube play */
-.platform-badge.youtube svg{
-  width:46px; height:46px; opacity:.68;
-}
-
-.watch-card:hover .platform-badge{
-  opacity:.75;
-  transform:translate(-50%,-50%) scale(1);
-}
-
-    /* Get involved */
-    .involved-wrap { max-width: 650px; margin: 2rem auto 0; }
+    /* Get involved (UPDATED STACKED LAYOUT) */
+    .involved-wrapper-stack { max-width: 650px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem; }
+    
     .form{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding: clamp(1.5rem, 4vw, 2rem); box-shadow:var(--shadow); }
     .form-row{display:flex; flex-direction:column; gap:.35rem; margin-bottom:1rem;}
     label{font-weight:900; color:var(--ink-2)}
@@ -293,13 +292,24 @@
     .form .btn-blue{margin-top:.4rem; width: 100%; padding: 1rem; font-size: 1.05rem;}
     .form-msg{min-height:1.2em; color:var(--ink-2); margin-top:.5rem; font-weight: 700;}
 
-    /* Contact bubbles */
-    .contact-bubbles { text-align: center; margin-top: 2.5rem; }
-    .contact-bubbles p { color: var(--muted); font-weight: 700; margin-bottom: 1.2rem; }
+    /* Contact bubbles INSIDE FORM */
+    .contact-bubbles { text-align: center; margin-top: 1.8rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+    .contact-bubbles p { color: var(--muted); font-weight: 700; margin-bottom: 1rem; font-size: 0.95rem; }
     .bubble-wrapper { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-    .bubble { display:flex; align-items:center; gap:.6rem; background:#fff; padding:.8rem 1.5rem; border-radius:999px; box-shadow:0 5px 15px rgba(16,50,92,.1); border:1px solid var(--line); font-weight:900; color:var(--ink-2); transition: transform .2s ease, box-shadow .2s ease; }
-    .bubble:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(16,50,92,.14); }
-    .bubble img { width: 24px; height: 24px; display:block; }
+    .bubble { display:flex; align-items:center; gap:.6rem; background:var(--paper-2); padding:.6rem 1.2rem; border-radius:999px; box-shadow: none; border:1px solid var(--line); font-weight:900; color:var(--ink-2); transition: transform .2s ease, box-shadow .2s ease; font-size: 0.9rem; cursor: pointer; }
+    .bubble:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(16,50,92,.1); background: #fff; }
+    .bubble img { width: 20px; height: 20px; display:block; }
+
+    /* Calendar */
+    .calendar-container {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0.5rem;
+      box-shadow: var(--shadow);
+      height: 500px; /* Fixed height for clean layout */
+      overflow: hidden;
+    }
 
     /* Footer */
     .site-footer{
@@ -337,125 +347,125 @@
     }
 
     /* ================== BRAND GRADIENT (matches footer/hero tone) ================== */
-:root{
-  /* reuse the same gradient logic you already use in footer */
-  --brand-gradient:
-    linear-gradient(112deg,
-      color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%,
-      color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%,
-      color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%,
-      color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%
-    );
-}
+    :root{
+      /* reuse the same gradient logic you already use in footer */
+      --brand-gradient:
+        linear-gradient(112deg,
+          color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%,
+          color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%,
+          color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%,
+          color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%
+        );
+    }
 
-/* unify footer to use the variable (visual parity with new section) */
-.site-footer{
-  background: var(--brand-gradient);
-}
+    /* unify footer to use the variable (visual parity with new section) */
+    .site-footer{
+      background: var(--brand-gradient);
+    }
 
-/* ================== HERO: ghost CTA to match site buttons ================== */
-.btn-ghost-cta{
-  display:inline-flex; align-items:center; justify-content:center;
-  gap:.45rem; padding:.72rem 1.15rem; min-height:46px;
-  border-radius:999px; font-weight:900; letter-spacing:.01em;
-  text-decoration:none; transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
-}
-.btn-ghost-cta.is-glass{
-  color:#fff; opacity:.98;
-  background: rgba(255,255,255,.10);
-  border: 2px solid rgba(255,255,255,.28);
-  backdrop-filter: blur(12px) saturate(120%); -webkit-backdrop-filter: blur(12px) saturate(120%);
-  box-shadow: 0 6px 16px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.30);
-}
-.btn-ghost-cta.is-glass:hover{
-  transform: translateY(-2px);
-  background: rgba(255,255,255,.16);
-  border-color: rgba(255,255,255,.42);
-  box-shadow: 0 10px 24px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.42);
-}
+    /* ================== HERO: ghost CTA to match site buttons ================== */
+    /* RESTORED EXACT BUTTON STYLE */
+    .btn-ghost-cta{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:.45rem; padding:.72rem 1.15rem; min-height:46px;
+      border-radius:999px; font-weight:900; letter-spacing:.01em;
+      text-decoration:none; transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, opacity .2s ease;
+    }
+    .btn-ghost-cta.is-glass{
+      color:#fff; opacity:.98;
+      background: rgba(255,255,255,.10);
+      border: 2px solid rgba(255,255,255,.28);
+      backdrop-filter: blur(12px) saturate(120%); -webkit-backdrop-filter: blur(12px) saturate(120%);
+      box-shadow: 0 6px 16px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.30);
+    }
+    .btn-ghost-cta.is-glass:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.16);
+      border-color: rgba(255,255,255,.42);
+      box-shadow: 0 10px 24px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.42);
+    }
 
-/* ================== SHARE YOUR VOICE SECTION ================== */
-/* gradient background that truly mirrors the footer/hero family */
-.brand-gradient-bg{
-  position:relative; background: var(--brand-gradient); color:#fff; isolation:isolate;
-}
-.brand-gradient-bg::before{
-  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
-  /* gentle lights/shadows so the glass card pops */
-  background:
-    radial-gradient(70% 60% at 75% 18%, rgba(255,255,255,.12), transparent 60%),
-    radial-gradient(100% 80% at 10% 90%, rgba(0,0,0,.20), transparent 60%);
-}
+    /* ================== SHARE YOUR VOICE SECTION ================== */
+    .brand-gradient-bg{
+      position:relative; background: var(--brand-gradient); color:#fff; isolation:isolate;
+    }
+    .brand-gradient-bg::before{
+      content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+      /* gentle lights/shadows so the glass card pops */
+      background:
+        radial-gradient(70% 60% at 75% 18%, rgba(255,255,255,.12), transparent 60%),
+        radial-gradient(100% 80% at 10% 90%, rgba(0,0,0,.20), transparent 60%);
+    }
 
-.section-gnomi{ padding: clamp(60px, 8vw, 100px) 0; scroll-margin-top: 80px; }
-.gnomi-container{ width:min(1200px, 92%); margin:0 auto; position:relative; z-index:1; }
+    .section-gnomi{ padding: clamp(60px, 8vw, 100px) 0; scroll-margin-top: 80px; }
+    .gnomi-container{ width:min(1200px, 92%); margin:0 auto; position:relative; z-index:1; }
 
-/* glass card that matches your radii & shadows */
-.glass-card{
-  border-radius: var(--radius);
-  background: rgba(255,255,255,.10);
-  border: 1px solid rgba(255,255,255,.28);
-  backdrop-filter: blur(14px) saturate(120%);
-  -webkit-backdrop-filter: blur(14px) saturate(120%);
-  box-shadow: 0 8px 24px rgba(16,50,92,.18), inset 0 1px 0 rgba(255,255,255,.25);
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-}
+    /* glass card that matches your radii & shadows */
+    .glass-card{
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.28);
+      backdrop-filter: blur(14px) saturate(120%);
+      -webkit-backdrop-filter: blur(14px) saturate(120%);
+      box-shadow: 0 8px 24px rgba(16,50,92,.18), inset 0 1px 0 rgba(255,255,255,.25);
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+    }
 
-/* type hierarchy = same feel as .h-section on dark bg */
-#gnomi .eyebrow{
-  display:inline-block;
-  font: 900 .78rem/1 "Peridot PE Variable","Roboto",sans-serif;
-  letter-spacing:.12em; text-transform:uppercase;
-  color:#fff; opacity:.95;
-  padding:.35rem .7rem; border-radius:999px;
-  background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.30);
-}
-#gnomi h2{
-  margin: .75rem 0 1rem 0;
-  font-family: "Peridot PE Variable","Roboto",sans-serif;
-  font-weight: 900;
-  /* mirror .h-section sizing */
-  font-size: clamp(28px, 4vw, 44px);
-  line-height: 1.1;
-  color:#fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,.25);
-}
-#gnomi .lead{
-  font-size: 1.08rem; line-height: 1.65; opacity:.97;
-  color:#fff;
-}
-#gnomi p{ margin:.65rem 0; }
-#gnomi .subtle{ opacity:.92; }
+    /* type hierarchy = same feel as .h-section on dark bg */
+    #gnomi .eyebrow{
+      display:inline-block;
+      font: 900 .78rem/1 "Peridot PE Variable","Roboto",sans-serif;
+      letter-spacing:.12em; text-transform:uppercase;
+      color:#fff; opacity:.95;
+      padding:.35rem .7rem; border-radius:999px;
+      background: rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.30);
+    }
+    #gnomi h2{
+      margin: .75rem 0 1rem 0;
+      font-family: "Peridot PE Variable","Roboto",sans-serif;
+      font-weight: 900;
+      /* mirror .h-section sizing */
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.1;
+      color:#fff;
+      text-shadow: 0 1px 2px rgba(0,0,0,.25);
+    }
+    #gnomi .lead{
+      font-size: 1.08rem; line-height: 1.65; opacity:.97;
+      color:#fff;
+    }
+    #gnomi p{ margin:.65rem 0; }
+    #gnomi .subtle{ opacity:.92; }
 
-/* button styled like your system buttons, but glassy on gradient */
-#gnomi .cta-row{ margin-top:.4rem; }
-.btn-form{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:.78rem 1.15rem; min-height:46px; border-radius:999px;
-  font-weight:900; letter-spacing:.01em; text-decoration:none; white-space:nowrap;
-  color: var(--brand-blue);
-  background: #fff;
-  border: 2px solid rgba(0,69,136,.18);
-  box-shadow: 0 6px 16px rgba(0,0,0,.12);
-  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
-}
-.btn-form:hover{
-  transform: translateY(-2px);
-  filter: brightness(1.04);
-  box-shadow: 0 10px 24px rgba(0,0,0,.16);
-}
+    /* button styled like your system buttons, but glassy on gradient */
+    #gnomi .cta-row{ margin-top:.4rem; }
+    .btn-form{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:.78rem 1.15rem; min-height:46px; border-radius:999px;
+      font-weight:900; letter-spacing:.01em; text-decoration:none; white-space:nowrap;
+      color: var(--brand-blue);
+      background: #fff;
+      border: 2px solid rgba(0,69,136,.18);
+      box-shadow: 0 6px 16px rgba(0,0,0,.12);
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .btn-form:hover{
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+      box-shadow: 0 10px 24px rgba(0,0,0,.16);
+    }
 
-/* give the card a breathing layout on narrow screens */
-@media (max-width: 640px){
-  .glass-card{ padding: 1.25rem; }
-  #gnomi h2{ font-size: clamp(24px, 6vw, 34px); }
-}
+    /* give the card a breathing layout on narrow screens */
+    @media (max-width: 640px){
+      .glass-card{ padding: 1.25rem; }
+      #gnomi h2{ font-size: clamp(24px, 6vw, 34px); }
+    }
 
-/* entrance animation consistent with your .reveal system */
-@media (prefers-reduced-motion: no-preference){
-  .glass-card.reveal{ opacity:0; transform: translateY(18px); }
-  .glass-card.reveal.visible{ opacity:1; transform:none; transition:opacity .7s cubic-bezier(.5,0,0,1), transform .7s cubic-bezier(.5,0,0,1); }
-}
+    /* entrance animation consistent with your .reveal system */
+    @media (prefers-reduced-motion: no-preference){
+      .glass-card.reveal{ opacity:0; transform: translateY(18px); }
+      .glass-card.reveal.visible{ opacity:1; transform:none; transition:opacity .7s cubic-bezier(.5,0,0,1), transform .7s cubic-bezier(.5,0,0,1); }
+    }
 
     /* MEDIA heading bigger (≈2×) */
     #media .h-section { font-size: clamp(37px, 5.5vw, 50px); line-height: 1.05; }
@@ -501,36 +511,36 @@
     @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
 
     /* Center-align the "Share Your Voice" section */
-.section-gnomi .gnomi-container{
-  display: grid;
-  place-items: center;
-}
+    .section-gnomi .gnomi-container{
+      display: grid;
+      place-items: center;
+    }
 
-#gnomi .glass-card{
-  width: min(920px, 100%);
-  margin-inline: auto;
-  text-align: center;
-}
+    #gnomi .glass-card{
+      width: min(920px, 100%);
+      margin-inline: auto;
+      text-align: center;
+    }
 
-#gnomi .eyebrow{ margin-inline: auto; }
+    #gnomi .eyebrow{ margin-inline: auto; }
 
-#gnomi .lead,
-#gnomi .subtle{
-  max-width: 72ch;
-  margin-inline: auto;
-}
+    #gnomi .lead,
+    #gnomi .subtle{
+      max-width: 72ch;
+      margin-inline: auto;
+    }
 
-#gnomi .cta-row{
-  display: flex;
-  justify-content: center;
-  margin-top: .6rem;
-}
+    #gnomi .cta-row{
+      display: flex;
+      justify-content: center;
+      margin-top: .6rem;
+    }
 
-/* (already centered on most viewports, but just in case) */
-.hero-cta{ justify-content: center; }
+    /* (already centered on most viewports, but just in case) */
+    .hero-cta{ justify-content: center; }
 
   </style>
-	<noscript>
+  <noscript>
   <style>
     /* If JS is blocked, show the hero content immediately */
     .hero-logo,
@@ -560,9 +570,9 @@
       <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Κύρια Πλοήγηση">
         <a href="#">Αρχική</a>
         <a href="#about">Βιογραφικό</a>
+        <a href="#media">Media</a>
         <a href="#program">Θέσεις</a>
         <a href="#articles">Άρθρα</a>
-        <a href="#media">Media</a>
         <a href="#get-involved" class="btn btn-outline" style="width:100%; text-align:center;">Συμμετοχή</a>
       </nav>
     </div>
@@ -570,12 +580,14 @@
 
   <!-- Main -->
   <main id="top" tabindex="-1">
-    <div class="election-ribbon" aria-hidden="true">Βουλευτικές Εκλογές • 24 Μαΐου 2026</div>
-
+    
     <!-- HERO -->
     <section class="hero" id="hero">
       <h1 class="sr-only">Elena Koushou Hadjidemetriou — Βουλευτικές Εκλογές 2026</h1>
       <img class="party-logo" src="party-logo.png" alt="Λογότυπο πολιτικού φορέα" />
+      
+      <!-- Ballot Number (Image based - RIGHT SIDE) -->
+      <img src="7.png" alt="Αριθμός 7" class="hero-number-img" />
 
       <div class="hero-inner">
         <div class="hero-text-content">
@@ -585,27 +597,27 @@
             <a href="#program" class="btn btn-white">Δες το Πρόγραμμα</a>
             <a href="#get-involved" class="btn btn-blue">Δήλωσε Συμμετοχή</a>
             <a href="#gnomi" class="btn-ghost-cta is-glass" aria-label="Μοιράσου τη γνώμη σου" title="Μοιράσου τη γνώμη σου">
-  Μοιράσου τη γνώμη σου
-</a>
+              Μοιράσου τη γνώμη σου
+            </a>
           </div>
         </div>
 
         <a href="#about" class="hero-portrait-link" aria-label="Μάθετε περισσότερα για την Έλενα">
           <picture>
-    <source srcset="portrait.avif" type="image/avif">
-    <source srcset="portrait.webp" type="image/webp">
-    <img
-      class="hero-portrait"
-      id="heroPortrait"
-      src="portrait.jpg"
-      alt="Πορτρέτο της Elena Koushou Hadjidemetriou"
-      fetchpriority="high"
-      decoding="async"
-      loading="eager"
-      style="max-width:100%;height:auto"
-      width="1600" height="2053"
-    >
-  </picture>
+            <source srcset="portrait.avif" type="image/avif">
+            <source srcset="portrait.webp" type="image/webp">
+            <img
+              class="hero-portrait"
+              id="heroPortrait"
+              src="portrait.jpg"
+              alt="Πορτρέτο της Elena Koushou Hadjidemetriou"
+              fetchpriority="high"
+              decoding="async"
+              loading="eager"
+              style="max-width:100%;height:auto"
+              width="1600" height="2053"
+            >
+          </picture>
           <span class="portrait-prompt">
             Ποια είναι η Έλενα;
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m0 0l-6-6m6 6l6-6"></path></svg>
@@ -628,27 +640,183 @@
           <p>Ξεκινώ αυτή τη διαδρομή πιστεύοντας ότι τίποτα δεν αλλάζει χωρίς εσένα. Θέλω να σε ακούσω, να ανταλλάξουμε ιδέες και να βρούμε λύσεις στα καθημερινά μας ζητήματα. Η ενασχόλησή μου με την πολιτική θα είναι λειτούργημα και ευθύνη απέναντί σου.</p>
           <p>Μαζί, με θέληση, πίστη και θάρρος, ας φέρουμε τις αλλαγές που χρειάζονται. Είμαι εδώ, για εμάς.</p>
           <a href="bio.html" class="btn btn-outline" style="margin-top: 1rem;">Αναλυτικό Βιογραφικό</a>
-
         </div>
       </div>
     </section>
 
-    <!-- QUOTE -->
-    <section class="section quote">
+    <!-- MEDIA / WATCH (Replaced Quote Section) -->
+    <section id="media" class="section">
       <div class="container">
-        <video class="quote-animation reveal" id="voteAnimation"
-       autoplay muted loop playsinline
-       width="160" height="160"
-       poster="vote-poster.jpg"
-       preload="metadata">
-  <source src="vote-elections.webm" type="video/webm">
-  <source src="vote-elections.mp4"  type="video/mp4">
-</video>
-        <blockquote class="reveal">«Η ψήφος σου είναι η δύναμη σου, η φωνή σου. Στις 24 Μαΐου ας την κάνουμε το βήμα για μια Κύπρο που προχωρά μπροστά.»</blockquote>
+        <div class="h-section-wrapper reveal" style="display:flex;align-items:center;gap:.75rem;">
+          <svg class="h-section-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" fill="currentColor"/></svg>
+          <h2 class="h-section">Media</h2>
+        </div>
+        <p class="section-subtitle reveal">Δείτε ομιλίες, συνεντεύξεις και παρεμβάσεις της Έλενας.</p>
+      </div>
+
+      <div class="swiper watch-carousel reveal">
+        <div class="swiper-wrapper">
+
+          <!-- NEW Reels (Top Priority) -->
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/elena_koushou_dem/reel/DT5AKo7jFw1/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('media-new-5.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Instagram Reel</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/elena_koushou_dem/reel/DTx3EQejOto/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('media-new-4.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Instagram Reel</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/elena_koushou_dem/reel/DTsolJeDOZ7/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('media-new-3.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Instagram Reel</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/elena_koushou_dem/p/DTiaBP1jNrv/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('media-new-2.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Instagram Post</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/elena_koushou_dem/p/DTaozlCjPhk/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('media-new-1.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Instagram Post</h3></div>
+            </a>
+          </div>
+
+          <!-- Existing Reels (Appended) -->
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/elena_koushou_dem/reel/DS2jlSnjK3B/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-8.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Συνεχίζουμε μαζι..</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/elena_koushou_dem/reel/DSnK4YLjO2_/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-9.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Σπάνια ακούμε...</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/elena_koushou_dem/reel/DSc55NvDIT3/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-10.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Ο καθένας μας κουβαλά...</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/elena_koushou_dem/reel/DRzuVvQjA81/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-11.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Παγκόσμια Ημέρα ΑμεΑ</h3></div>
+            </a>
+          </div>
+          
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/elena_koushou_dem/reel/DRUk707DFEL/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-7.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Υπάρχουν λύσεις...</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/reel/DRKlDYvjPXG/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-6.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Όταν οι νέοι μας...</h3></div>
+            </a>
+          </div>
+          
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DQMnXcNjOHw/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-5.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Ψυχική Υγεία στα σχολεία...</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DOyQLCmDPqI/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-1.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Πέρα από τους τίτλους...</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DOi4y8ajCET/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-2.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Προσιτό ενοίκιο...</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.instagram.com/p/DObms2hDHKw/" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-3.jpg');">
+                <div class="platform-badge instagram"><img src="si-instagram.svg" alt="" aria-hidden="true"></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Νέα πνοή στη στέγαση.</h3></div>
+            </a>
+          </div>
+
+          <div class="swiper-slide">
+            <a href="https://www.youtube.com/watch?v=6gOvvM-5HO8&t=578s" target="_blank" rel="noopener" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-4.jpg');">
+                <div class="platform-badge youtube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></div>
+              </div>
+              <div class="watch-info">
+                <h3 class="watch-title">Συνέντευξη για το Κράτος Δικαίου</h3>
+                <p class="watch-meta">YouTube Video</p>
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Watch nav buttons -->
+      <div class="nav-row">
+        <div class="swiper-button-prev watch-prev"></div>
+        <div class="swiper-button-next watch-next"></div>
       </div>
     </section>
 
-    <!-- PROGRAM -->
+    <!-- PROGRAM CARDS (Skipped Proposals List) -->
     <section id="program" class="section">
       <div class="container">
         <h2 class="h-section center reveal">Θέσεις & Πρόγραμμα</h2>
@@ -720,6 +888,32 @@
         <div class="swiper articles-carousel reveal">
           <div class="swiper-wrapper">
 
+            <!-- New Article 1: Ergo vs Laikismos -->
+            <div class="swiper-slide">
+              <article class="article-card">
+                <div class="article-cover" style="background-image:url('article-new-1.jpg')"></div>
+                <div class="article-body">
+                  <div class="article-meta"><span class="tag">Πολιτική</span><time datetime="2026-01-20">21 Ιαν 2026</time></div>
+                  <h3 class="article-title">Προχωρά με έργο αντί με λαικισμό</h3>
+                  <p class="article-excerpt">Η ουσιαστική πολιτική απαιτεί λύσεις και αποτελέσματα, όχι εύκολα λόγια.</p>
+                  <div class="article-actions"><a href="article-ergo.html" class="btn-link">Διαβάστε το Άρθρο</a></div>
+                </div>
+              </article>
+            </div>
+
+            <!-- New Article 2: Sports/Bullying -->
+            <div class="swiper-slide">
+              <article class="article-card">
+                <div class="article-cover" style="background-image:url('article-sports-hero.jpg')"></div>
+                <div class="article-body">
+                  <div class="article-meta"><span class="tag">Αθλητισμός</span><time datetime="2026-01-15">12 Ιαν 2026</time></div>
+                  <h3 class="article-title">Ακαδημίες χωρίς Bullying & Ψυχολογική Βία</h3>
+                  <p class="article-excerpt">Προστασία της ψυχικής και σωματικής ακεραιότητας των παιδιών στον αθλητισμό.</p>
+                  <div class="article-actions"><a href="article-athlitismos-xwris-bullying.html" class="btn-link">Διαβάστε το Άρθρο</a></div>
+                </div>
+              </article>
+            </div>
+
         	<div class="swiper-slide">
               <article class="article-card">
                 <div class="article-cover" style="background-image:url('article-3.webp')"></div>
@@ -766,54 +960,6 @@
                 </div>
               </article>
             </div>
-
-            <!-- <div class="swiper-slide">
-              <article class="article-card">
-                <div class="article-cover" style="background-image:url('article-3.jpg')"></div>
-                <div class="article-body">
-                  <div class="article-meta"><span class="tag">Υγεία</span><time datetime="2025-09-14">14 Σεπ 2025</time></div>
-                  <h3 class="article-title">ΓεΣΥ με επίκεντρο τον πολίτη: δείκτες ποιότητας</h3>
-                  <p class="article-excerpt">Μετρήσιμη βελτίωση στην πρωτοβάθμια, ώστε τα νοσοκομεία να ανασάνουν.</p>
-                  <div class="article-actions"><a href="#" class="btn-link">Διαβάστε το Άρθρο</a></div>
-                </div>
-              </article>
-            </div>
-
-            <div class="swiper-slide">
-              <article class="article-card">
-                <div class="article-cover" style="background-image:url('article-4.jpg')"></div>
-                <div class="article-body">
-                  <div class="article-meta"><span class="tag">Διαφάνεια</span><time datetime="2025-10-01">1 Οκτ 2025</time></div>
-                  <h3 class="article-title">Ανοικτά δεδομένα & λογοδοσία στην πράξη</h3>
-                  <p class="article-excerpt">Ένα διαφανές κράτος χτίζει εμπιστοσύνη και μειώνει τη γραφειοκρατία.</p>
-                  <div class="article-actions"><a href="#" class="btn-link">Διαβάστε το Άρθρο</a></div>
-                </div>
-              </article>
-            </div>
-
-            <div class="swiper-slide">
-              <article class="article-card">
-                <div class="article-cover" style="background-image:url('article-5.jpg')"></div>
-                <div class="article-body">
-                  <div class="article-meta"><span class="tag">Πόλεις</span><time datetime="2025-11-20">20 Νοε 2025</time></div>
-                  <h3 class="article-title">Βιώσιμες πόλεις: σκίαση, πράσινο και προσβασιμότητα</h3>
-                  <p class="article-excerpt">Απλές παρεμβάσεις που αλλάζουν την καθημερινότητα σε κάθε γειτονιά.</p>
-                  <div class="article-actions"><a href="#" class="btn-link">Διαβάστε το Άρθρο</a></div>
-                </div>
-              </article>
-            </div>
-
-            <div class="swiper-slide">
-              <article class="article-card">
-                <div class="article-cover" style="background-image:url('article-6.jpg')"></div>
-                <div class="article-body">
-                  <div class="article-meta"><span class="tag">Παιδεία</span><time datetime="2025-12-05">5 Δεκ 2025</time></div>
-                  <h3 class="article-title">Διαφάνεια στα σχολεία: συμμετοχή γονέων & μαθητών</h3>
-                  <p class="article-excerpt">Ανοικτές πρακτικές που ενισχύουν εμπιστοσύνη και αποτελεσματικότητα.</p>
-                  <div class="article-actions"><a href="#" class="btn-link">Διαβάστε το Άρθρο</a></div>
-                </div>
-              </article>
-            </div> -->
           </div>
         </div>
 
@@ -821,183 +967,6 @@
           <div class="swiper-button-prev articles-prev"></div>
           <div class="swiper-button-next articles-next"></div>
         </div>
-      </div>
-    </section>
-
-    <!-- MEDIA / WATCH -->
-    <section id="media" class="section">
-      <div class="container">
-        <div class="h-section-wrapper reveal" style="display:flex;align-items:center;gap:.75rem;">
-          <svg class="h-section-arrow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5V19L19 12L8 5Z" fill="currentColor"/></svg>
-          <h2 class="h-section">Media</h2>
-        </div>
-        <p class="section-subtitle reveal">Δείτε ομιλίες, συνεντεύξεις και παρεμβάσεις της Έλενας.</p>
-      </div>
-
-		<div class="swiper watch-carousel reveal">
-        <div class="swiper-wrapper">
-
-<!-- New Reel 1 -->
-<div class="swiper-slide">
-  <a href="https://www.instagram.com/elena_koushou_dem/reel/DS2jlSnjK3B/" target="_blank" rel="noopener" class="watch-card">
-    <div class="watch-thumbnail" style="background-image: url('video-thumb-8.jpg');">
-      <div class="platform-badge instagram">
-        <img src="si-instagram.svg" alt="" aria-hidden="true">
-      </div>
-    </div>
-    <div class="watch-info">
-      <h3 class="watch-title">Συνεχίζουμε μαζι..</h3>
-      <p class="watch-meta">Instagram Reel</p>
-    </div>
-  </a>
-</div>
-
-<!-- New Reel 2 -->
-<div class="swiper-slide">
-  <a href="https://www.instagram.com/elena_koushou_dem/reel/DSnK4YLjO2_/" target="_blank" rel="noopener" class="watch-card">
-    <div class="watch-thumbnail" style="background-image: url('video-thumb-9.jpg');">
-      <div class="platform-badge instagram">
-        <img src="si-instagram.svg" alt="" aria-hidden="true">
-      </div>
-    </div>
-    <div class="watch-info">
-      <h3 class="watch-title">Σπάνια ακούμε πραγματικά τον άλλον.</h3>
-      <p class="watch-meta">Instagram Reel</p>
-    </div>
-  </a>
-</div>
-
-<!-- New Reel 3 -->
-<div class="swiper-slide">
-  <a href="https://www.instagram.com/elena_koushou_dem/reel/DSc55NvDIT3/" target="_blank" rel="noopener" class="watch-card">
-    <div class="watch-thumbnail" style="background-image: url('video-thumb-10.jpg');">
-      <div class="platform-badge instagram">
-        <img src="si-instagram.svg" alt="" aria-hidden="true">
-      </div>
-    </div>
-    <div class="watch-info">
-      <h3 class="watch-title">Ο καθένας μας κουβαλά μια δύναμη που δεν φαίνεται πάντα.</h3>
-      <p class="watch-meta">Instagram Reel</p>
-    </div>
-  </a>
-</div>
-
-<!-- New Reel 4 -->
-<div class="swiper-slide">
-  <a href="https://www.instagram.com/elena_koushou_dem/reel/DRzuVvQjA81/" target="_blank" rel="noopener" class="watch-card">
-    <div class="watch-thumbnail" style="background-image: url('video-thumb-11.jpg');">
-      <div class="platform-badge instagram">
-        <img src="si-instagram.svg" alt="" aria-hidden="true">
-      </div>
-    </div>
-    <div class="watch-info">
-      <h3 class="watch-title">Παγκόσμια Ημέρα Ανρθρώπων με Αναπηρία.</h3>
-      <p class="watch-meta">Instagram Reel</p>
-    </div>
-  </a>
-</div>
-			
-          <div class="swiper-slide">
-            <a href="https://www.instagram.com/elena_koushou_dem/reel/DRUk707DFEL/" target="_blank" rel="noopener" class="watch-card">
-              <div class="watch-thumbnail" style="background-image: url('video-thumb-7.jpg');">
-<div class="platform-badge instagram">
-        <img src="si-instagram.svg" alt="" aria-hidden="true">
-      </div>              </div>
-              <div class="watch-info">
-                <h3 class="watch-title">Υπάρχουν λύσεις, αρκεί να υπάρχει τόλμη, πίστη και αποφασιστικότητα...</h3>
-                <p class="watch-meta">Instagram Reel</p>
-              </div>
-            </a>
-          </div>
-
-          <div class="swiper-slide">
-            <a href="https://www.instagram.com/reel/DRKlDYvjPXG/" target="_blank" rel="noopener" class="watch-card">
-              <div class="watch-thumbnail" style="background-image: url('video-thumb-6.jpg');">
-<div class="platform-badge instagram">
-        <img src="si-instagram.svg" alt="" aria-hidden="true">
-      </div>              </div>
-              <div class="watch-info">
-                <h3 class="watch-title">Όταν οι νέοι μας νιώθουν ότι δεν μπορούν καν να ξεκινήσουν… κάτι δεν πάει καλά.</h3>
-                <p class="watch-meta">Instagram Reel</p>
-              </div>
-            </a>
-          </div>
-			
-          <div class="swiper-slide">
-            <a href="https://www.instagram.com/p/DQMnXcNjOHw/" target="_blank" rel="noopener" class="watch-card">
-              <div class="watch-thumbnail" style="background-image: url('video-thumb-5.jpg');">
-<div class="platform-badge instagram">
-        <img src="si-instagram.svg" alt="" aria-hidden="true">
-      </div>              </div>
-              <div class="watch-info">
-                <h3 class="watch-title">Ψυχική Υγεία στα σχολεία μας...</h3>
-                <p class="watch-meta">Instagram Reel</p>
-              </div>
-            </a>
-          </div>
-			
-
-          <div class="swiper-slide">
-            <a href="https://www.instagram.com/p/DOyQLCmDPqI/" target="_blank" rel="noopener" class="watch-card">
-              <div class="watch-thumbnail" style="background-image: url('video-thumb-1.jpg');">
-<div class="platform-badge instagram">
-        <img src="si-instagram.svg" alt="" aria-hidden="true">
-      </div>              </div>
-              <div class="watch-info">
-                <h3 class="watch-title">Πέρα από τους τίτλους...</h3>
-                <p class="watch-meta">Instagram Reel</p>
-              </div>
-            </a>
-          </div>
-
-          <div class="swiper-slide">
-            <a href="https://www.instagram.com/p/DOi4y8ajCET/" target="_blank" rel="noopener" class="watch-card">
-              <div class="watch-thumbnail" style="background-image: url('video-thumb-2.jpg');">
-<div class="platform-badge instagram">
-        <img src="si-instagram.svg" alt="" aria-hidden="true">
-      </div>              </div>
-              <div class="watch-info">
-                <h3 class="watch-title">Προσιτό ενοίκιο...</h3>
-                <p class="watch-meta">Instagram Reel</p>
-              </div>
-            </a>
-          </div>
-
-          <div class="swiper-slide">
-            <a href="https://www.instagram.com/p/DObms2hDHKw/" target="_blank" rel="noopener" class="watch-card">
-              <div class="watch-thumbnail" style="background-image: url('video-thumb-3.jpg');">
-<div class="platform-badge instagram">
-        <img src="si-instagram.svg" alt="" aria-hidden="true">
-      </div>              </div>
-              <div class="watch-info">
-                <h3 class="watch-title">Νέα πνοή στη στέγαση.</h3>
-                <p class="watch-meta">Instagram Reel</p>
-              </div>
-            </a>
-          </div>
-
-          <div class="swiper-slide">
-            <a href="https://www.youtube.com/watch?v=6gOvvM-5HO8&t=578s" target="_blank" rel="noopener" class="watch-card">
-              <div class="watch-thumbnail" style="background-image: url('video-thumb-4.jpg');">
-<div class="platform-badge youtube">
-        <!-- minimalist play triangle -->
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <polygon points="5 3 19 12 5 21 5 3"></polygon>
-        </svg>
-      </div>              </div>
-              <div class="watch-info">
-                <h3 class="watch-title">Συνέντευξη για το Κράτος Δικαίου</h3>
-                <p class="watch-meta">YouTube Video</p>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Watch nav buttons -->
-      <div class="nav-row">
-        <div class="swiper-button-prev watch-prev"></div>
-        <div class="swiper-button-next watch-next"></div>
       </div>
     </section>
 
@@ -1030,61 +999,54 @@
 </section>
 
 
-    <!-- GET INVOLVED -->
+    <!-- GET INVOLVED + CALENDAR (RESTRUCTURED STACKED LAYOUT) -->
     <section id="get-involved" class="section section-bg-paper">
       <div class="container">
         <h2 class="h-section center reveal">Γίνε Μέρος της Δυναμικής μας</h2>
-        <p class="section-subtitle center reveal">Η δύναμή μας είναι οι άνθρωποί μας. Συμπλήρωσε τη φόρμα για να γίνεις εθελοντής ή επικοινώνησε μαζί μας.</p>
-        <div class="involved-wrap">
-          <form id="involvedForm"
-      class="form reveal"
-      aria-label="Φόρμα εθελοντισμού"
-      action="https://script.google.com/macros/s/AKfycbwDAKkOhQT_ict2a1ckUJBYqajrCFlid_J5kmU0pYpCNbfWsU7FWmu4PPllxwmbqVZk/exec"
-      method="POST"
-      novalidate>
-  <div class="form-row">
-    <label for="name">Ονοματεπώνυμο</label>
-    <input id="name" name="name" type="text" autocomplete="name" required />
-  </div>
-  <div class="form-row">
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" autocomplete="email" required />
-  </div>
-  <div class="form-row">
-    <label for="interest">Πως θέλεις να βοηθήσεις;</label>
-    <select id="interest" name="interest">
-      <option>Εθελοντισμός στην περιοχή μου</option>
-      <option>Φιλοξενία οικιακής συγκέντρωσης</option>
-      <option>Βοήθεια στα social media</option>
-      <option>Οτιδήποτε χρειαστεί</option>
-    </select>
-  </div>
-
-  <!-- Honeypot για bots -->
-  <input type="text" name="website" tabindex="-1" autocomplete="off"
-         style="position:absolute;left:-9999px;height:0;width:0;padding:0;margin:0;border:0;"/>
-
-  <!-- reCAPTCHA v2 -->
-  <div class="g-recaptcha"
-       data-sitekey="6LfjFtsrAAAAAAwaAAFLT2s_f47FaidIJjIae6Pn"
-       style="margin: 1rem 0; transform:scale(0.9); transform-origin:0 0;"></div>
-
-  <button type="submit" class="btn btn-blue" id="involvedSubmitBtn">Δήλωσε Συμμετοχή</button>
-  <p class="form-msg" role="status" aria-live="polite"></p>
-</form>
-
-
-          <div class="contact-bubbles reveal">
-            <p>Ή επικοινώνησε απευθείας με την ομάδα:</p>
-            <div class="bubble-wrapper">
-              <a class="bubble reveal" id="viberBubble" target="_blank" rel="noopener">
-                <img src="icon-viber.svg" alt="" aria-hidden="true" /><span>Viber</span>
-              </a>
-              <a class="bubble reveal" id="emailBubble" rel="noopener">
-                <img src="icon-email.svg" alt="" aria-hidden="true" /><span>Email</span>
-              </a>
+        <p class="section-subtitle center reveal">Ενημερώσου για τις δράσεις μας ή έλα να βοηθήσεις ενεργά την προσπάθεια.</p>
+        
+        <div class="involved-wrapper-stack reveal">
+          
+          <!-- Contact Form with Bubbles Inside -->
+          <form id="involvedForm" class="form" aria-label="Φόρμα εθελοντισμού"
+                action="https://script.google.com/macros/s/AKfycbwDAKkOhQT_ict2a1ckUJBYqajrCFlid_J5kmU0pYpCNbfWsU7FWmu4PPllxwmbqVZk/exec"
+                method="POST" novalidate>
+            <div class="form-row">
+              <label for="name">Ονοματεπώνυμο</label>
+              <input id="name" name="name" type="text" autocomplete="name" required />
             </div>
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+            
+            <!-- Hidden bot field -->
+            <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;height:0;width:0;padding:0;margin:0;border:0;"/>
+            
+            <div class="g-recaptcha" data-sitekey="6LfjFtsrAAAAAAwaAAFLT2s_f47FaidIJjIae6Pn" style="margin: 1rem 0; transform:scale(0.9); transform-origin:0 0;"></div>
+            
+            <button type="submit" class="btn btn-blue" id="involvedSubmitBtn" style="width: 100%;">Δήλωσε Συμμετοχή</button>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+
+            <!-- Contact Bubbles (Moved INSIDE form, below button) -->
+            <div class="contact-bubbles">
+                <p>Ή επικοινώνησε απευθείας με την ομάδα:</p>
+                <div class="bubble-wrapper">
+                  <a class="bubble" id="viberBubble" target="_blank" rel="noopener">
+                    <img src="icon-viber.svg" alt="" aria-hidden="true" /><span>Viber</span>
+                  </a>
+                  <a class="bubble" id="emailBubble" rel="noopener">
+                    <img src="icon-email.svg" alt="" aria-hidden="true" /><span>Email</span>
+                  </a>
+                </div>
+            </div>
+          </form>
+
+          <!-- Calendar (Stacked below form) -->
+          <div class="calendar-container">
+            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FNicosia&showPrint=0&src=Y19lYjNhZTk3ZTI4NmVlMDQzYzU5OGFlMWM5YTU0NmZiODQzNmYzZGQ2YTM1ZGQwYzQ1Mzc1Yzk5OGJjOTNjYWFiQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23f6bf26" style="border:0; width:100%; height:500px;" frameborder="0" scrolling="no"></iframe>
           </div>
+
         </div>
       </div>
     </section>
@@ -1098,7 +1060,7 @@
         <div><strong>Elena Koushou Hadjidemetriou</strong><br />Βουλευτικές Εκλογές 2026</div>
       </div>
 
-      <!-- Socials (use your URLs) -->
+      <!-- Socials -->
       <div class="foot-socials">
         <a href="https://www.facebook.com/ekoushos/" aria-label="Facebook" target="_blank" rel="noopener"><img src="si-facebook.svg" alt="" /></a>
         <a href="https://x.com/elenakoushos" aria-label="X (Twitter)" target="_blank" rel="noopener"><img src="si-x.png" alt="" /></a>
@@ -1106,7 +1068,6 @@
         <a href="https://www.linkedin.com/in/elena-koushos-hadjidemetriou-b98a7446/" aria-label="LinkedIn" target="_blank" rel="noopener"><img src="si-linkedin.svg" alt="" /></a>
         <a href="https://www.tiktok.com/@elenakoushoshd?lang=en" aria-label="TikTok" target="_blank" rel="noopener"><img src="si-tiktok.svg" alt="" /></a>
         <a href="#" aria-label="Youtube" target="_blank" rel="noopener"><img src="si-youtube.svg" alt="" /></a>
-
       </div>
 
       <div class="foot-legal">© 2025</div>
@@ -1123,13 +1084,7 @@
       document.documentElement.classList.add('enter');
 
 	  const ENABLE_PORTRAIT_MORPH = false;
-      /* ===== Contact details (edit once here) ===== */
-      const CONTACT = {
-        phone: "+35799123456",
-        email: "vote@elenakoushos.com",
-        whatsappText: "Γεια σας! Ενδιαφέρομαι να μάθω περισσότερα για την καμπάνια της Έλενας."
-      };
-
+      
       /* ===== Nav toggle ===== */
       const navToggle = document.querySelector('.nav-toggle'),
             navMenu   = document.getElementById('nav-menu');
@@ -1197,67 +1152,54 @@
       });
 
       /* ===== Real form submit to Apps Script + reCAPTCHA ===== */
-const form = document.getElementById('involvedForm');
-if (form) {
-  const msg   = form.querySelector('.form-msg');
-  const btn   = document.getElementById('involvedSubmitBtn');
+      const form = document.getElementById('involvedForm');
+      if (form) {
+        const msg   = form.querySelector('.form-msg');
+        const btn   = document.getElementById('involvedSubmitBtn');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    msg.style.color = 'var(--ink-2)';
-    msg.textContent = 'Αποστολή...';
-    btn.disabled = true;
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          msg.style.color = 'var(--ink-2)';
+          msg.textContent = 'Αποστολή...';
+          btn.disabled = true;
 
-    const data = Object.fromEntries(new FormData(form).entries());
-    if (!data.name || !data.email) {
-      msg.textContent = 'Παρακαλώ συμπληρώστε το όνομα και το email σας.';
-      msg.style.color = '#D93025';
-      btn.disabled = false;
-      return;
-    }
+          const data = Object.fromEntries(new FormData(form).entries());
+          if (!data.name || !data.email) {
+            msg.textContent = 'Παρακαλώ συμπληρώστε το όνομα και το email σας.';
+            msg.style.color = '#D93025';
+            btn.disabled = false;
+            return;
+          }
 
-    try {
-      // Στέλνουμε τα FormData όπως είναι, για να περιέχουν και το g-recaptcha-response
-      const res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form)
-      });
+          try {
+            const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+            let data = {};
+            try { data = await res.json(); } catch(_) {}
 
-      // Αν ο browser κόψει CORS, δεν θα έχουμε JSON. Προσπαθούμε… αλλιώς δίνουμε generic μήνυμα.
-      let data = {};
-      try { data = await res.json(); } catch(_) {}
-
-      if (res.ok && (data.ok === true || Object.keys(data).length === 0)) {
-        msg.textContent = 'Ευχαριστούμε! Θα επικοινωνήσουμε σύντομα.';
-        msg.style.color = 'var(--brand-blue)';
-        form.reset();
-        if (window.grecaptcha) grecaptcha.reset();
-      } else {
-        msg.textContent = 'Αποτυχία επαλήθευσης ή σφάλμα διακομιστή. Δοκιμάστε ξανά.';
-        msg.style.color = '#D93025';
-        if (window.grecaptcha) grecaptcha.reset();
+            if (res.ok && (data.ok === true || Object.keys(data).length === 0)) {
+              msg.textContent = 'Ευχαριστούμε! Θα επικοινωνήσουμε σύντομα.';
+              msg.style.color = 'var(--brand-blue)';
+              form.reset();
+              if (window.grecaptcha) grecaptcha.reset();
+            } else {
+              msg.textContent = 'Αποτυχία επαλήθευσης ή σφάλμα διακομιστή.';
+              msg.style.color = '#D93025';
+              if (window.grecaptcha) grecaptcha.reset();
+            }
+          } catch (err) {
+            msg.textContent = 'Σφάλμα δικτύου. Παρακαλώ δοκιμάστε ξανά.';
+            msg.style.color = '#D93025';
+            if (window.grecaptcha) grecaptcha.reset();
+          } finally {
+            btn.disabled = false;
+          }
+        });
       }
-    } catch (err) {
-      msg.textContent = 'Σφάλμα δικτύου. Παρακαλώ δοκιμάστε ξανά.';
-      msg.style.color = '#D93025';
-      if (window.grecaptcha) grecaptcha.reset();
-    } finally {
-      btn.disabled = false;
-    }
-  });
-}
-
 
       /* ===== Quick contact bubbles ===== */
       const setupContactLink = (id, url) => { const el = document.getElementById(id); if (el) el.href = url; };
-      setupContactLink(
-  'viberBubble',
-  'https://invite.viber.com/?g2=AQA7hC17s8htQFTqDMRpIDf0wq%2Fr6fAwxmPSoCNvKRbge4MZTbH3llaX3DjjqTdI'
-);
-setupContactLink(
-  'emailBubble',
-  'mailto:vote@elenakoushos.com?subject=' + encodeURIComponent('Επικοινωνία για την καμπάνια 2026')
-);
+      setupContactLink('viberBubble', 'https://invite.viber.com/?g2=AQA7hC17s8htQFTqDMRpIDf0wq%2Fr6fAwxmPSoCNvKRbge4MZTbH3llaX3DjjqTdI');
+      setupContactLink('emailBubble', 'mailto:vote@elenakoushos.com?subject=' + encodeURIComponent('Επικοινωνία για την καμπάνια 2026'));
 
       /* ===== Sticky header shows after hero ===== */
       const siteHeader = document.getElementById('siteHeader'),
