@@ -48,6 +48,9 @@
       --radius:14px;
       --header-height: 96px;
 
+      /* Brand gradient definition */
+      --brand-gradient: linear-gradient(112deg, color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%, color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%, color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%, color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%);
+
       /* hero interaction */
       --mx:50%;
       --my:38%;
@@ -109,6 +112,45 @@
     .btn-white:hover{transform: translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.08)}
 
     .election-ribbon{text-align:center; padding:.5rem 1rem; background:linear-gradient(90deg, var(--brand-blue), var(--brand-accent)); color:#fff; font-weight:900; letter-spacing:.02em}
+
+    /* ================= BALLOT RIBBON (#7) ================= */
+    .ballot-ribbon {
+      position: fixed;
+      top: 0;
+      right: clamp(20px, 5vw, 60px); /* Responsive right position */
+      z-index: 1100; /* Above nav */
+      width: clamp(50px, 8vw, 70px);
+      height: clamp(80px, 12vw, 110px);
+      background: var(--brand-gradient);
+      color: #fff;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      padding-top: 12px;
+      /* Shape with point at bottom */
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+      /* Filters for shadow since clip-path cuts box-shadow */
+      filter: drop-shadow(0 5px 15px rgba(0,45,100,0.4));
+      
+      /* Animation state hidden */
+      transform: translateY(-120%);
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      will-change: transform;
+    }
+    .ballot-ribbon.dropped { transform: translateY(0); }
+    .ribbon-label {
+      font-size: 0.75rem; text-transform: uppercase; font-weight: 700; opacity: 0.9;
+      letter-spacing: 0.05em; margin-bottom: -2px;
+    }
+    .ribbon-number {
+      font-family: "Peridot PE Variable", serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      line-height: 1;
+    }
+    @media (max-width: 960px) {
+      .ballot-ribbon { right: 70px; height: 85px; width: 45px; } /* Adjust so it doesn't hide hamburger */
+      .ribbon-label { font-size: 0.6rem; }
+      .ribbon-number { font-size: 1.8rem; }
+    }
 
     /* ================= HERO ================ */
     .hero{
@@ -218,78 +260,6 @@
     .program-card .read-more-prompt { color: var(--brand-blue); font-weight: 900; }
     .program-card .read-more-prompt::after { content: ' →'; }
 
-/* ================= PROPOSALS SECTION ================= */
-    .proposals-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      margin-top: 2.5rem;
-    }
-    @media (min-width: 768px) {
-      .proposals-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    }
-
-    .proposal-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-      color: var(--ink-2);
-      font-weight: 700;
-      font-size: 1.05rem; /* Readable but compact */
-      line-height: 1.4;
-      box-shadow: var(--shadow);
-      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    /* Brand accent line on hover */
-    .proposal-item::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 5px;
-      background: var(--brand-blue);
-      transform: scaleY(0);
-      opacity: 0;
-      transition: transform 0.25s ease, opacity 0.25s ease;
-      transform-origin: center;
-    }
-
-    .proposal-item:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(16,50,92,.14);
-      border-color: rgba(0,69,136,0.25);
-      color: var(--brand-blue);
-    }
-
-    .proposal-item:hover::before {
-      transform: scaleY(1);
-      opacity: 1;
-    }
-
-    .proposal-text {
-      padding-left: 8px; /* Space for the hover line */
-      margin-right: 1rem;
-    }
-
-    .proposal-icon {
-      width: 22px; height: 22px;
-      color: var(--brand-accent); /* Softer accent initially */
-      flex-shrink: 0;
-      transition: transform 0.2s ease, color 0.2s ease;
-    }
-
-    .proposal-item:hover .proposal-icon {
-      transform: translateX(5px);
-      color: var(--brand-blue);
-    }
-	  
     /* Articles carousel */
     .articles .swiper { overflow: hidden; }
     .articles .swiper-slide { height: auto; display: flex; }
@@ -355,9 +325,18 @@
   transform:translate(-50%,-50%) scale(1);
 }
 
-    /* Get involved */
-    .involved-wrap { max-width: 650px; margin: 2rem auto 0; }
-    .form{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding: clamp(1.5rem, 4vw, 2rem); box-shadow:var(--shadow); }
+    /* Get involved (UPDATED with Calendar Grid) */
+    .involved-wrap { max-width: 100%; margin: 0; }
+    
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 4vw, 3rem);
+      margin-top: 2rem;
+      align-items: start;
+    }
+    
+    .form{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding: clamp(1.5rem, 4vw, 2rem); box-shadow:var(--shadow); height: 100%; }
     .form-row{display:flex; flex-direction:column; gap:.35rem; margin-bottom:1rem;}
     label{font-weight:900; color:var(--ink-2)}
     input, select{ padding:.7rem .8rem; border-radius:10px; border:1px solid var(--line); background:#fff; color:var(--ink); outline:none; font-size: 1rem; transition: all .2s; }
@@ -365,10 +344,22 @@
     .form .btn-blue{margin-top:.4rem; width: 100%; padding: 1rem; font-size: 1.05rem;}
     .form-msg{min-height:1.2em; color:var(--ink-2); margin-top:.5rem; font-weight: 700;}
 
+    /* Calendar Wrapper */
+    .calendar-wrapper {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 0.5rem;
+      box-shadow: var(--shadow);
+      height: 480px; /* Fixed height to match form approx */
+      overflow: hidden;
+    }
+    .h-sub { font-family: "Peridot PE Variable", sans-serif; font-size: 1.5rem; color: var(--brand-blue); margin-bottom: 1rem; }
+
     /* Contact bubbles */
-    .contact-bubbles { text-align: center; margin-top: 2.5rem; }
-    .contact-bubbles p { color: var(--muted); font-weight: 700; margin-bottom: 1.2rem; }
-    .bubble-wrapper { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .contact-bubbles { text-align: left; margin-top: 1.5rem; }
+    .contact-bubbles p { color: var(--muted); font-weight: 700; margin-bottom: 0.8rem; }
+    .bubble-wrapper { display: flex; justify-content: flex-start; gap: 1rem; flex-wrap: wrap; }
     .bubble { display:flex; align-items:center; gap:.6rem; background:#fff; padding:.8rem 1.5rem; border-radius:999px; box-shadow:0 5px 15px rgba(16,50,92,.1); border:1px solid var(--line); font-weight:900; color:var(--ink-2); transition: transform .2s ease, box-shadow .2s ease; }
     .bubble:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(16,50,92,.14); }
     .bubble img { width: 24px; height: 24px; display:block; }
@@ -557,6 +548,11 @@
       .foot-brand, .foot-socials { justify-content: center; }
       .foot-socials { order: -1; }
       .foot-legal{text-align: center;}
+      
+      /* New grid adjustments for mobile */
+      .action-grid { grid-template-columns: 1fr; gap: 4rem; }
+      .contact-bubbles { text-align: center !important; }
+      .bubble-wrapper { justify-content: center !important; }
     }
 
     @media (min-width: 961px) {
@@ -601,6 +597,78 @@
 /* (already centered on most viewports, but just in case) */
 .hero-cta{ justify-content: center; }
 
+/* ================= PROPOSALS SECTION ================= */
+    .proposals-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    @media (min-width: 768px) {
+      .proposals-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    }
+
+    .proposal-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      color: var(--ink-2);
+      font-weight: 700;
+      font-size: 1.05rem; /* Readable but compact */
+      line-height: 1.4;
+      box-shadow: var(--shadow);
+      transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* Brand accent line on hover */
+    .proposal-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 5px;
+      background: var(--brand-blue);
+      transform: scaleY(0);
+      opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      transform-origin: center;
+    }
+
+    .proposal-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(16,50,92,.14);
+      border-color: rgba(0,69,136,0.25);
+      color: var(--brand-blue);
+    }
+
+    .proposal-item:hover::before {
+      transform: scaleY(1);
+      opacity: 1;
+    }
+
+    .proposal-text {
+      padding-left: 8px; /* Space for the hover line */
+      margin-right: 1rem;
+    }
+
+    .proposal-icon {
+      width: 22px; height: 22px;
+      color: var(--brand-accent); /* Softer accent initially */
+      flex-shrink: 0;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .proposal-item:hover .proposal-icon {
+      transform: translateX(5px);
+      color: var(--brand-blue);
+    }
+
   </style>
 	<noscript>
   <style>
@@ -617,6 +685,13 @@
 </noscript>
 </head>
 <body>
+  
+  <!-- Ballot Number Ribbon -->
+  <div class="ballot-ribbon" id="ballotRibbon">
+    <span class="ribbon-label">Αρ.</span>
+    <span class="ribbon-number">7</span>
+  </div>
+
   <!-- Progress bar -->
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
@@ -784,8 +859,7 @@
       </div>
     </section>
 
-
-<!-- POLITICAL PROPOSALS -->
+    <!-- POLITICAL PROPOSALS -->
     <section id="proposals" class="section section-bg-paper">
       <div class="container">
         <h2 class="h-section center reveal">Πολιτικές Προτάσεις</h2>
@@ -846,7 +920,7 @@
         </div>
       </div>
     </section>
-	  
+
     <!-- ARTICLES -->
     <section id="articles" class="section section-bg-paper articles">
       <div class="container">
@@ -1165,61 +1239,76 @@
 </section>
 
 
-    <!-- GET INVOLVED -->
+    <!-- GET INVOLVED (Updated Layout with Calendar) -->
     <section id="get-involved" class="section section-bg-paper">
       <div class="container">
         <h2 class="h-section center reveal">Γίνε Μέρος της Δυναμικής μας</h2>
-        <p class="section-subtitle center reveal">Η δύναμή μας είναι οι άνθρωποί μας. Συμπλήρωσε τη φόρμα για να γίνεις εθελοντής ή επικοινώνησε μαζί μας.</p>
-        <div class="involved-wrap">
-          <form id="involvedForm"
-      class="form reveal"
-      aria-label="Φόρμα εθελοντισμού"
-      action="https://script.google.com/macros/s/AKfycbwDAKkOhQT_ict2a1ckUJBYqajrCFlid_J5kmU0pYpCNbfWsU7FWmu4PPllxwmbqVZk/exec"
-      method="POST"
-      novalidate>
-  <div class="form-row">
-    <label for="name">Ονοματεπώνυμο</label>
-    <input id="name" name="name" type="text" autocomplete="name" required />
-  </div>
-  <div class="form-row">
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" autocomplete="email" required />
-  </div>
-  <div class="form-row">
-    <label for="interest">Πως θέλεις να βοηθήσεις;</label>
-    <select id="interest" name="interest">
-      <option>Εθελοντισμός στην περιοχή μου</option>
-      <option>Φιλοξενία οικιακής συγκέντρωσης</option>
-      <option>Βοήθεια στα social media</option>
-      <option>Οτιδήποτε χρειαστεί</option>
-    </select>
-  </div>
+        <p class="section-subtitle center reveal">Ενημερώσου για τις δράσεις μας ή έλα να βοηθήσεις ενεργά την προσπάθεια.</p>
+        
+        <!-- NEW ACTION GRID -->
+        <div class="action-grid reveal">
+          
+          <!-- Column 1: Form -->
+          <div class="involved-col">
+             <h3 class="h-sub">Δήλωση Συμμετοχής</h3>
+             <form id="involvedForm"
+                class="form"
+                aria-label="Φόρμα εθελοντισμού"
+                action="https://script.google.com/macros/s/AKfycbwDAKkOhQT_ict2a1ckUJBYqajrCFlid_J5kmU0pYpCNbfWsU7FWmu4PPllxwmbqVZk/exec"
+                method="POST"
+                novalidate>
+                <div class="form-row">
+                  <label for="name">Ονοματεπώνυμο</label>
+                  <input id="name" name="name" type="text" autocomplete="name" required />
+                </div>
+                <div class="form-row">
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" autocomplete="email" required />
+                </div>
+                <div class="form-row">
+                  <label for="interest">Πως θέλεις να βοηθήσεις;</label>
+                  <select id="interest" name="interest">
+                    <option>Εθελοντισμός στην περιοχή μου</option>
+                    <option>Φιλοξενία οικιακής συγκέντρωσης</option>
+                    <option>Βοήθεια στα social media</option>
+                    <option>Οτιδήποτε χρειαστεί</option>
+                  </select>
+                </div>
 
-  <!-- Honeypot για bots -->
-  <input type="text" name="website" tabindex="-1" autocomplete="off"
-         style="position:absolute;left:-9999px;height:0;width:0;padding:0;margin:0;border:0;"/>
+                <!-- Honeypot -->
+                <input type="text" name="website" tabindex="-1" autocomplete="off"
+                       style="position:absolute;left:-9999px;height:0;width:0;padding:0;margin:0;border:0;"/>
 
-  <!-- reCAPTCHA v2 -->
-  <div class="g-recaptcha"
-       data-sitekey="6LfjFtsrAAAAAAwaAAFLT2s_f47FaidIJjIae6Pn"
-       style="margin: 1rem 0; transform:scale(0.9); transform-origin:0 0;"></div>
+                <!-- reCAPTCHA v2 -->
+                <div class="g-recaptcha"
+                     data-sitekey="6LfjFtsrAAAAAAwaAAFLT2s_f47FaidIJjIae6Pn"
+                     style="margin: 1rem 0; transform:scale(0.9); transform-origin:0 0;"></div>
 
-  <button type="submit" class="btn btn-blue" id="involvedSubmitBtn">Δήλωσε Συμμετοχή</button>
-  <p class="form-msg" role="status" aria-live="polite"></p>
-</form>
+                <button type="submit" class="btn btn-blue" id="involvedSubmitBtn">Δήλωσε Συμμετοχή</button>
+                <p class="form-msg" role="status" aria-live="polite"></p>
+             </form>
+          </div>
 
-
-          <div class="contact-bubbles reveal">
-            <p>Ή επικοινώνησε απευθείας με την ομάδα:</p>
-            <div class="bubble-wrapper">
-              <a class="bubble reveal" id="viberBubble" target="_blank" rel="noopener">
-                <img src="icon-viber.svg" alt="" aria-hidden="true" /><span>Viber</span>
-              </a>
-              <a class="bubble reveal" id="emailBubble" rel="noopener">
-                <img src="icon-email.svg" alt="" aria-hidden="true" /><span>Email</span>
-              </a>
+          <!-- Column 2: Calendar -->
+          <div class="calendar-col">
+            <h3 class="h-sub">Επερχόμενες Εκδηλώσεις</h3>
+            <div class="calendar-wrapper">
+              <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FShanghai&showPrint=0&src=eHNpcmltaXMueHNAZ21haWwuY29t&src=MDE2ZDQxMGUxZWM2YjI5YTU4NTIwZGM1ZDBlYWE3YWVmMjk3NTI0Y2JiNWJmMmU0OWIzMDVlZDMwNmNkNjAyNEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZWwuY3kjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZmFtaWx5MDk2OTk2NzAzOTAyMzE0NDE0NDhAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23039be5&color=%23a79b8e&color=%230b8043&color=%23ad1457" style="border:0; width:100%; height:100%;" frameborder="0" scrolling="no"></iframe>
+            </div>
+            
+            <div class="contact-bubbles">
+              <p>Ή επικοινώνησε απευθείας με την ομάδα:</p>
+              <div class="bubble-wrapper">
+                <a class="bubble" id="viberBubble" target="_blank" rel="noopener">
+                  <img src="icon-viber.svg" alt="" aria-hidden="true" /><span>Viber</span>
+                </a>
+                <a class="bubble" id="emailBubble" rel="noopener">
+                  <img src="icon-email.svg" alt="" aria-hidden="true" /><span>Email</span>
+                </a>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -1256,6 +1345,12 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.classList.add('enter');
+      
+      // Ballot Ribbon Animation
+      setTimeout(() => {
+        const ribbon = document.getElementById('ballotRibbon');
+        if(ribbon) ribbon.classList.add('dropped');
+      }, 800);
 
 	  const ENABLE_PORTRAIT_MORPH = false;
       /* ===== Contact details (edit once here) ===== */
