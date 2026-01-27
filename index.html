@@ -138,11 +138,11 @@
       background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
     }
     
-    /* Ballot Number Image (#7) - Positioned Right */
+    /* Ballot Number Image Positioning */
     .hero-number-img {
       position: absolute;
-      top: clamp(25px, 6%, 45px);
-      right: clamp(20px, 8vw, 80px); 
+      top: clamp(25px, 6%, 45px); /* Balanced from top */
+      right: clamp(20px, 8vw, 80px); /* Responsive from right */
       left: auto;
       
       width: clamp(70px, 12vw, 120px);
@@ -154,12 +154,9 @@
     }
     .hero-number-img:hover { transform: scale(1.05) rotate(2deg); }
 
+    /* Mobile tweak for number */
     @media (max-width: 768px) {
-        .hero-number-img {
-            top: 25px;
-            right: 20px;
-            width: 75px; 
-        }
+        .hero-number-img { top: 25px; right: 20px; width: 75px; }
     }
 
     .hero-inner{
@@ -275,10 +272,14 @@
     .watch-title { font-weight:900; font-size:1rem; color:var(--ink-2); margin:0 0 .25rem 0; }
     .watch-meta { font-size:.9rem; color:var(--muted); margin:0; }
 	
-	/* Platform badge overlay */
+	/* Platform badge overlay (hover) */
     .platform-badge{
-      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.94); opacity:0;
-      transition: transform .3s ease, opacity .3s ease; pointer-events:none;
+      position:absolute;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%) scale(.94);
+      opacity:0;
+      transition: transform .3s ease, opacity .3s ease;
+      pointer-events:none;
     }
     .platform-badge img, .platform-badge svg{ width:56px; height:56px; display:block; opacity:.72; filter: drop-shadow(0 2px 6px rgba(0,0,0,.25)); }
     .platform-badge.youtube svg{ width:46px; height:46px; opacity:.68; }
@@ -337,6 +338,7 @@
 
     /* Brand Gradient & Footer */
     :root{
+      /* reuse the same gradient logic you already use in footer */
       --brand-gradient:
         linear-gradient(112deg,
           color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%,
@@ -395,7 +397,6 @@
     #gnomi .lead{ font-size: 1.08rem; line-height: 1.65; opacity:.97; color:#fff; max-width: 72ch; margin-inline: auto; }
     #gnomi p{ margin:.65rem 0; }
     #gnomi .subtle{ opacity:.92; max-width: 72ch; margin-inline: auto; }
-
     #gnomi .cta-row{ display: flex; justify-content: center; margin-top: .6rem; }
     .btn-form{
       display:inline-flex; align-items:center; justify-content:center;
@@ -462,8 +463,9 @@
       overflow: hidden;
     }
     
-    /* Slide Styling - Important: Use explicit class selector for the vertical slides */
+    /* Slide Styling */
     .proposals-carousel .swiper-slide {
+      /* Force a specific height for the slide layout in vertical mode */
       height: 160px !important; 
       display: flex;
       align-items: center;
@@ -649,7 +651,6 @@
       <div class="container center">
         <h2 class="h-section reveal">Πολιτικές Προτάσεις</h2>
         <p class="section-subtitle reveal">Συγκεκριμένες, κοστολογημένες λύσεις για τα προβλήματα της καθημερινότητας.</p>
-        <!-- The Swiper Container for Vertical Cards -->
         <div class="proposals-swiper-container reveal">
           <div class="swiper proposals-carousel">
             <div class="swiper-wrapper">
@@ -721,6 +722,7 @@
       </div>
     </section>
   </main>
+
 
  <!-- FOOTER -->
   <footer class="site-footer">
