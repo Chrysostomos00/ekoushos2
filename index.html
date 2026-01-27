@@ -138,23 +138,29 @@
       background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
     }
     
-    /* Hero Number Image */
+    /* Ballot Number Positioning */
     .hero-number-img {
       position: absolute;
-      top: clamp(20px, 5vh, 40px);
-      right: clamp(20px, 8vw, 80px); 
+      top: clamp(25px, 6%, 45px); /* Balanced from top */
+      right: clamp(20px, 8vw, 80px); /* Responsive from right */
       left: auto;
-      width: clamp(70px, 12vw, 120px);
+      
+      width: clamp(70px, 12vw, 110px);
       height: auto;
       z-index: 10;
-      filter: drop-shadow(0 6px 14px rgba(0,25,60,0.3));
+      
+      filter: drop-shadow(0 6px 12px rgba(0,25,60,0.2)); 
       transition: transform 0.3s ease;
     }
     .hero-number-img:hover { transform: scale(1.05) rotate(2deg); }
 
-    /* Mobile tweak for number */
+    /* Mobile Adjustment */
     @media (max-width: 768px) {
-        .hero-number-img { top: 25px; right: 20px; width: 75px; }
+        .hero-number-img {
+            top: 25px;       
+            right: 20px;
+            width: 75px; 
+        }
     }
 
     .hero-inner{
@@ -281,7 +287,6 @@
 
     /* Get involved & Calendar Layout */
     .involved-wrapper-stack { max-width: 650px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem; }
-    
     .form{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding: clamp(1.5rem, 4vw, 2rem); box-shadow:var(--shadow); }
     .form-row{display:flex; flex-direction:column; gap:.35rem; margin-bottom:1rem;}
     label{font-weight:900; color:var(--ink-2)}
@@ -313,15 +318,12 @@
     .foot{display:grid; gap:2rem; grid-template-columns:1fr auto 1fr; padding:3rem 0; align-items:center;}
     .foot a { color: #fff; opacity: 0.92; transition: opacity .2s; }
     .foot a:hover { opacity: 1; }
-
     .foot-brand{display:flex; gap:.7rem; align-items:center}
     .foot-brand img{width:44px; height:44px}
-
     .foot-socials { display: flex; justify-content: center; gap: .75rem; align-items: center; }
     .foot-socials a { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); }
     .foot-socials a:hover { background: rgba(255,255,255,.18); }
     .foot-socials img { width:22px; height:22px; display:block; }
-
     .foot-legal{opacity:.92; text-align: right;}
 
     /* Reveal */
@@ -394,7 +396,6 @@
     #gnomi .lead{ font-size: 1.08rem; line-height: 1.65; opacity:.97; color:#fff; max-width: 72ch; margin-inline: auto; }
     #gnomi p{ margin:.65rem 0; }
     #gnomi .subtle{ opacity:.92; max-width: 72ch; margin-inline: auto; }
-
     #gnomi .cta-row{ display: flex; justify-content: center; margin-top: .6rem; }
     .btn-form{
       display:inline-flex; align-items:center; justify-content:center;
@@ -404,7 +405,6 @@
     }
     .btn-form:hover{ transform: translateY(-2px); filter: brightness(1.04); box-shadow: 0 10px 24px rgba(0,0,0,.16); }
 
-    /* Media/Hero Alignment */
     .hero-cta{ justify-content: center; }
     @media (max-width: 640px){ .glass-card{ padding: 1.25rem; } #gnomi h2{ font-size: clamp(24px, 6vw, 34px); } }
     @media (prefers-reduced-motion: no-preference){ .glass-card.reveal{ opacity:0; transform: translateY(18px); } .glass-card.reveal.visible{ opacity:1; transform:none; transition:opacity .7s cubic-bezier(.5,0,0,1), transform .7s cubic-bezier(.5,0,0,1); } }
@@ -458,12 +458,12 @@
       width: 100%;
       height: 480px; /* Fixed height for visible carousel */
       margin-top: 3rem;
-      padding: 20px 0; /* Add padding to prevent clipping of shadows */
+      padding: 20px 0;
       overflow: hidden;
     }
     
     /* Slide Styling */
-    .swiper-slide {
+    .proposals-carousel .swiper-slide {
       /* Force a specific height for the slide layout in vertical mode */
       height: 160px !important; 
       display: flex;
@@ -475,8 +475,7 @@
     .prop-card {
       /* Dimensions within slide */
       width: min(100%, 750px);
-      height: 140px; /* Slightly smaller than slide height to leave gaps */
-      
+      height: 140px; 
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -523,7 +522,7 @@
        .prop-icon-wrap { width: 44px; height: 44px; }
        .prop-title { font-size: 1.05rem; }
        .prop-arrow { display: none; }
-       .swiper-slide { height: 140px !important; }
+       .proposals-carousel .swiper-slide { height: 140px !important; }
     }
 
   </style>
@@ -653,6 +652,7 @@
       <div class="container center">
         <h2 class="h-section reveal">Πολιτικές Προτάσεις</h2>
         <p class="section-subtitle reveal">Συγκεκριμένες, κοστολογημένες λύσεις για τα προβλήματα της καθημερινότητας.</p>
+        <!-- The Swiper Container for Vertical Cards -->
         <div class="proposals-swiper-container reveal">
           <div class="swiper proposals-carousel">
             <div class="swiper-wrapper">
