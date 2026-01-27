@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="el" data-theme="sky">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Υποχρεωτική κοινωνική στέγαση — Έλενα Κούσιου Χατζηδημητρίου</title>
+  <meta name="description" content="Για προσιτή κατοικία και δίκαιη αξιοποίηση ξένων επενδύσεων στην Κύπρο." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <style>
+    @font-face{ font-family:"Peridot PE Variable"; src:url("assets/fonts/PeridotPE-Variable.woff2") format("woff2"); font-weight:100 900; font-style:normal; font-display:swap; }
+  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  
+  <style>
+    /* Shared styles */
+    :root{ --brand-plum:#723666; --brand-blue:#004588; --brand-accent:#A06EA4; --ink:#0A2244; --ink-2:#14335A; --muted:#5A6F90; --paper:#FFFFFF; --paper-2:#F7FAFF; --paper-3:#EDF4FF; --line:#D9E7FF; --shadow:0 8px 24px rgba(16,50,92,.08); --radius:14px; --header-height: 96px; --brand-gradient: linear-gradient(112deg, color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%, color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%, color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%, color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%); }
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0; color:var(--ink); background-color: var(--paper); font:400 17px/1.65 "Roboto", sans-serif; -webkit-font-smoothing:antialiased;}
+    img, svg{max-width:100%; height:auto; display:block} a{color:inherit; text-decoration:none} .container{width:min(1200px, 92%); margin:0 auto}
+    h1,h2,h3,h4,h5{font-family:"Peridot PE Variable","Roboto",sans-serif; color: var(--ink-2); letter-spacing:.2px; margin-top: 0;}
+    .site-header{ position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:.5rem 0; height: var(--header-height);}
+    .brand img{height: 80px; width:auto} .nav-menu{display:flex; gap:1.1rem; align-items:center}
+    .nav-menu a{padding:.5rem .75rem; border-radius:8px; color:var(--ink-2); font-weight:700;} .nav-menu a:hover{background:rgba(20,51,90,.06)}
+    .nav-toggle{display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding: 10px;} .nav-toggle span{width:26px; height:2px; background:var(--ink-2); display:block; transition:0.3s;}
+    .btn{display:inline-flex; align-items:center; justify-content:center; padding:.75rem 1.25rem; border-radius:999px; font-weight:900; transition: all .2s ease; border:2px solid transparent;}
+    .btn-blue{background:var(--brand-blue); color:#fff} .btn-blue:hover{filter:brightness(1.07); transform: translateY(-2px);}
+    .btn-outline{border-color:var(--brand-blue); color:var(--ink-2)} .btn-outline:hover{background:rgba(0,69,136,.12); transform: translateY(-2px);}
+    .site-footer{ color:#fff; background: var(--brand-gradient); margin-top: clamp(60px, 8vw, 100px); }
+    .foot{display:grid; gap:2rem; grid-template-columns:1fr auto 1fr; padding:3rem 0; align-items:center;}
+    .foot-socials { display: flex; justify-content: center; gap: .75rem; }
+    .foot-socials a { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); }
+    .reveal{opacity:0; transform:translateY(22px); transition:opacity .75s, transform .75s} .reveal.visible{opacity:1; transform:translateY(0)}
+    @media (max-width: 960px){ .nav-toggle{display:flex} .nav-menu{position:fixed; left:1rem; right:1rem; top:calc(var(--header-height) + 0.5rem); background:#fff; border:1px solid var(--line); border-radius:12px; padding:.8rem; flex-direction:column; opacity:0; pointer-events:none; transform:translateY(-20px);} .nav-menu.show{opacity:1; pointer-events:auto; transform:translateY(0);} .foot{grid-template-columns:1fr; text-align: center;} .foot-socials{order:-1;} }
+
+    /* Page Specific */
+    .proposal-hero { padding: clamp(3rem, 6vw, 5rem) 0 3rem; background: var(--paper); border-bottom: 1px solid var(--line); text-align: center; }
+    .eyebrow { color: var(--brand-accent); font-weight: 900; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.8rem; margin-bottom: 1rem; display: block; }
+    .proposal-title { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.15; max-width: 960px; margin: 0 auto; color: var(--ink-2); }
+    .content-wrapper { width: min(840px, 92%); margin: 0 auto; padding: 3rem 0; }
+    .prose p { margin-bottom: 1.5rem; color: rgba(10, 34, 68, 0.9); font-size: 1.1rem; line-height: 1.7; }
+    .prose strong { color: var(--brand-blue); font-weight: 900; }
+    .prose ul { margin-bottom: 1.5rem; padding-left: 1.2rem; }
+    .prose li { margin-bottom: 0.5rem; position: relative; padding-left: 0.5rem; }
+    .problem-box { background: #FFF5F5; border-left: 5px solid #D93025; padding: 2rem; border-radius: 0 var(--radius) var(--radius) 0; margin: 2.5rem 0; }
+    .problem-box h3 { color: #D93025; display: flex; align-items: center; gap: 0.5rem; font-size: 1.3rem; margin-bottom: 1rem; }
+    .solution-section { margin: 3.5rem 0; }
+    .solution-title { font-size: 1.8rem; margin-bottom: 1rem; color: var(--brand-blue); }
+    .step-card { background: #fff; padding: 1.5rem; border-radius: var(--radius); border: 1px solid var(--line); box-shadow: var(--shadow); display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem; transition: transform .2s ease; }
+    .step-card:hover { transform: translateY(-3px); }
+    .step-number { background: var(--brand-blue); color: #fff; font-weight: 900; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .conclusion { border-top: 2px solid var(--line); padding-top: 3rem; margin-top: 4rem; }
+  </style>
+</head>
+<body>
+  
+  <header class="site-header">
+    <div class="nav container">
+      <a class="brand" href="index.html"><img src="logo.svg" alt="Λογότυπο" /></a>
+      <button class="nav-toggle"><span></span><span></span><span></span></button>
+      <nav id="nav-menu" class="nav-menu">
+        <a href="index.html">Αρχική</a>
+        <a href="index.html#program">Θέσεις</a>
+        <a href="index.html#get-involved" class="btn btn-outline">Συμμετοχή</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="proposal-hero">
+      <div class="container">
+        <span class="eyebrow reveal">Πολιτικη Προταση</span>
+        <h1 class="proposal-title reveal">Υποχρεωτική κοινωνική στέγαση από αχρησιμοποίητα επενδυτικά ακίνητα</h1>
+        <p class="reveal" style="margin-top: 1rem; font-size: 1.2rem; color: var(--muted);">Για προσιτή κατοικία και δίκαιη αξιοποίηση ξένων επενδύσεων στην Κύπρο</p>
+      </div>
+    </section>
+
+    <article class="content-wrapper prose">
+      
+      <section class="problem-box reveal">
+        <h3>Το πρόβλημα</h3>
+        <p>Τα τελευταία χρόνια, οι ξένες επενδύσεις σε ακίνητα έχουν αυξηθεί θεαματικά στην Κύπρο. Παρά τη θετική επίδραση στην οικονομία και στις κατασκευές, η μεγάλη ζήτηση για αγορά ακινήτων από μη μόνιμους κατοίκους:</p>
+        <ul>
+          <li>έχει αυξήσει τις τιμές,</li>
+          <li>έχει μειώσει τη διαθεσιμότητα μακροχρόνιας στέγασης,</li>
+          <li>και έχει οδηγήσει χιλιάδες νέους, οικογένειες και εργαζόμενους εκτός αγοράς ενοικίου.</li>
+        </ul>
+        <p>Από την άλλη πλευρά, μεγάλος αριθμός επενδυτικών ακινήτων μένει κενός και αναξιοποίητος. Αυτό δεν είναι μόνο οικονομικά αναποτελεσματικό· είναι και κοινωνικά άδικο.</p>
+      </section>
+
+      <section class="solution-section reveal">
+        <h3 class="solution-title">Η πρόταση</h3>
+        <p>Προτείνεται ένα νέο, στοχευμένο πλαίσιο κοινωνικής κατοικίας: Όταν ένας ξένος επενδυτής αγοράζει ακίνητο στην Κύπρο και δεν το χρησιμοποιεί για ιδιοκατοίκηση ή για σκοπούς εταιρικής χρήσης, τότε:</p>
+        <p><strong>το ακίνητο θα διατίθεται υποχρεωτικά ως προσιτή κατοικία για περίοδο 2–3 ετών σε δικαιούχους ενοικιαστές, με ελεγχόμενο ενοίκιο.</strong></p>
+        <p>Είναι μια λύση που:</p>
+        <ul>
+          <li>διατηρεί τους ξένους επενδυτές στην αγορά,</li>
+          <li>ενισχύει τα δημόσια έσοδα,</li>
+          <li>αυξάνει τη διαθεσιμότητα κατοικιών,</li>
+          <li>μειώνει την πίεση στις τιμές.</li>
+        </ul>
+      </section>
+
+      <section class="reveal">
+        <h3>Πώς εφαρμόζεται στην πράξη</h3>
+        
+        <div class="steps-container">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <div>
+              <h4>Νομικός χαρακτηρισμός “Μη Χρησιμοποιούμενου Επενδυτικού Ακινήτου”</h4>
+              <p>Ένα ακίνητο χαρακτηρίζεται έτσι όταν: δεν αποτελεί μόνιμη κατοικία, δεν φιλοξενεί εταιρική δραστηριότητα, δεν χρησιμοποιείται ενεργά από τον ιδιοκτήτη.</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <div>
+              <h4>Υποχρέωση διάθεσης σε κοινωνικό μισθωτήριο</h4>
+              <p>Το ακίνητο εντάσσεται για 2–3 χρόνια σε κρατικό μηχανισμό προσιτής στέγασης, π.χ. μέσω: ΚΟΑΓ (Κυπριακός Οργανισμός Ανάπτυξης Γης), Δήμων.</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <div>
+              <h4>Ελεγχόμενο ενοίκιο</h4>
+              <p>Το ύψος του ενοικίου καθορίζεται με βάση: περιοχή, τεχνικά χαρακτηριστικά, εισοδηματικά κριτήρια ενοικιαστή, και είναι χαμηλότερο της αγοράς για να στηρίξει προσβασιμότητα.</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <div>
+              <h4>Φορολογικά κίνητρα για τους επενδυτές</h4>
+              <p>Για όσους συμμετέχουν χωρίς αντιστάσεις, προσφέρεται: μείωση δημοτικών τελών, ταχύτερη αδειοδότηση σε μελλοντικές αναπτύξεις.</p>
+            </div>
+          </div>
+          <div class="step-card">
+            <div class="step-number">5</div>
+            <div>
+              <h4>Δικαίωμα επαναφοράς χρήσης</h4>
+              <p>Μετά την περίοδο 2–3 ετών: ο ιδιοκτήτης μπορεί να κάνει ό,τι επιθυμεί με το ακίνητο, χωρίς δεσμεύσεις και περιορισμούς.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="reveal" style="margin-top: 3rem;">
+        <h3>Γιατί είναι ρεαλιστική πολιτική</h3>
+        <p>Η πρόταση:</p>
+        <ul>
+          <li>δεν αποθαρρύνει επενδύσεις,</li>
+          <li>δεν παραβιάζει ιδιοκτησιακά δικαιώματα,</li>
+          <li>δεν επιβαρύνει τον κρατικό προϋπολογισμό,</li>
+          <li>προσφέρει άμεση αύξηση διαθέσιμων κατοικιών,</li>
+          <li>μειώνει την πίεση στις τιμές,</li>
+          <li>και κατευθύνει τον πλούτο προς όφελος της κοινωνίας.</li>
+        </ul>
+        <p><strong>Είναι μια δίκαιη ανταπόδοση:</strong> Η Κύπρος προσφέρει πρόσβαση στην αγορά, ασφάλεια, υποδομές. Οι επενδυτές, σε αντάλλαγμα, προσφέρουν πρόσβαση στη στέγη.</p>
+      </section>
+
+      <section class="conclusion reveal">
+        <h3>Καταληκτικό μήνυμα</h3>
+        <p>Δεν είναι λογικό να έχουμε χιλιάδες άδεια διαμερίσματα και ταυτόχρονα χιλιάδες πολίτες εκτός στέγης.</p>
+        <p>Δεν είναι λογικό να αυξάνονται οι τιμές για όλους επειδή τα ακίνητα χρησιμοποιούνται ως επενδυτικά προϊόντα.</p>
+        <p>Με αυτή την πρόταση, μετατρέπουμε το πρόβλημα σε λύση: <strong>Από την κερδοσκοπία στην κοινωνική ωφέλεια.</strong></p>
+        
+        <div style="background: var(--paper-2); padding: 2rem; border-left: 5px solid var(--brand-blue); border-radius: 0 var(--radius) var(--radius) 0; margin-top: 2rem;">
+          <h4 style="color: var(--brand-blue); margin-bottom: 0.5rem;">Δήλωση</h4>
+          <p style="margin-bottom: 0;">Η πρόσβαση στη στέγη δεν μπορεί να είναι προνόμιο λίγων. Σήμερα βλέπουμε χιλιάδες ακίνητα στην Κύπρο να αγοράζονται αποκλειστικά ως επενδυτικά προϊόντα και να παραμένουν κενά, ενώ την ίδια στιγμή νέοι, εργαζόμενοι και οικογένειες αδυνατούν να βρουν αξιοπρεπή και προσιτή κατοικία.</p>
+          <p style="margin-top: 1rem; margin-bottom: 0;">Με την πρόταση για διάθεση αχρησιμοποίητων επενδυτικών ακινήτων σε προσιτό ενοίκιο για δύο έως τρία χρόνια, κάνουμε ένα απλό, δίκαιο και αναγκαίο βήμα: μετατρέπουμε την επένδυση σε κοινωνικό όφελος. Η Κύπρος μπορεί να προσελκύει ξένους επενδυτές χωρίς να θυσιάζει το δικαίωμα των ανθρώπων της σε οικονομικά προσιτή στέγη.</p>
+          <p style="margin-top: 1rem; margin-bottom: 0;">Η πολιτεία οφείλει να δράσει τώρα. Δεν μπορεί να υπάρχουν άδεια διαμερίσματα και άστεγες ευκαιρίες. Δεν μπορούμε να επιτρέψουμε στους νέους μας να φύγουν από τον τόπο τους επειδή δεν βρίσκουν σπίτι. Η στέγαση δεν είναι απλώς αγορά – είναι ζωή, αξιοπρέπεια και μέλλον.</p>
+        </div>
+      </section>
+
+      <div style="text-align: center; margin-top: 4rem;">
+        <a href="index.html#proposals" class="btn btn-blue">Επιστροφή στις Προτάσεις</a>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container foot">
+      <div class="foot-brand"><img src="mono.png" alt="Logo" /><div><strong>Elena Koushou Hadjidemetriou</strong><br />Βουλευτικές Εκλογές 2026</div></div>
+      <div class="foot-socials">
+        <a href="#" target="_blank"><img src="si-facebook.svg" alt=""/></a>
+        <a href="#" target="_blank"><img src="si-instagram.svg" alt=""/></a>
+      </div>
+      <div class="foot-legal">© 2025</div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggle = document.querySelector('.nav-toggle'), menu = document.getElementById('nav-menu');
+      if(toggle) toggle.addEventListener('click', () => { 
+        const exp = toggle.getAttribute('aria-expanded') === 'true'; 
+        toggle.setAttribute('aria-expanded', !exp); 
+        menu.classList.toggle('show'); 
+      });
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+      }, {threshold: 0.1});
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
+  </script>
+</body>
+</html>
