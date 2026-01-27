@@ -722,48 +722,250 @@
     </section>
   </main>
 
+ <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container foot">
-      <div class="foot-brand"><img src="mono.png" alt="Logo" /><div><strong>Elena Koushou Hadjidemetriou</strong><br />Βουλευτικές Εκλογές 2026</div></div>
-      <div class="foot-socials"><a href="#" target="_blank"><img src="si-facebook.svg" alt=""/></a><a href="#" target="_blank"><img src="si-instagram.svg" alt=""/></a></div>
+      <div class="foot-brand">
+        <img src="mono.png" alt="Έλενα Κούσιου Χατζηδημητρίου μονόγραμμα" />
+        <div><strong>Elena Koushou Hadjidemetriou</strong><br />Βουλευτικές Εκλογές 2026</div>
+      </div>
+
+      <!-- Socials -->
+      <div class="foot-socials">
+        <a href="https://www.facebook.com/ekoushos/" aria-label="Facebook" target="_blank" rel="noopener"><img src="si-facebook.svg" alt="" /></a>
+        <a href="https://www.instagram.com/elena_koushou_dem/" aria-label="Instagram" target="_blank" rel="noopener"><img src="si-instagram.svg" alt="" /></a>
+        <a href="https://www.linkedin.com/in/elena-koushos-hadjidemetriou-b98a7446/" aria-label="LinkedIn" target="_blank" rel="noopener"><img src="si-linkedin.svg" alt="" /></a>
+        <a href="https://www.tiktok.com/@elenakoushos_7?_r=1&_t=ZN-93LUATaTH6c" aria-label="TikTok" target="_blank" rel="noopener"><img src="si-tiktok.svg" alt="" /></a>
+        <a href="https://m.youtube.com/@%CE%88%CE%BB%CE%B5%CE%BD%CE%B1%CE%9A%CE%BF%CF%8D%CF%83%CE%B9%CE%BF%CF%85%CE%A7%CE%B1%CF%84%CE%B6%CE%B7%CE%B4%CE%B7%CE%BC%CE%B7%CF%84%CF%81%CE%AF%CE%BF%CF%85" aria-label="Youtube" target="_blank" rel="noopener"><img src="si-youtube.svg" alt="" /></a>
+        <a href="https://x.com/elenakoushos" aria-label="X (Twitter)" target="_blank" rel="noopener"><img src="si-x.png" alt="" /></a>
+      </div>
+
       <div class="foot-legal">© 2025</div>
     </div>
   </footer>
 
+  <!-- JS deps -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+  <!-- App JS -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.classList.add('enter');
 
-      // Initialize Main Carousels
-      new Swiper('.articles-carousel', { loop: false, slidesPerView: 3, breakpoints: {320:{slidesPerView:1}, 640:{slidesPerView:2}, 1024:{slidesPerView:3}}, navigation: {nextEl:'.articles-next', prevEl:'.articles-prev'} });
-      new Swiper('.watch-carousel', { loop: false, slidesPerView: 3, breakpoints: {320:{slidesPerView:1.2, centeredSlides:true}, 640:{slidesPerView:2}, 1024:{slidesPerView:3}}, navigation: {nextEl:'.watch-next', prevEl:'.watch-prev'} });
-
-      // FIXED: Vertical Proposals Carousel Init
-      new Swiper('.proposals-carousel', {
-         direction: 'vertical',
-         slidesPerView: 3, /* Needs explicit CSS height on container */
-         centeredSlides: true,
-         spaceBetween: 10,
-         loop: true,
-         speed: 500,
-         mousewheel: true,
-         grabCursor: true,
-         autoplay: {
-           delay: 3000,
-           disableOnInteraction: true,
-         },
-         on: {
-           init: function() {
-             // Force visibility check in case of rendering delay
-             this.update();
-           }
-         }
-      });
+	  const ENABLE_PORTRAIT_MORPH = false;
       
-      // ... Form logic & other listeners remain same ...
+      /* ===== Nav toggle ===== */
+      const navToggle = document.querySelector('.nav-toggle'),
+            navMenu   = document.getElementById('nav-menu');
+
+      if (navToggle) {
+        navToggle.addEventListener('click', () => {
+          const open = navToggle.getAttribute('aria-expanded') === 'true';
+          navToggle.setAttribute('aria-expanded', String(!open));
+          navMenu.classList.toggle('show');
+        });
+      }
+      document.querySelectorAll('#nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          navMenu.classList.remove('show');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      /* ===== Smooth anchors (account for sticky header) ===== */
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+          const id = a.getAttribute('href');
+          if (id === '#top' || id === '#') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+          const el = document.querySelector(id);
+          if (!el) return;
+          e.preventDefault();
+          const headerH = document.querySelector('.site-header.is-visible')?.offsetHeight || 0;
+          const offsetTop = el.getBoundingClientRect().top + window.scrollY - (headerH + 20);
+          window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+        });
+      });
+
+      /* ===== Scroll progress ===== */
+      const bar = document.querySelector('.scroll-progress span');
+      window.addEventListener('scroll', () => {
+        const h = document.documentElement;
+        bar.style.width = `${(h.scrollTop / (h.scrollHeight - h.clientHeight) * 100).toFixed(2)}%`;
+      }, { passive: true });
+
+      /* ===== Reveal-on-scroll ===== */
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            const parent = entry.target.parentElement;
+            if (parent && parent.classList.contains('program-cards')) {
+              Array.from(parent.children).forEach((item, index) => { item.style.transitionDelay = `${index * 90}ms`; });
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      /* ===== Carousels ===== */
+      new Swiper('.articles-carousel', {
+        loop: false, watchOverflow: true, spaceBetween: 24,
+        navigation: { nextEl: '.articles-next', prevEl: '.articles-prev' },
+        breakpoints: { 320:{slidesPerView:1}, 640:{slidesPerView:2}, 1024:{slidesPerView:3} }
+      });
+      new Swiper('.watch-carousel', {
+        loop: false, watchOverflow: true, spaceBetween: 24,
+        navigation: { nextEl: '.watch-next', prevEl: '.watch-prev' },
+        breakpoints: { 320:{slidesPerView:1.2, centeredSlides: true}, 500:{slidesPerView:2}, 900:{slidesPerView:3}, 1200:{slidesPerView:4} }
+      });
+
+      /* ===== Real form submit to Apps Script + reCAPTCHA ===== */
+      const form = document.getElementById('involvedForm');
+      if (form) {
+        const msg   = form.querySelector('.form-msg');
+        const btn   = document.getElementById('involvedSubmitBtn');
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          msg.style.color = 'var(--ink-2)';
+          msg.textContent = 'Αποστολή...';
+          btn.disabled = true;
+
+          const data = Object.fromEntries(new FormData(form).entries());
+          if (!data.name || !data.email) {
+            msg.textContent = 'Παρακαλώ συμπληρώστε το όνομα και το email σας.';
+            msg.style.color = '#D93025';
+            btn.disabled = false;
+            return;
+          }
+
+          try {
+            const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+            let data = {};
+            try { data = await res.json(); } catch(_) {}
+
+            if (res.ok && (data.ok === true || Object.keys(data).length === 0)) {
+              msg.textContent = 'Ευχαριστούμε! Θα επικοινωνήσουμε σύντομα.';
+              msg.style.color = 'var(--brand-blue)';
+              form.reset();
+              if (window.grecaptcha) grecaptcha.reset();
+            } else {
+              msg.textContent = 'Αποτυχία επαλήθευσης ή σφάλμα διακομιστή.';
+              msg.style.color = '#D93025';
+              if (window.grecaptcha) grecaptcha.reset();
+            }
+          } catch (err) {
+            msg.textContent = 'Σφάλμα δικτύου. Παρακαλώ δοκιμάστε ξανά.';
+            msg.style.color = '#D93025';
+            if (window.grecaptcha) grecaptcha.reset();
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      }
+
+      /* ===== Quick contact bubbles ===== */
+      const setupContactLink = (id, url) => { const el = document.getElementById(id); if (el) el.href = url; };
+      setupContactLink('viberBubble', 'https://invite.viber.com/?g2=AQA7hC17s8htQFTqDMRpIDf0wq%2Fr6fAwxmPSoCNvKRbge4MZTbH3llaX3DjjqTdI');
+      setupContactLink('emailBubble', 'mailto:vote@elenakoushos.com?subject=' + encodeURIComponent('Επικοινωνία για την καμπάνια 2026'));
+
+      /* ===== Sticky header shows after hero ===== */
+      const siteHeader = document.getElementById('siteHeader'),
+            hero       = document.getElementById('hero');
+      new IntersectionObserver(([e]) => siteHeader.classList.toggle('is-visible', !e.isIntersecting), { threshold: 0.2 }).observe(hero);
+
+      /* ===== HERO background interaction ===== */
+      const root = document.documentElement;
+      let target = { x: 0.5, y: 0.38 }, current = { x: 0.5, y: 0.38 };
+      function tick(){
+        current.x += (target.x - current.x) * 0.08;
+        current.y += (target.y - current.y) * 0.08;
+        root.style.setProperty('--mx', `${(current.x * 100).toFixed(2)}%`);
+        root.style.setProperty('--my', `${(current.y * 100).toFixed(2)}%`);
+        const dx = current.x - 0.5;
+        const dy = current.y - 0.38;
+        const dist = Math.hypot(dx, dy);
+        root.style.setProperty('--twist', `${(dx * 10).toFixed(2)}deg`);
+        root.style.setProperty('--glow-size', `${(260 + dist * 80).toFixed(2)}px`);
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      const moveTo = (x,y)=>{ const r=hero.getBoundingClientRect(); target.x=(x-r.left)/r.width; target.y=(y-r.top)/r.height; };
+      const onPointer = e => { const p = e.touches ? e.touches[0] : e; moveTo(p.clientX, p.clientY); };
+      hero.addEventListener('mousemove', onPointer, {passive:true});
+      hero.addEventListener('touchstart', onPointer, {passive:true});
+      hero.addEventListener('touchmove', onPointer, {passive:true});
+      hero.addEventListener('mouseleave', ()=>{ target.x=0.5; target.y=0.38; });
+      const r = hero.getBoundingClientRect(); moveTo(r.left + r.width*0.5, r.top + r.height*0.38);
+
+      /* ===== HERO → ABOUT portrait morph (restored) ===== */
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (ENABLE_PORTRAIT_MORPH && !prefersReduced) {
+        const heroPortrait  = document.getElementById('heroPortrait');
+        const aboutPortrait = document.getElementById('aboutPortrait');
+        const aboutSection  = document.getElementById('about');
+        const boxOnPage = el => { const b = el.getBoundingClientRect(); return { left: b.left + window.scrollX, top: b.top + window.scrollY, width: b.width, height: b.height }; };
+        const clamp01 = v => Math.min(1, Math.max(0, v));
+        const lerp = (a,b,t) => a + (b-a)*t;
+        const ease = t => t<0.5 ? 2*t*t : -1+(4-2*t)*t;
+        let startBox, endBox, startAt, endAt;
+
+        function computeMorphFrames(){
+          heroPortrait.style.transform = '';
+          heroPortrait.style.opacity   = '1';
+          aboutPortrait.style.opacity  = '0';
+          startBox = boxOnPage(heroPortrait);
+          endBox   = boxOnPage(aboutPortrait);
+          const headerH = (document.querySelector('.site-header')?.offsetHeight || 0);
+          const heroBottom = hero.offsetTop + hero.offsetHeight;
+          const aboutTop   = aboutSection.offsetTop;
+          startAt = heroBottom - window.innerHeight * 0.65;
+          endAt   = aboutTop   - headerH + window.innerHeight * 0.10;
+          onScrollMorph();
+        }
+
+        function onScrollMorph(){
+          const y = window.scrollY;
+          const p = clamp01((y - startAt) / Math.max(1,(endAt - startAt)));
+          const pe = ease(p);
+          const dx = (endBox.left - startBox.left);
+          const dy = (endBox.top  - startBox.top);
+          const sx = endBox.width  / Math.max(1,startBox.width);
+          const sy = endBox.height / Math.max(1,startBox.height);
+
+          if(p > 0) {
+            heroPortrait.style.transform = `translate(${dx * pe}px, ${dy * pe}px) scale(${lerp(1, sx, pe)}, ${lerp(1, sy, pe)})`;
+            heroPortrait.parentElement.style.transform = '';
+            heroPortrait.style.filter = `drop-shadow(0 ${lerp(18,10,pe)}px ${lerp(40,26,pe)}px rgba(10,34,68,${lerp(.18,.10,pe)}))`;
+          } else {
+            heroPortrait.style.transform = '';
+            heroPortrait.style.filter = '';
+          }
+
+          const fadeStart = 0.50, fadeEnd = 0.60;
+          if (p <= fadeStart) { heroPortrait.style.opacity = '1'; aboutPortrait.style.opacity = '0'; }
+          else if (p >= fadeEnd){ heroPortrait.style.opacity = '0'; aboutPortrait.style.opacity = '1'; }
+          else {
+            const t = (p - fadeStart)/(fadeEnd - fadeStart);
+            heroPortrait.style.opacity = String(1 - t);
+            aboutPortrait.style.opacity = String(t);
+          }
+        }
+
+        const recalc = () => { setTimeout(() => {computeMorphFrames(); onScrollMorph();}, 50) };
+        ['load','resize','orientationchange'].forEach(evt => window.addEventListener(evt, recalc, { passive:true }));
+        Promise.allSettled(Array.from(document.images).map(img => img.complete ? Promise.resolve() : new Promise(res => img.onload = res))).then(recalc);
+        window.addEventListener('scroll', onScrollMorph, { passive:true });
+      }
     });
   </script>
+	<!-- Vercel Web Analytics -->
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+
 </body>
 </html>
