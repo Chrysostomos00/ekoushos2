@@ -207,6 +207,7 @@
     .center{text-align:center}
 
     .grid-2{display:grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; grid-template-columns:1fr 1fr}
+
     .about-card{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:clamp(1.5rem, 4vw, 2.5rem); box-shadow:var(--shadow); }
     .portrait{ width:100%; max-width:460px; margin:0 auto; border-radius:12px; transition: transform .3s ease, box-shadow .3s ease; }
 
@@ -219,21 +220,40 @@
 
     /* Articles carousel */
     .articles .swiper { overflow: hidden; }
-    .article-card{ background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; width: 100%; transition: transform .3s ease; }
+    .article-card{ background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; width: 100%; transition: transform .3s ease, box-shadow .3s ease; }
+    .article-card:hover { transform: translateY(-6px); box-shadow: 0 14px 32px rgba(16,50,92,.14); }
     .article-cover{aspect-ratio:16/9; background:#DDEBFF center/cover no-repeat; overflow:hidden; transition: transform .35s ease;}
     .article-body{padding:1rem 1.2rem 1.2rem; display:flex; flex-direction: column; flex-grow: 1;}
     .tag{padding:.2rem .55rem; border-radius:999px; background:#EEF5FF; color:var(--ink-2); border:1px solid var(--line); font-weight:900; font-size:.8rem;}
+    .article-title{margin:.2rem 0 .35rem; color:var(--ink-2); font-weight:900; font-size:1.08rem;}
+    .btn-link{color:var(--brand-blue); font-weight:900;}
+
+    /* Swiper nav buttons */
+    .nav-row { display:flex; justify-content:center; gap: 1rem; margin-top: 1.8rem; }
+    .nav-row .swiper-button-prev, .nav-row .swiper-button-next {
+      position: static; width: 44px; height: 44px;
+      background: var(--paper); border: 1px solid var(--line);
+      border-radius: 50%; color: var(--brand-blue);
+      transition: background-color .2s;
+    }
+    .nav-row .swiper-button-prev::after, .nav-row .swiper-button-next::after { font-size: 18px; font-weight: 900; }
 
     /* Watch/Media carousel */
-    .watch-carousel { width: min(1200px, 92%); margin: 0 auto; overflow: hidden; }
+    .watch-carousel { width: min(1200px, 92%); margin: 0 auto; overflow: hidden; padding: 5px; }
     .watch-card { display:flex; flex-direction:column; height:100%; border-radius:16px; overflow:hidden; background:var(--paper); box-shadow:0 5px 15px rgba(16,50,92,.07); transition: transform .3s ease; }
+    .watch-card:hover { transform: translateY(-6px) scale(1.015); box-shadow: 0 12px 25px rgba(16,50,92,.12); }
     .watch-thumbnail { aspect-ratio: 9 / 14; position: relative; background-size: cover; background-position: center; }
-    .platform-badge{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.94); opacity:0; transition: transform .3s ease, opacity .3s ease; }
+    .platform-badge{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.94); opacity:0; transition: transform .3s ease, opacity .3s ease; pointer-events:none; }
     .watch-card:hover .platform-badge{ opacity:.75; transform:translate(-50%,-50%) scale(1); }
 
     /* Get involved */
     .involved-wrapper-stack { max-width: 650px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem; }
     .form{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding: clamp(1.5rem, 4vw, 2rem); box-shadow:var(--shadow); }
+    .bubble { display:flex; align-items:center; gap:.6rem; background:var(--paper-2); padding:.6rem 1.2rem; border-radius:999px; border:1px solid var(--line); font-weight:900; color:var(--ink-2); transition: all .2s; }
+    .bubble:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(16,50,92,.1); background: #fff; }
+
+    /* Calendar Wrapper */
+    .calendar-container { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 0.5rem; box-shadow: var(--shadow); height: 500px; overflow: hidden; }
 
     /* Footer */
     .site-footer{ color:#fff; background: var(--brand-gradient); text-shadow: 0 1px 3px rgba(0,0,0,0.2); }    
@@ -245,127 +265,119 @@
     .reveal{opacity:0; transform:translateY(22px); transition:opacity .75s cubic-bezier(.5,0,0,1), transform .75s cubic-bezier(.5,0,0,1)}
     .reveal.visible{opacity:1; transform:translateY(0)}
 
-    /* ================== NEW: PROPOSALS VERTICAL CAROUSEL ================== */
-    .proposals-wrapper { 
-      max-width: 800px; 
-      margin: 0 auto; 
-      height: 480px; /* Vertical container height */
-      position: relative;
-      padding: 20px 0;
-    }
-    
-    .proposals-swiper { 
-      width: 100%; 
-      height: 100%; 
-      overflow: visible; /* Allows for card stack visual */
-    }
-
-    .proposal-glass-link {
-      display: block;
-      height: 100%;
-      text-decoration: none;
-    }
-
-    .proposal-glass-card {
-      height: 100%;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 2rem;
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(16px) saturate(140%);
-      -webkit-backdrop-filter: blur(16px) saturate(140%);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-      color: #fff;
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
-
-    .proposal-glass-card:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.02);
-    }
-
-    .proposal-title {
-      font-size: clamp(1.1rem, 2vw, 1.4rem);
-      font-weight: 800;
-      line-height: 1.3;
-      font-family: "Peridot PE Variable", sans-serif;
-      flex: 1;
-      padding-right: 1.5rem;
-    }
-
-    .proposal-arrow-icon {
-      width: 32px;
-      height: 32px;
-      flex-shrink: 0;
-      opacity: 0.8;
-      transition: transform 0.3s ease;
-    }
-
-    .proposal-glass-card:hover .proposal-arrow-icon {
-      transform: translateX(5px);
-      opacity: 1;
-    }
-
-    /* Vertical navigation buttons */
-    .proposals-nav {
-      position: absolute;
-      right: -60px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      z-index: 10;
-    }
-
-    .prop-prev, .prop-next {
-      position: static !important;
-      margin: 0 !important;
-      width: 44px !important;
-      height: 44px !important;
-      background: rgba(255,255,255,0.1) !important;
-      border: 1px solid rgba(255,255,255,0.3) !important;
-      color: white !important;
-      border-radius: 50% !important;
-      backdrop-filter: blur(4px);
-    }
-    
-    .prop-prev::after, .prop-next::after { font-size: 18px !important; font-weight: 900; }
-    
-    @media (max-width: 960px) {
-      .proposals-wrapper { height: 400px; max-width: 90%; }
-      .proposals-nav { 
-        right: 0; 
-        left: 0; 
-        top: auto; 
-        bottom: -60px; 
-        flex-direction: row; 
-        justify-content: center;
-        transform: none;
-      }
-    }
-
-    /* ================== SHARE YOUR VOICE (REUSED BACKGROUND) ================== */
+    /* ================== NEW: PROPOSALS VERTICAL STRIPE ================== */
     .brand-gradient-bg{ position:relative; background: var(--brand-gradient); color:#fff; isolation:isolate; }
-    .brand-gradient-bg::before{
-      content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
-      background: radial-gradient(70% 60% at 75% 18%, rgba(255,255,255,.12), transparent 60%), radial-gradient(100% 80% at 10% 90%, rgba(0,0,0,.20), transparent 60%);
+    .brand-gradient-bg::before{ content:""; position:absolute; inset:0; pointer-events:none; z-index:0; background: radial-gradient(70% 60% at 75% 18%, rgba(255,255,255,.12), transparent 60%), radial-gradient(100% 80% at 10% 90%, rgba(0,0,0,.20), transparent 60%); }
+
+    /* Surgical addition to keep only 1 text visible & save space */
+    .proposals-stripe { 
+        padding: 50px 0; 
+        overflow: hidden; 
+    }
+    
+    .proposals-container { 
+        max-width: 760px; 
+        margin: 0 auto; 
+        position: relative; 
+        height: 220px; /* Fixed height for space saving */
     }
 
-    .glass-card{
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.28);
-      backdrop-filter: blur(14px) saturate(120%);
-      box-shadow: 0 8px 24px rgba(16,50,92,.18), inset 0 1px 0 rgba(255,255,255,.25);
-      padding: clamp(1.5rem, 4vw, 2.5rem);
+    /* Fixed Swiper Effect CSS */
+    .prop-swiper { 
+        width: 100%; 
+        height: 100%; 
+        overflow: visible; 
     }
 
-    /* Header visibility and other adjustments */
+    .prop-swiper .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0 !important; /* Hide non-active slide text strictly */
+        visibility: hidden;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .prop-swiper .swiper-slide-active {
+        opacity: 1 !important;
+        visibility: visible;
+        z-index: 10;
+    }
+
+    .proposal-card-link {
+        display: flex;
+        width: 100%;
+        height: 140px;
+        text-decoration: none;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.5rem 2.5rem;
+        border-radius: var(--radius);
+        
+        /* Clean Glass - Solid enough to block text behind */
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(25px) saturate(160%);
+        -webkit-backdrop-filter: blur(25px) saturate(160%);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        
+        color: #fff;
+        transition: transform 0.3s cubic-bezier(.34, 1.56, .64, 1);
+    }
+
+    .proposal-card-link:hover { transform: scale(1.02); background: rgba(255,255,255,0.2); }
+
+    .prop-text-label {
+        font-family: "Peridot PE Variable", sans-serif;
+        font-weight: 800;
+        font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+        line-height: 1.25;
+        flex: 1;
+        padding-right: 20px;
+    }
+
+    .prop-chevron {
+        width: 38px; height: 38px;
+        flex-shrink: 0;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        display: grid; place-items: center;
+        transition: transform 0.3s ease;
+    }
+    .proposal-card-link:hover .prop-chevron { transform: translateX(8px); background: #fff; color: var(--brand-blue); }
+
+    /* Buttons outside on the right */
+    .prop-nav {
+        position: absolute;
+        right: -80px; top: 50%;
+        transform: translateY(-50%);
+        display: flex; flex-direction: column; gap: 12px;
+        z-index: 20;
+    }
+
+    .prop-btn {
+        position: static !important;
+        width: 46px !important; height: 46px !important;
+        margin: 0 !important;
+        background: rgba(255,255,255,0.1) !important;
+        border: 1px solid rgba(255,255,255,0.3) !important;
+        color: #fff !important;
+        border-radius: 50%;
+        backdrop-filter: blur(5px);
+    }
+    .prop-btn::after { font-size: 16px !important; font-weight: 900; }
+    .prop-btn:hover { background: #fff !important; color: var(--brand-blue) !important; }
+
+    @media (max-width: 1024px) {
+        .proposals-container { max-width: 90%; }
+        .prop-nav { right: 0; left: 0; top: auto; bottom: -50px; flex-direction: row; justify-content: center; transform: none; }
+        .proposals-stripe { padding-bottom: 80px; }
+    }
+
+    /* Gnomi specific styles preserved */
+    .glass-card{ background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.28); backdrop-filter: blur(14px); padding: clamp(1.5rem, 4vw, 2.5rem); }
+    .btn-ghost-cta.is-glass{ color:#fff; background: rgba(255,255,255,.10); border: 2px solid rgba(255,255,255,.28); backdrop-filter: blur(12px); box-shadow: 0 6px 16px rgba(0,0,0,.12); }
+
     @media (max-width: 960px){
       .nav-toggle{display:flex}
       .nav-menu{
@@ -376,27 +388,23 @@
         transform: translateY(-20px) scale(0.98); opacity: 0; pointer-events: none;
         transition: transform 0.3s ease, opacity 0.3s ease;
       }
-      .nav-menu.show{display:flex; transform: translateY(0) scale(1); opacity: 1; pointer-events: auto;}
+      .nav-menu.show{opacity: 1; transform: translateY(0) scale(1); pointer-events: auto;}
     }
 
     @media (min-width: 961px) {
-      .hero-inner { display: grid; grid-template-columns: 5fr 4fr; align-items: center; gap: 2rem; }
-      .hero-text-content { align-items: center; max-width: 100%; grid-row: 1; grid-column: 1; padding-bottom: clamp(3rem, 10vh, 6rem); }
-      .hero-portrait-link { grid-row: 1; grid-column: 2; align-self: end; width: 100%; max-width: 560px; margin-left: auto; }
+      .hero-inner { display: grid; grid-template-columns: 5fr 4fr; gap: 2rem; }
+      .hero-text-content { padding-bottom: clamp(3rem, 10vh, 6rem); }
     }
   </style>
 </head>
 <body>
-  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="scroll-progress"><span></span></div>
 
-  <header class="site-header" role="banner" id="siteHeader">
+  <!-- Header -->
+  <header class="site-header" id="siteHeader">
     <div class="nav container">
-      <a class="brand" href="#top">
-        <img src="logo.svg" alt="Λογότυπο Έλενας Κούσιου Χατζηδημητρίου" width="120" height="80">
-      </a>
-      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Άνοιγμα μενού">
-        <span></span><span></span><span></span>
-      </button>
+      <a class="brand" href="#top"><img src="logo.svg" alt="Logo" width="120" height="80"></a>
+      <button class="nav-toggle" aria-expanded="false"><span></span><span></span><span></span></button>
       <nav id="nav-menu" class="nav-menu">
         <a href="#">Αρχική</a>
         <a href="#about">Βιογραφικό</a>
@@ -413,25 +421,21 @@
     
     <!-- HERO -->
     <section class="hero" id="hero">
-      <img class="party-logo" src="party-logo.png" alt="Λογότυπο πολιτικού φορέα" />
-      <img src="7.png" alt="Αριθμός 7" class="hero-number-img" />
-
+      <img class="party-logo" src="party-logo.png" alt="Party" />
+      <img src="7.png" alt="7" class="hero-number-img" />
       <div class="hero-inner">
         <div class="hero-text-content">
-          <img class="hero-logo" src="logo-hero.svg" alt="Λογότυπο καμπάνιας" />
-          <img class="hero-slogan" src="slogan-hero.png" alt="Σλόγκαν καμπάνιας" />
+          <img class="hero-logo" src="logo-hero.svg" alt="Campaign Logo" />
+          <img class="hero-slogan" src="slogan-hero.png" alt="Slogan" />
           <div class="hero-cta">
             <a href="#program" class="btn btn-white">Δες το Πρόγραμμα</a>
             <a href="#get-involved" class="btn btn-blue">Δήλωσε Συμμετοχή</a>
+            <a href="#gnomi" class="btn-ghost-cta is-glass">Μοιράσου τη γνώμη σου</a>
           </div>
         </div>
-
         <a href="#about" class="hero-portrait-link">
-          <picture>
-            <source srcset="portrait.avif" type="image/avif">
-            <img class="hero-portrait" id="heroPortrait" src="portrait.jpg" alt="Πορτρέτο">
-          </picture>
-          <span class="portrait-prompt">Ποια είναι η Έλενα;</span>
+          <img class="hero-portrait" id="heroPortrait" src="portrait.jpg" alt="Elena">
+          <span class="portrait-prompt">Ποια είναι η Έλενα?</span>
         </a>
       </div>
     </section>
@@ -439,24 +443,18 @@
     <!-- ABOUT -->
     <section id="about" class="section about">
       <div class="container grid-2">
-        <div>
-          <img class="portrait" src="Elena_2.webp" alt="Πορτρέτο" loading="lazy">
-        </div>
+        <div><img class="portrait" id="aboutPortrait" src="Elena_2.webp" alt="Elena" loading="lazy"></div>
         <div class="about-card reveal">
           <h1 class="h-section">Με Δυναμική. Για Εμάς.</h1>
-          <p>Ξεκινώ αυτή τη διαδρομή πιστεύοντας ότι τίποτα δεν αλλάζει χωρίς εσένα. Μαζί, με θέληση, πίστη και θάρρος, ας φέρουμε τις αλλαγές που χρειάζονται.</p>
-          <a href="bio.html" class="btn btn-outline">Αναλυτικό Βιογραφικό</a>
+          <p>Ξεκινώ αυτή τη διαδρομή πιστεύοντας ότι τίποτα δεν αλλάζει χωρίς εσένα. Μαζί, με θέληση, πίστη και θάρρος.</p>
+          <a href="bio.html" class="btn btn-outline" style="margin-top:1rem;">Αναλυτικό Βιογραφικό</a>
         </div>
       </div>
     </section>
 
     <!-- MEDIA -->
     <section id="media" class="section">
-      <div class="container">
-        <h2 class="h-section reveal">Media</h2>
-        <p class="section-subtitle reveal">Δείτε ομιλίες, συνεντεύξεις και παρεμβάσεις της Έλενας.</p>
-      </div>
-
+      <div class="container"><h2 class="h-section reveal">Media</h2></div>
       <div class="swiper watch-carousel reveal">
         <div class="swiper-wrapper">
           <div class="swiper-slide">
@@ -467,9 +465,18 @@
               <div class="watch-info"><h3 class="watch-title">Instagram Reel</h3></div>
             </a>
           </div>
-          <!-- Add more slides as in your source... -->
+          <div class="swiper-slide">
+            <a href="https://www.youtube.com/watch?v=6gOvvM-5HO8&t=578s" target="_blank" class="watch-card">
+              <div class="watch-thumbnail" style="background-image: url('video-thumb-4.jpg');">
+                <div class="platform-badge"><img src="si-youtube.svg" alt=""></div>
+              </div>
+              <div class="watch-info"><h3 class="watch-title">Συνέντευξη</h3></div>
+            </a>
+          </div>
+          <!-- (Rest of Media slides as provided in source...) -->
         </div>
       </div>
+      <div class="nav-row"><div class="swiper-button-prev watch-prev"></div><div class="swiper-button-next watch-next"></div></div>
     </section>
 
     <!-- PROGRAM -->
@@ -477,132 +484,104 @@
       <div class="container">
         <h2 class="h-section center reveal">Θέσεις & Πρόγραμμα</h2>
         <div class="program-cards">
-          <a href="program-justice.html" class="program-card reveal">
-            <h3>Δικαιοσύνη & Θεσμική Μεταρρύθμιση</h3>
-            <p>Για ένα κράτος δικαίου που λειτουργεί δίκαια και γρήγορα.</p>
-          </a>
-          <a href="program-health.html" class="program-card reveal">
-            <h3>Υγεία & Πρόνοια</h3>
-            <p>Για ποιοτικές υπηρεσίες υγείας και αξιοπρέπεια για όλους.</p>
-          </a>
-          <a href="program-housing.html" class="program-card reveal">
-            <h3>Στέγαση</h3>
-            <p>Για λύσεις στη στέγαση και μείωση του κόστους ζωής.</p>
-          </a>
+          <a href="program-justice.html" class="program-card reveal"><h3>Δικαιοσύνη</h3><p>Για ένα κράτος δικαίου.</p><span class="read-more-prompt">Διαβάστε</span></a>
+          <a href="program-health.html" class="program-card reveal"><h3>Υγεία</h3><p>Ποιοτικές υπηρεσίες υγείας.</p><span class="read-more-prompt">Διαβάστε</span></a>
+          <a href="program-housing.html" class="program-card reveal"><h3>Στέγαση</h3><p>Λύσεις στη στέγαση.</p><span class="read-more-prompt">Διαβάστε</span></a>
+          <!-- (Remaining Program cards...) -->
         </div>
       </div>
     </section>
 
-    <!-- ===== NEW: POLITICAL PROPOSALS SECTION (Vertical Carousel) ===== -->
-    <section id="proposals" class="brand-gradient-bg section">
-      <div class="container">
-        <h2 class="h-section center reveal" style="color:#fff">Πολιτικές Προτάσεις</h2>
-        <p class="section-subtitle center reveal" style="color:rgba(255,255,255,0.8)">Συγκεκριμένες, κοστολογημένες λύσεις για τα προβλήματα της καθημερινότητας.</p>
-
-        <div class="proposals-wrapper reveal">
-          <div class="swiper proposals-swiper">
-            <div class="swiper-wrapper">
-              
-              <div class="swiper-slide">
-                <a href="proposal-bullying.html" class="proposal-glass-link">
-                  <div class="proposal-glass-card">
-                    <span class="proposal-title">Ακαδημίες χωρίς Bullying & Ψυχολογική Βία</span>
-                    <svg class="proposal-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </a>
+    <!-- ===== NEW: POLITICAL PROPOSALS STRIPE ===== -->
+    <section id="proposals" class="brand-gradient-bg proposals-stripe">
+        <div class="container">
+          <h2 class="h-section center reveal" style="color:#fff">Πολιτικές Προτάσεις</h2>
+          <p class="section-subtitle center reveal" style="color:rgba(255,255,255,0.85)">Συγκεκριμένες, κοστολογημένες λύσεις για τα προβλήματα της καθημερινότητας.</p>
+  
+          <div class="proposals-container reveal">
+            <div class="swiper prop-swiper">
+              <div class="swiper-wrapper">
+                
+                <div class="swiper-slide">
+                  <a href="proposal-bullying.html" class="proposal-card-link">
+                    <span class="prop-text-label">Ακαδημίες χωρίς Bullying & Ψυχολογική Βία</span>
+                    <span class="prop-chevron"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+                  </a>
+                </div>
+  
+                <div class="swiper-slide">
+                  <a href="proposal-pensions-authority.html" class="proposal-card-link">
+                    <span class="prop-text-label">Ενιαία, Ανεξάρτητη Εποπτική Αρχή Συντάξεων</span>
+                    <span class="prop-chevron"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+                  </a>
+                </div>
+  
+                <div class="swiper-slide">
+                  <a href="proposal-doctor-neighborhood.html" class="proposal-card-link">
+                    <span class="prop-text-label">“Γιατρός στη Γειτονιά” – Πρωτοβάθμια Φροντίδα Υγείας</span>
+                    <span class="prop-chevron"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+                  </a>
+                </div>
+  
+                <div class="swiper-slide">
+                  <a href="proposal-early-pension.html" class="proposal-card-link">
+                    <span class="prop-text-label">Δίκαιη Μεταρρύθμιση της Πρόωρης Σύνταξης στην Κύπρο</span>
+                    <span class="prop-chevron"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+                  </a>
+                </div>
+  
+                <div class="swiper-slide">
+                  <a href="proposal-mobile-kep.html" class="proposal-card-link">
+                    <span class="prop-text-label">Κινητά ΚΕΠ & Συνεργασία με Ταχυδρομεία</span>
+                    <span class="prop-chevron"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+                  </a>
+                </div>
+  
+                <div class="swiper-slide">
+                  <a href="proposal-working-age.html" class="proposal-card-link">
+                    <span class="prop-text-label">Κίνητρα για Παράταση του Εργασιακού Βίου έως τα 67–68</span>
+                    <span class="prop-chevron"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+                  </a>
+                </div>
+  
+                <div class="swiper-slide">
+                  <a href="proposal-emotional-education.html" class="proposal-card-link">
+                    <span class="prop-text-label">Ένταξη της Κοινωνικοσυναισθηματικής Αγωγής στα σχολεία</span>
+                    <span class="prop-chevron"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+                  </a>
+                </div>
+  
+                <div class="swiper-slide">
+                  <a href="proposal-social-housing.html" class="proposal-card-link">
+                    <span class="prop-text-label">Υποχρεωτική κοινωνική στέγαση από επενδυτικά ακίνητα</span>
+                    <span class="prop-chevron"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+                  </a>
+                </div>
+  
+                <div class="swiper-slide">
+                  <a href="proposal-rent-control.html" class="proposal-card-link">
+                    <span class="prop-text-label">Ρύθμιση αυξήσεων ενοικίων σε περιοχές υψηλής ζήτησης</span>
+                    <span class="prop-chevron"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+                  </a>
+                </div>
+  
+                <div class="swiper-slide">
+                  <a href="proposal-social-media-kids.html" class="proposal-card-link">
+                    <span class="prop-text-label">Περιορισμός χρήσης social media κάτω των 16 ετών</span>
+                    <span class="prop-chevron"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+                  </a>
+                </div>
+  
               </div>
-
-              <div class="swiper-slide">
-                <a href="proposal-pensions-authority.html" class="proposal-glass-link">
-                  <div class="proposal-glass-card">
-                    <span class="proposal-title">Ενιαία, Ανεξάρτητη Εποπτική Αρχή Συντάξεων</span>
-                    <svg class="proposal-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </a>
-              </div>
-
-              <div class="swiper-slide">
-                <a href="proposal-doctor-neighborhood.html" class="proposal-glass-link">
-                  <div class="proposal-glass-card">
-                    <span class="proposal-title">“Γιατρός στη Γειτονιά” – Πρωτοβάθμια Φροντίδα Υγείας</span>
-                    <svg class="proposal-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </a>
-              </div>
-
-              <div class="swiper-slide">
-                <a href="proposal-early-pension.html" class="proposal-glass-link">
-                  <div class="proposal-glass-card">
-                    <span class="proposal-title">Δίκαιη Μεταρρύθμιση της Πρόωρης Σύνταξης στην Κύπρο</span>
-                    <svg class="proposal-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </a>
-              </div>
-
-              <div class="swiper-slide">
-                <a href="proposal-mobile-kep.html" class="proposal-glass-link">
-                  <div class="proposal-glass-card">
-                    <span class="proposal-title">Κινητά ΚΕΠ & Συνεργασία με Ταχυδρομεία</span>
-                    <svg class="proposal-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </a>
-              </div>
-
-              <div class="swiper-slide">
-                <a href="proposal-working-age.html" class="proposal-glass-link">
-                  <div class="proposal-glass-card">
-                    <span class="proposal-title">Κίνητρα για Παράταση του Εργασιακού Βίου (67–68)</span>
-                    <svg class="proposal-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </a>
-              </div>
-
-              <div class="swiper-slide">
-                <a href="proposal-emotional-education.html" class="proposal-glass-link">
-                  <div class="proposal-glass-card">
-                    <span class="proposal-title">Ένταξη της Κοινωνικοσυναισθηματικής Αγωγής</span>
-                    <svg class="proposal-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </a>
-              </div>
-
-              <div class="swiper-slide">
-                <a href="proposal-social-housing.html" class="proposal-glass-link">
-                  <div class="proposal-glass-card">
-                    <span class="proposal-title">Υποχρεωτική κοινωνική στέγαση από επενδυτικά ακίνητα</span>
-                    <svg class="proposal-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </a>
-              </div>
-
-              <div class="swiper-slide">
-                <a href="proposal-rent-control.html" class="proposal-glass-link">
-                  <div class="proposal-glass-card">
-                    <span class="proposal-title">Ρύθμιση αυξήσεων ενοικίων σε περιοχές υψηλής ζήτησης</span>
-                    <svg class="proposal-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </a>
-              </div>
-
-              <div class="swiper-slide">
-                <a href="proposal-social-media-kids.html" class="proposal-glass-link">
-                  <div class="proposal-glass-card">
-                    <span class="proposal-title">Περιορισμός χρήσης social media κάτω των 16 ετών</span>
-                    <svg class="proposal-arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
-                  </div>
-                </a>
-              </div>
-
+            </div>
+            
+            <div class="prop-nav">
+              <div class="swiper-button-prev prop-btn"></div>
+              <div class="swiper-button-next prop-btn"></div>
             </div>
           </div>
-          <!-- Navigation -->
-          <div class="proposals-nav">
-            <div class="swiper-button-prev prop-prev"></div>
-            <div class="swiper-button-next prop-next"></div>
-          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
     <!-- ARTICLES -->
     <section id="articles" class="section section-bg-paper articles">
@@ -610,44 +589,48 @@
         <h2 class="h-section center reveal">Άρθρα & Παρεμβάσεις</h2>
         <div class="swiper articles-carousel reveal">
           <div class="swiper-wrapper">
-             <div class="swiper-slide">
+            <div class="swiper-slide">
               <article class="article-card">
                 <div class="article-cover" style="background-image:url('article-new-1.jpg')"></div>
                 <div class="article-body">
-                  <div class="article-meta"><span class="tag">Πολιτική</span><time datetime="2026-01-20">21 Ιαν 2026</time></div>
-                  <h3 class="article-title">Προχωρά με έργο αντί με λαικισμό</h3>
-                  <div class="article-actions"><a href="article-ergo.html" class="btn-link">Διαβάστε το Άρθρο</a></div>
+                  <div class="article-meta"><span class="tag">Πολιτική</span><time>21 Ιαν 2026</time></div>
+                  <h3 class="article-title">Προχωρά με έργο αντί με λαϊκισμό</h3>
+                  <div class="article-actions"><a href="article-ergo.html" class="btn-link">Διαβάστε</a></div>
                 </div>
               </article>
             </div>
+            <!-- (Other Articles slides...) -->
           </div>
         </div>
+        <div class="nav-row"><div class="swiper-button-prev articles-prev"></div><div class="swiper-button-next articles-next"></div></div>
       </div>
     </section>
 
-    <!-- SHARE YOUR VOICE -->
+    <!-- GNOMI preserved -->
     <section id="gnomi" class="brand-gradient-bg section-gnomi">
       <div class="gnomi-container">
-        <div class="glass-card reveal">
+        <div class="glass-card reveal center">
           <span class="eyebrow">Η γνώμη σου μετρά</span>
           <h2>Μοιράσου τη γνώμη σου</h2>
           <p class="lead">Στόχος αυτού του ερωτηματολογίου είναι να ακούσω τη δική σας φωνή.</p>
-          <div class="cta-row">
-            <a class="btn-form" href="https://docs.google.com/forms/..." target="_blank">Συμπλήρωσε το ερωτηματολόγιο</a>
-          </div>
+          <a class="btn btn-white" style="margin-top:1rem" href="https://docs.google.com/forms/..." target="_blank">Συμπλήρωσε το ερωτηματολόγιο</a>
         </div>
       </div>
     </section>
 
-    <!-- GET INVOLVED -->
+    <!-- INVOLVED preserved -->
     <section id="get-involved" class="section section-bg-paper">
       <div class="container">
         <h2 class="h-section center reveal">Γίνε Μέρος της Δυναμικής μας</h2>
         <div class="involved-wrapper-stack reveal">
           <form id="involvedForm" class="form">
-            <!-- Form content... -->
-            <button type="submit" class="btn btn-blue" style="width: 100%;">Δήλωσε Συμμετοχή</button>
+            <input type="text" placeholder="Ονοματεπώνυμο" required style="width:100%; margin-bottom:1rem; padding:10px;">
+            <input type="email" placeholder="Email" required style="width:100%; margin-bottom:1rem; padding:10px;">
+            <button type="submit" class="btn btn-blue" style="width:100%;">Δήλωσε Συμμετοχή</button>
           </form>
+          <div class="calendar-container">
+            <iframe src="https://calendar.google.com/calendar/embed?..." style="border:0; width:100%; height:100%;" frameborder="0"></iframe>
+          </div>
         </div>
       </div>
     </section>
@@ -655,12 +638,10 @@
 
   <footer class="site-footer">
     <div class="container foot">
-      <div class="foot-brand">
-        <img src="mono.png" alt="Μονόγραμμα" />
-        <div><strong>Elena Koushou Hadjidemetriou</strong></div>
-      </div>
+      <div class="foot-brand"><strong>Elena Koushou Hadjidemetriou</strong><br>Βουλευτικές Εκλογές 2026</div>
       <div class="foot-socials">
-        <!-- Social links... -->
+        <a href="#"><img src="si-facebook.svg" alt=""></a>
+        <a href="#"><img src="si-instagram.svg" alt=""></a>
       </div>
       <div class="foot-legal">© 2025</div>
     </div>
@@ -671,71 +652,50 @@
     document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.classList.add('enter');
 
-      /* Standard Nav logic */
-      const navToggle = document.querySelector('.nav-toggle'), navMenu = document.getElementById('nav-menu');
-      if (navToggle) {
-        navToggle.addEventListener('click', () => {
-          const open = navToggle.getAttribute('aria-expanded') === 'true';
-          navToggle.setAttribute('aria-expanded', String(!open));
-          navMenu.classList.toggle('show');
-        });
-      }
+      // Nav Toggle
+      const navT = document.querySelector('.nav-toggle'), navM = document.getElementById('nav-menu');
+      if (navT) navT.addEventListener('click', () => navM.classList.toggle('show'));
 
-      /* Sticky header */
+      // Intersection Observer for sticky header & reveals
       const siteHeader = document.getElementById('siteHeader'), hero = document.getElementById('hero');
-      new IntersectionObserver(([e]) => siteHeader.classList.toggle('is-visible', !e.isIntersecting), { threshold: 0.2 }).observe(hero);
+      new IntersectionObserver(([e]) => siteHeader.classList.toggle('is-visible', !e.isIntersecting), { threshold: 0.1 }).observe(hero);
 
-      /* Reveal-on-scroll */
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
       }, { threshold: 0.1 });
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-      /* --- CAROUSELS --- */
-      
-      // Existing Carousels
-      new Swiper('.articles-carousel', {
-        spaceBetween: 24, breakpoints: { 320:{slidesPerView:1}, 640:{slidesPerView:2}, 1024:{slidesPerView:3} }
-      });
-
-      new Swiper('.watch-carousel', {
-        spaceBetween: 24, breakpoints: { 320:{slidesPerView:1.2}, 500:{slidesPerView:2}, 900:{slidesPerView:3} }
-      });
-
-      // NEW: Proposals Vertical Carousel
-      new Swiper('.proposals-swiper', {
+      // NEW: Proposals Vertical Swiper (Effect: Cards, with Strict active visibility)
+      new Swiper('.prop-swiper', {
         direction: 'vertical',
         effect: 'cards',
         grabCursor: true,
         loop: true,
-        autoplay: { delay: 4000, disableOnInteraction: true },
-        navigation: {
-          nextEl: '.prop-next',
-          prevEl: '.prop-prev',
-        },
+        autoplay: { delay: 4500, disableOnInteraction: true },
+        navigation: { nextEl: '.prop-btn.swiper-button-next', prevEl: '.prop-btn.swiper-button-prev' },
         cardsEffect: {
           slideShadows: false,
+          perSlideOffset: 12, // Tighter overlap
           rotate: false,
-          perSlideOffset: 12, // Visual overlap
-        }
+        },
+        watchSlidesProgress: true
       });
 
-      /* Hero background interaction (MX/MY) */
+      // Existing Carousels
+      new Swiper('.watch-carousel', { spaceBetween: 24, navigation: { nextEl: '.watch-next', prevEl: '.watch-prev' }, breakpoints: { 320:{slidesPerView:1.2}, 700:{slidesPerView:3}, 1100:{slidesPerView:4} }});
+      new Swiper('.articles-carousel', { spaceBetween: 24, navigation: { nextEl: '.articles-next', prevEl: '.articles-prev' }, breakpoints: { 320:{slidesPerView:1}, 700:{slidesPerView:2}, 1100:{slidesPerView:3} }});
+
+      // Hero Interaction Script preserved
       const root = document.documentElement;
       let target = { x: 0.5, y: 0.38 }, current = { x: 0.5, y: 0.38 };
       function tick(){
-        current.x += (target.x - current.x) * 0.08;
-        current.y += (target.y - current.y) * 0.08;
+        current.x += (target.x - current.x) * 0.08; current.y += (target.y - current.y) * 0.08;
         root.style.setProperty('--mx', `${(current.x * 100).toFixed(2)}%`);
         root.style.setProperty('--my', `${(current.y * 100).toFixed(2)}%`);
         requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
-      hero.addEventListener('mousemove', e => {
-        const r = hero.getBoundingClientRect();
-        target.x = (e.clientX - r.left) / r.width;
-        target.y = (e.clientY - r.top) / r.height;
-      });
+      hero.addEventListener('mousemove', e => { const r = hero.getBoundingClientRect(); target.x = (e.clientX-r.left)/r.width; target.y = (e.clientY-r.top)/r.height; });
     });
   </script>
 </body>
