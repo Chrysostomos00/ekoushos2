@@ -138,11 +138,11 @@
       background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
     }
     
-    /* Ballot Number Positioning */
+    /* Ballot Number Image (#7) - Positioned Right */
     .hero-number-img {
       position: absolute;
-      top: clamp(25px, 6%, 45px); /* Balanced from top */
-      right: clamp(20px, 8vw, 80px); /* Pushed to the right side */
+      top: clamp(25px, 6%, 45px);
+      right: clamp(20px, 8vw, 80px); 
       left: auto;
       
       width: clamp(70px, 12vw, 120px);
@@ -154,10 +154,10 @@
     }
     .hero-number-img:hover { transform: scale(1.05) rotate(2deg); }
 
-    /* Mobile Adjustment */
+    /* Mobile tweak for number */
     @media (max-width: 768px) {
         .hero-number-img {
-            top: 25px;       
+            top: 25px;
             right: 20px;
             width: 75px; 
         }
@@ -276,7 +276,7 @@
     .watch-title { font-weight:900; font-size:1rem; color:var(--ink-2); margin:0 0 .25rem 0; }
     .watch-meta { font-size:.9rem; color:var(--muted); margin:0; }
 	
-	/* Platform badge overlay */
+	/* Platform badge overlay (hover) */
     .platform-badge{
       position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.94); opacity:0;
       transition: transform .3s ease, opacity .3s ease; pointer-events:none;
@@ -694,7 +694,7 @@
         <div class="glass-card reveal">
           <span class="eyebrow">Η γνώμη σου μετρά</span>
           <h2 id="gnomi-heading">Μοιράσου τη γνώμη σου</h2>
-          <p class="lead">Στόχος αυτού του ερωτηματολογίου είναι να ακούσω τη δική σας φωνή, να κατανοήσω τις ανάγκες και τις προτεραιότητές σας και να διαμορφώσω πολιτικές προτάσεις που απαντούν σε πραγματικά προβλήματα.</p>
+          <p class="lead">Στόχος αυτού του ερωτηματολογίου είναι να ακούσω τη δική σας φωνή...</p>
           <div class="cta-row"><a class="btn-form" href="https://docs.google.com/forms/d/e/1FAIpQLSexwEYiNsY_tZa_Hr37djOBaCDfz6q3MRatPjfZjaxEU0wEug/viewform" target="_blank" rel="noopener noreferrer">Συμπλήρωσε το ερωτηματολόγιο</a></div>
           <p class="subtle">Οι δικές σας απαντήσεις θα έχουν μεγάλη βαρύτητα και αξία για εμένα.</p>
         </div>
@@ -899,7 +899,7 @@
 
       /* ===== HERO → ABOUT portrait morph (restored) ===== */
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (false && !prefersReduced) { // Disabled per previous code
+      if (ENABLE_PORTRAIT_MORPH && !prefersReduced) {
         const heroPortrait  = document.getElementById('heroPortrait');
         const aboutPortrait = document.getElementById('aboutPortrait');
         const aboutSection  = document.getElementById('about');
