@@ -138,25 +138,29 @@
       background:linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
     }
     
-    /* Ballot Number Image Positioning */
+    /* Ballot Number Image (#7) - Positioned Right */
     .hero-number-img {
       position: absolute;
-      top: clamp(25px, 6%, 45px); /* Balanced from top */
-      right: clamp(20px, 8vw, 80px); /* Responsive from right */
+      top: clamp(25px, 6%, 45px);
+      right: clamp(20px, 8vw, 80px); 
       left: auto;
       
       width: clamp(70px, 12vw, 120px);
       height: auto;
       z-index: 10;
       
-      filter: drop-shadow(0 6px 14px rgba(0,25,60,0.3)); 
+      filter: drop-shadow(0 6px 12px rgba(0,25,60,0.2)); 
       transition: transform 0.3s ease;
     }
     .hero-number-img:hover { transform: scale(1.05) rotate(2deg); }
 
     /* Mobile tweak for number */
     @media (max-width: 768px) {
-        .hero-number-img { top: 25px; right: 20px; width: 75px; }
+        .hero-number-img {
+            top: 25px;
+            right: 20px;
+            width: 75px; 
+        }
     }
 
     .hero-inner{
@@ -274,12 +278,8 @@
 	
 	/* Platform badge overlay (hover) */
     .platform-badge{
-      position:absolute;
-      top:50%; left:50%;
-      transform:translate(-50%,-50%) scale(.94);
-      opacity:0;
-      transition: transform .3s ease, opacity .3s ease;
-      pointer-events:none;
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(.94); opacity:0;
+      transition: transform .3s ease, opacity .3s ease; pointer-events:none;
     }
     .platform-badge img, .platform-badge svg{ width:56px; height:56px; display:block; opacity:.72; filter: drop-shadow(0 2px 6px rgba(0,0,0,.25)); }
     .platform-badge.youtube svg{ width:46px; height:46px; opacity:.68; }
@@ -651,6 +651,7 @@
       <div class="container center">
         <h2 class="h-section reveal">Πολιτικές Προτάσεις</h2>
         <p class="section-subtitle reveal">Συγκεκριμένες, κοστολογημένες λύσεις για τα προβλήματα της καθημερινότητας.</p>
+        <!-- The Swiper Container for Vertical Cards -->
         <div class="proposals-swiper-container reveal">
           <div class="swiper proposals-carousel">
             <div class="swiper-wrapper">
@@ -723,39 +724,45 @@
     </section>
   </main>
 
-
- <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container foot">
-      <div class="foot-brand">
-        <img src="mono.png" alt="Έλενα Κούσιου Χατζηδημητρίου μονόγραμμα" />
-        <div><strong>Elena Koushou Hadjidemetriou</strong><br />Βουλευτικές Εκλογές 2026</div>
-      </div>
-
-      <!-- Socials -->
-      <div class="foot-socials">
-        <a href="https://www.facebook.com/ekoushos/" aria-label="Facebook" target="_blank" rel="noopener"><img src="si-facebook.svg" alt="" /></a>
-        <a href="https://www.instagram.com/elena_koushou_dem/" aria-label="Instagram" target="_blank" rel="noopener"><img src="si-instagram.svg" alt="" /></a>
-        <a href="https://www.linkedin.com/in/elena-koushos-hadjidemetriou-b98a7446/" aria-label="LinkedIn" target="_blank" rel="noopener"><img src="si-linkedin.svg" alt="" /></a>
-        <a href="https://www.tiktok.com/@elenakoushos_7?_r=1&_t=ZN-93LUATaTH6c" aria-label="TikTok" target="_blank" rel="noopener"><img src="si-tiktok.svg" alt="" /></a>
-        <a href="https://m.youtube.com/@%CE%88%CE%BB%CE%B5%CE%BD%CE%B1%CE%9A%CE%BF%CF%8D%CF%83%CE%B9%CE%BF%CF%85%CE%A7%CE%B1%CF%84%CE%B6%CE%B7%CE%B4%CE%B7%CE%BC%CE%B7%CF%84%CF%81%CE%AF%CE%BF%CF%85" aria-label="Youtube" target="_blank" rel="noopener"><img src="si-youtube.svg" alt="" /></a>
-        <a href="https://x.com/elenakoushos" aria-label="X (Twitter)" target="_blank" rel="noopener"><img src="si-x.png" alt="" /></a>
-      </div>
-
+      <div class="foot-brand"><img src="mono.png" alt="Logo" /><div><strong>Elena Koushou Hadjidemetriou</strong><br />Βουλευτικές Εκλογές 2026</div></div>
+      <div class="foot-socials"><a href="#" target="_blank"><img src="si-facebook.svg" alt=""/></a><a href="#" target="_blank"><img src="si-instagram.svg" alt=""/></a></div>
       <div class="foot-legal">© 2025</div>
     </div>
   </footer>
 
-  <!-- JS deps -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-  <!-- App JS -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.classList.add('enter');
 
-	  const ENABLE_PORTRAIT_MORPH = false;
+      // Initialize Main Carousels
+      new Swiper('.articles-carousel', { loop: false, slidesPerView: 3, breakpoints: {320:{slidesPerView:1}, 640:{slidesPerView:2}, 1024:{slidesPerView:3}}, navigation: {nextEl:'.articles-next', prevEl:'.articles-prev'} });
+      new Swiper('.watch-carousel', { loop: false, slidesPerView: 3, breakpoints: {320:{slidesPerView:1.2, centeredSlides:true}, 640:{slidesPerView:2}, 1024:{slidesPerView:3}}, navigation: {nextEl:'.watch-next', prevEl:'.watch-prev'} });
+
+      // FIXED: Vertical Proposals Carousel Init
+      new Swiper('.proposals-carousel', {
+         direction: 'vertical',
+         slidesPerView: 3, /* Needs explicit CSS height on container */
+         centeredSlides: true,
+         spaceBetween: 10,
+         loop: true,
+         speed: 500,
+         mousewheel: true,
+         grabCursor: true,
+         autoplay: {
+           delay: 3000,
+           disableOnInteraction: true,
+         },
+         on: {
+           init: function() {
+             // Force visibility check in case of rendering delay
+             this.update();
+           }
+         }
+      });
       
       /* ===== Nav toggle ===== */
       const navToggle = document.querySelector('.nav-toggle'),
@@ -810,19 +817,7 @@
         });
       }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-      /* ===== Carousels ===== */
-      new Swiper('.articles-carousel', {
-        loop: false, watchOverflow: true, spaceBetween: 24,
-        navigation: { nextEl: '.articles-next', prevEl: '.articles-prev' },
-        breakpoints: { 320:{slidesPerView:1}, 640:{slidesPerView:2}, 1024:{slidesPerView:3} }
-      });
-      new Swiper('.watch-carousel', {
-        loop: false, watchOverflow: true, spaceBetween: 24,
-        navigation: { nextEl: '.watch-next', prevEl: '.watch-prev' },
-        breakpoints: { 320:{slidesPerView:1.2, centeredSlides: true}, 500:{slidesPerView:2}, 900:{slidesPerView:3}, 1200:{slidesPerView:4} }
-      });
-
+      
       /* ===== Real form submit to Apps Script + reCAPTCHA ===== */
       const form = document.getElementById('involvedForm');
       if (form) {
@@ -963,11 +958,5 @@
       }
     });
   </script>
-	<!-- Vercel Web Analytics -->
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-
 </body>
 </html>
