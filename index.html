@@ -10,15 +10,18 @@
   <meta property="og:image" content="portrait.png" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
+  <!-- Local variable font -->
   <style>
     @font-face{
       font-family:"Peridot PE Variable";
       src:url("assets/fonts/PeridotPE-Variable.woff2") format("woff2");
-      font-weight:100 900; font-style:normal; font-display:swap;
+      font-weight:100 900;
+      font-style:normal;
+      font-display:swap;
     }
   </style>
 
-  <!-- External deps -->
+  <!-- External CSS deps -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -32,11 +35,24 @@
 
   <style>
     :root{
-      --brand-plum:#723666; --brand-blue:#004588; --brand-accent:#A06EA4;
-      --ink:#0A2244; --ink-2:#14335A; --muted:#5A6F90;
-      --paper:#FFFFFF; --paper-2:#F7FAFF; --paper-3:#EDF4FF;
-      --line:#D9E7FF; --radius:14px; --header-height: 96px;
+      --brand-plum:#723666;
+      --brand-blue:#004588;
+      --brand-accent:#A06EA4;
+      --ink:#0A2244;
+      --ink-2:#14335A;
+      --muted:#5A6F90;
+      --paper:#FFFFFF;
+      --paper-2:#F7FAFF;
+      --paper-3:#EDF4FF;
+      --line:#D9E7FF;
+      --shadow:0 8px 24px rgba(16,50,92,.08);
+      --radius:14px;
+      --header-height: 96px;
+
+      /* hero interaction */
       --mx:50%; --my:38%; --glow-size: 260px; --twist:0deg;
+      
+      /* Brand gradient definition */
       --brand-gradient: linear-gradient(112deg, color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%, color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%, color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%, color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%);
     }
 
@@ -45,234 +61,238 @@
     body{
       margin:0; color:var(--ink);
       background: linear-gradient(180deg, var(--paper-2), var(--paper));
-      font:400 16px/1.65 "Roboto", sans-serif; -webkit-font-smoothing:antialiased;
+      font:400 16px/1.65 "Roboto", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
     img, svg{max-width:100%; height:auto; display:block}
     a{color:inherit; text-decoration:none}
     .container{width:min(1200px, 92%); margin:0 auto}
-    h1,h2,h3,.h-section,.hero-title{ font-family:"Peridot PE Variable", sans-serif; letter-spacing:.2px; }
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-    /* UI components */
+    h1,h2,h3,.h-section,.hero-title{
+      font-family:"Peridot PE Variable","Roboto",system-ui,-apple-system,Segoe UI,Arial,sans-serif;
+      letter-spacing:.2px;
+    }
+
+    /* ===== Global UI bits ===== */
     .scroll-progress{position:fixed; inset:0 0 auto 0; height:4px; z-index:9999}
     .scroll-progress span{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--brand-blue),var(--brand-accent))}
 
     .site-header{
       position:fixed; top:0; left:0; right:0; z-index:1000;
-      background:rgba(255,255,255,.9); backdrop-filter: blur(12px);
-      border-bottom:1px solid var(--line); transform: translateY(-100%); opacity:0; transition: transform .35s ease, opacity .35s ease;
+      background:rgba(255,255,255,.9);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom:1px solid var(--line);
+      transform: translateY(-100%);
+      opacity:0; pointer-events:none;
+      transition: transform .35s ease, opacity .35s ease;
     }
     .site-header.is-visible{transform:none; opacity:1; pointer-events:auto;}
-    .nav{display:flex; align-items:center; justify-content:space-between; height: var(--header-height);}
+
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:.5rem 0; height: var(--header-height);}
     .brand img{height: 80px; width:auto}
     .nav-menu{display:flex; gap:1.1rem; align-items:center}
-    .nav-menu a{padding:.5rem .75rem; border-radius:8px; color:var(--ink-2); font-weight:700; transition: .2s;}
+    .nav-menu a{padding:.5rem .75rem; border-radius:8px; color:var(--ink-2); font-weight:700; transition: background-color .2s ease;}
     .nav-menu a:hover{background:rgba(20,51,90,.06)}
     .nav-toggle{display:none; flex-direction:column; gap:5px; background:none; border:0; cursor:pointer; padding: 10px;}
-    .nav-toggle span{width:26px; height:2px; background:var(--ink-2); display:block; transition: .3s;}
+    .nav-toggle span{width:26px; height:2px; background:var(--ink-2); display:block; transition: transform 0.3s ease, opacity 0.3s ease;}
     .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
     .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
     .nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
 
-    .btn{display:inline-flex; align-items:center; justify-content:center; padding:.75rem 1.25rem; border-radius:999px; font-weight:900; transition: all .2s ease; text-align: center;}
+    .btn{display:inline-block; padding:.75rem 1.25rem; border-radius:999px; font-weight:900; border:2px solid transparent; transition: all .2s ease; text-align: center; min-height:46px; display:inline-flex; align-items:center; justify-content:center;}
     .btn-blue{background:var(--brand-blue); color:#fff}
+    .btn-blue:hover{filter:brightness(1.07); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,69,136,0.28);}
+    .btn-outline{border-color:var(--brand-blue); color:var(--ink-2)}
+    .btn-outline:hover{background:rgba(0,69,136,.12); transform: translateY(-2px);}
     .btn-white{background:#fff; color:var(--brand-blue); border:2px solid rgba(0,69,136,.18)}
-    .btn-outline{border-color:var(--brand-blue); color:var(--ink-2); border: 2px solid var(--brand-blue);}
+    .btn-white:hover{transform: translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.08)}
 
-    /* Hero */
+    /* ================= HERO ================ */
     .hero{
-      position:relative; padding-top: clamp(3rem, 10vh, 6rem); padding-bottom: 0;
+      position:relative;
+      padding-top: clamp(3rem, 10vh, 6rem);
+      padding-bottom: 0;
       display: flex; align-items: center; overflow:hidden;
-      background: radial-gradient(var(--glow-size) var(--glow-size) at var(--mx) var(--my), rgba(160,110,164,0.18) 0%, transparent 60%),
-                  radial-gradient(900px 700px at 26% 40%, rgba(0,70,137,0.45), transparent 70%), var(--brand-gradient);
+      background:
+        radial-gradient(var(--glow-size) var(--glow-size) at var(--mx) var(--my),
+          rgba(160,110,164,0.18) 0%,
+          rgba(160,110,164,0.10) 18%,
+          transparent 60%),
+        radial-gradient(900px 700px at 26% 40%,
+          rgba(0,70,137,0.45),
+          transparent 70%),
+        var(--brand-gradient);
+      filter: hue-rotate(var(--twist));
     }
     .hero-number-img {
-      position: absolute; top: clamp(20px, 5vh, 40px); right: clamp(20px, 8vw, 80px); 
-      width: clamp(70px, 12vw, 120px); z-index: 10; filter: drop-shadow(0 6px 14px rgba(0,25,60,0.3));
+      position: absolute;
+      top: clamp(20px, 5vh, 40px); right: clamp(20px, 8vw, 80px); 
+      width: clamp(70px, 12vw, 120px);
+      z-index: 10;
+      filter: drop-shadow(0 6px 14px rgba(0,25,60,0.3));
+      transition: transform 0.3s ease;
     }
-    .hero-inner{ position:relative; z-index:2; width:min(1200px, 92%); margin:0 auto; display:flex; flex-direction:column; align-items:center; gap: 1.5rem; }
-    .hero-logo, .hero-slogan, .hero-portrait-link, .hero-cta { max-width: 500px; width: 100%; opacity:0; transform: translateY(10px); }
-    .enter .hero-logo{ animation: slideUp .8s forwards .05s; }
-    .enter .hero-slogan{ animation: slideUp .8s forwards .18s; }
-    .enter .hero-cta{ animation: slideUp .8s forwards .32s; }
-    .enter .hero-portrait-link { animation: slideUp .8s forwards .25s; }
-    @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
-    .party-logo{ position:absolute; left: 20px; bottom: 20px; width: clamp(100px, 12vw, 150px); filter: drop-shadow(0 2px 6px rgba(0,0,0,0.18)); }
-    .hero-portrait{ width: 100%; border-radius: 12px; filter: drop-shadow(0 18px 40px rgba(10,34,68,0.18)); }
+    .hero-inner{
+      position:relative; z-index:2;
+      width:min(1200px, 92%); margin:0 auto;
+      display:flex; flex-direction:column; align-items:center; gap: 1.5rem;
+    }
+    .hero-logo, .hero-slogan, .hero-portrait-link, .hero-cta { max-width: 500px; width: 100%; }
+    .hero-logo{ will-change: transform, filter, opacity; transform: translateY(8px) scale(.985); opacity:0; filter: blur(6px); }
+    .hero-slogan{ will-change: transform, filter, opacity; transform: translateY(8px) scale(.99); opacity:0; filter: blur(6px); animation: floaty 6s ease-in-out infinite 1.1s; }
+    @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    .hero-cta{ display:flex; gap:.75rem; align-items:center; justify-content: center; flex-wrap:wrap; opacity:0; transform: translateY(10px); }
 
+    .enter .hero-logo{ animation: logoIn .8s cubic-bezier(.2,.7,.2,1) .05s forwards; }
+    .enter .hero-slogan{ animation: sloganIn .9s cubic-bezier(.2,.7,.2,1) .18s forwards; }
+    .enter .hero-cta{ animation: ctaIn .7s cubic-bezier(.2,.7,.2,1) .32s forwards; }
+    .enter .hero-portrait-link { animation: portraitIn 1.1s cubic-bezier(.2,.8,.2,1) .25s forwards; }
+
+    @keyframes logoIn{ to{ opacity:1; transform: translateY(0) scale(1); filter: blur(0); } }
+    @keyframes sloganIn{ to{ opacity:1; transform: translateY(0) scale(1); filter: blur(0); } }
+    @keyframes ctaIn{ to{ opacity:1; transform: translateY(0); } }
+    @keyframes portraitIn { to { transform: translateX(0) scale(1); opacity: 1; } }
+
+    .party-logo{
+      position:absolute; left: 20px; bottom: 20px;
+      width: clamp(100px, 12vw, 150px);
+      height: auto; z-index:4; pointer-events:none;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.18));
+    }
+
+    .hero-portrait-link { z-index: 3; display: block; position: relative; transform: translateX(40px) scale(1.05); opacity: 0; }
+    .hero-portrait{ width: 100%; transform-origin: bottom center; border-radius: 12px; filter: drop-shadow(0 18px 40px rgba(10,34,68,.18)); transition: filter 0.4s ease, transform 0.4s ease; }
     .portrait-prompt {
       position: absolute; bottom: 12%; left: 50%;
       transform: translateX(-50%) translateY(15px);
       color: #fff; background: rgba(10, 34, 68, 0.7);
-      backdrop-filter: blur(8px); padding: 0.6rem 1.1rem; border-radius: 999px;
-      font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; opacity: 0; transition: opacity .4s ease, transform .4s ease;
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      padding: 0.6rem 1.1rem; border-radius: 999px;
+      font-weight: 700; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; white-space: nowrap; pointer-events: none; opacity: 0; transition: .4s ease;
     }
     .hero-portrait-link:hover .portrait-prompt { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* Layout Sections */
+    /* Sections */
     .section{padding: clamp(60px, 8vw, 100px) 0; position:relative}
     .section-bg-paper { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .h-section{ color:var(--ink-2); font:900 clamp(28px, 4vw, 44px)/1.1 inherit; margin:0 0 .7rem; }
+    .section-subtitle { font-size: 1.05rem; color: var(--muted); max-width: 700px; margin: -0.3rem auto 2.2rem; }
     .center{text-align:center}
 
     .grid-2{display:grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; grid-template-columns:1fr 1fr}
-    .about-card{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:clamp(1.5rem, 4vw, 2.5rem); box-shadow:var(--shadow); }
-    .portrait{ width:100%; border-radius:12px; }
+    .about-card{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:clamp(1.5rem, 4vw, 2.5rem); box-shadow:var(--shadow); }
+    .portrait{ width:100%; max-width:460px; margin:0 auto; border-radius:12px; transition: transform .3s ease; }
 
-    /* Calendar */
-    .calendar-container { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); height: 500px; overflow: hidden; box-shadow: var(--shadow); }
+    /* Calendar Container */
+    .calendar-container { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 0.5rem; box-shadow: var(--shadow); height: 500px; overflow: hidden; max-width: 1000px; margin: 0 auto; }
 
-    /* Program Section */
+    /* Program Cards */
     .program-cards{display:grid; gap:1.5rem; grid-template-columns:repeat(3, 1fr); margin-top:3rem}
-    .program-card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:1.5rem; transition:.25s; box-shadow:var(--shadow); }
+    .program-card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:1.5rem; transition:.25s ease; color:var(--ink); box-shadow:var(--shadow); }
     .program-card:hover{transform:translateY(-6px); box-shadow:0 14px 32px rgba(16,50,92,.14)}
-    .program-card h3{ color:var(--ink-2); margin:0 0 .5rem; display:flex; align-items:center; gap:.75rem; }
+    .program-card h3{ color:var(--ink-2); margin: .7rem 0 .35rem; display:flex; align-items:center; gap:.75rem; }
     .program-card-icon { width: 32px; height: 32px; color: var(--brand-blue); }
 
-    /* =================== PROPOSALS STACK (PRO) =================== */
-    .section-proposals{
-      padding: 70px 0;                 
-      background: var(--brand-gradient);
-      overflow: hidden;                 
-      position: relative;
+    /* =================== THE FINAL PROFESSIONAL STACKED CAROUSEL FIX =================== */
+    .section-proposals { padding: 50px 0; background: var(--brand-gradient); overflow: hidden; position: relative; }
+    .proposals-flex-container { display: flex; align-items: center; gap: 4rem; width: min(1200px, 92%); margin: 0 auto; justify-content: space-between; }
+    .proposals-label-side { 
+        color:#fff; font-family:"Peridot PE Variable", sans-serif; 
+        font-weight:900; font-size:clamp(1.8rem, 4vw, 2.5rem); 
+        line-height:1.1; flex-shrink: 0; max-width: 260px;
     }
 
-    .proposals-flex-container{
-      display:flex;
-      align-items:center;
-      gap: 4rem;
-      width: min(1200px, 92%);
-      margin: 0 auto;
+    .proposals-stack-view { height: 160px; flex-grow: 1; position: relative; max-width: 700px; }
+    .proposals-swiper { width: 100%; height: 100%; overflow: visible !important; }
+    
+    .proposal-card-stack {
+      width: 100%; height: 100%; border-radius: 20px; 
+      color:#fff; text-decoration: none;
+      background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(16px) saturate(120%); -webkit-backdrop-filter: blur(16px) saturate(120%);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.18);
+      transition: opacity 0.5s ease, border 0.5s ease, transform 0.5s ease;
+      display: flex; align-items: center;
     }
 
-    .proposals-label-side{
-      color:#fff;
-      font-family:"Peridot PE Variable", sans-serif;
-      font-weight:900;
-      font-size:clamp(1.8rem, 3.5vw, 2.5rem);
-      line-height:1.1;
-      flex-shrink:0;
-      max-width: 250px;
+    /* THE TRUE FIX: Visibility handling to remove screenshot clutter */
+    .swiper-slide .card-inner-focus { 
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease; 
+      display: flex; align-items: center; gap: 1.5rem; padding: 0 2.5rem; width: 100%;
+    }
+    .swiper-slide-active .card-inner-focus { opacity: 1; pointer-events: auto; }
+    
+    /* Fade the "shadow" layers significantly on desktop to avoid confusion */
+    .swiper-slide:not(.swiper-slide-active) .proposal-card-stack { opacity: 0.35; border: 1px solid rgba(255, 255, 255, 0.1); }
+
+    .prop-icon-final { 
+        width: 56px; height: 56px; border-radius: 12px; background: rgba(255,255,255,0.15); 
+        display: grid; place-items: center; flex-shrink: 0;
+    }
+    .prop-icon-final svg { width: 32px; height: 32px; color:#fff; }
+    .prop-title-final { font-family: "Peridot PE Variable", sans-serif; font-weight: 800; font-size: clamp(1.1rem, 2.2vw, 1.45rem); flex: 1; line-height: 1.25; }
+    .prop-arrow-final { width: 26px; opacity: 0.6; transition: .3s ease;}
+    .proposal-card-stack:hover .prop-arrow-final { transform: translateX(5px); opacity: 1; }
+
+    .prop-controls { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
+    .prop-nav-btn {
+      width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.1); color: #fff; display: grid; place-items: center; cursor: pointer; transition: .2s;
+    }
+    .prop-nav-btn:hover { background: rgba(255,255,255,0.22); border-color: #fff; }
+
+    @media (max-width: 960px) {
+        .proposals-flex-container { flex-direction: column; text-align: center; gap: 1.5rem; }
+        .proposals-stack-view { max-width: 100%; height: 125px; }
+        .prop-controls { display: none; }
+        .card-inner-focus { padding: 0 1.2rem; }
+        .prop-title-final { font-size: 1.05rem; }
     }
 
-    .proposals-stack-view{
-      --card-h: 118px;                 
-      --peek-gap: 16px;                
-      position: relative;
-      flex-grow: 1;
-      max-width: 720px;
-      height: calc(var(--card-h) + (var(--peek-gap) * 4));
-    }
+    /* Media/Articles */
+    .article-card, .watch-card { background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; height: 100%; transition: transform .3s ease; }
+    .article-cover, .watch-thumbnail { aspect-ratio: 16/9; background-size: cover; background-position: center; overflow:hidden; }
+    .watch-thumbnail { aspect-ratio: 9/14; position: relative; }
+    .platform-badge{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0; transition: .3s; pointer-events: none;}
+    .watch-card:hover .platform-badge{ opacity: 0.9; transform:translate(-50%,-50%) scale(1.15); }
+    .tag { font-size:.8rem; background:var(--paper-3); padding:2px 10px; border-radius:99px; font-weight:900; }
+    .nav-row { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; }
+    .swiper-button-prev, .swiper-button-next { position: static; width:44px; height:44px; background:#fff; border:1px solid var(--line); border-radius:50%; color:var(--brand-blue); }
 
-    .proposals-swiper{
-      width: 100%;
-      height: 100%;
-      overflow: visible;               
-    }
+    /* Gnomi/Opinion */
+    .section-gnomi{ background: var(--brand-gradient); color:#fff; text-align: center; }
+    .glass-card{ background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); border-radius: 20px; backdrop-filter: blur(14px); padding: 3.5rem 2rem; max-width: 900px; margin: 0 auto; box-shadow: var(--shadow); }
 
-    .proposals-swiper .swiper-slide{
-      height: var(--card-h);
-      display:flex;
-      align-items:stretch;
-    }
-
-    .proposal-card-stack{
-      width: 100%;
-      height: 100%;
-      border-radius: 20px;
-      color:#fff;
-      text-decoration:none;
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.22);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      box-shadow: 0 14px 36px rgba(0,0,0,0.16);
-      display:flex;
-      align-items:center;
-      transition: box-shadow .25s ease, border-color .25s ease, background .25s ease;
-    }
-
-    .swiper-slide-active .proposal-card-stack{
-      background: rgba(255,255,255,0.14);
-      border-color: rgba(255,255,255,0.30);
-      box-shadow: 0 18px 44px rgba(0,0,0,0.22);
-    }
-
-    /* THE FIX: CONTENT OPACITY ON BACK CARDS */
-    .card-inner-content{
-      display:flex;
-      align-items:center;
-      gap: 1.5rem;
-      padding: 0 2rem;
-      width: 100%;
-      transition: opacity .18s ease;
-    }
-    .swiper-slide:not(.swiper-slide-active) .card-inner-content{
-      opacity: 0; pointer-events: none;
-    }
-
-    .prop-icon-circle{
-      width: 52px; height: 52px; border-radius: 12px;
-      background: rgba(255,255,255,0.16);
-      display:grid; place-items:center; flex-shrink:0;
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-    .prop-icon-circle svg{ width:30px; height:30px; color:#fff; }
-    .prop-title-stack{ font-family:"Peridot PE Variable", sans-serif; font-weight:800; font-size: 1.22rem; flex:1; line-height:1.25; }
-    .prop-stack-arrow{ opacity:.65; width:26px; }
-
-    .stack-controls{ display:flex; flex-direction:column; gap: 10px; flex-shrink:0; }
-    .stack-nav-btn{
-      width: 40px; height: 40px; border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.25);
-      background: rgba(255,255,255,0.10); color:#fff;
-      display:grid; place-items:center; cursor:pointer; transition: .2s;
-    }
-
-    /* Media/Articles items restoration */
-    .watch-carousel, .articles-carousel { overflow: hidden; padding: 5px; }
-    .watch-card, .article-card { 
-      background:#fff; border:1px solid var(--line); border-radius:16px; 
-      overflow:hidden; box-shadow:var(--shadow); display:flex; flex-direction:column; height: 100%; transition: transform .3s ease;
-    }
-    .watch-thumbnail{ aspect-ratio: 9/14; background-size: cover; position:relative; }
-    .platform-badge{ 
-        position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); 
-        opacity:0; transition: .3s;
-    }
-    .watch-card:hover .platform-badge{ opacity: 0.9; transform:translate(-50%,-50%) scale(1.1); }
-    .watch-info, .article-body { padding: 1.25rem; }
-    .article-cover { aspect-ratio: 16/9; background-size: cover; }
-    .tag { background:var(--paper-3); font-size: .8rem; padding: 2px 10px; border-radius:99px; font-weight:900; }
-
-    /* Form and Gnomi styles */
-    .section-gnomi{ background: var(--brand-gradient); color:#fff; padding: 80px 0; text-align: center; }
-    .glass-card{ background: rgba(255,255,255,0.12); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.25); border-radius: 20px; padding: 3rem; max-width: 850px; margin: 0 auto; }
+    /* Form */
+    .involved-wrapper-stack { max-width: 650px; margin: 0 auto; display: flex; flex-direction: column; gap: 2.5rem; }
     .form{ background:#fff; border-radius:var(--radius); padding: clamp(1.5rem, 4vw, 2.5rem); box-shadow:var(--shadow); }
-    .form-row { display: flex; flex-direction: column; gap: 5px; margin-bottom: 1rem; }
-    input { padding: 12px; border: 1px solid var(--line); border-radius: 8px; }
+    .contact-bubbles { text-align: center; border-top: 1px solid var(--line); padding-top: 2rem; margin-top: 2rem; }
+    .bubble-wrapper{ display:flex; justify-content:center; gap: 1rem; margin-top: 1rem; }
+    .bubble { display: flex; align-items:center; gap:.5rem; background:var(--paper-2); padding:10px 24px; border-radius:99px; font-weight:800; border: 1px solid var(--line); font-size: .9rem; }
 
-    @media (max-width: 960px){
-      .nav-toggle{display:flex}
-      .nav-menu{
-        position:fixed; left:1rem; right:1rem; top:100px; background:#fff; border-radius:12px;
-        flex-direction:column; padding:1rem; display:none; border:1px solid var(--line); box-shadow:var(--shadow);
-      }
-      .nav-menu.show{display:flex}
-      .proposals-flex-container{ flex-direction:column; text-align:center; gap: 1.5rem; }
-      .proposals-stack-view{ max-width: 100%; --card-h: 110px; height: calc(var(--card-h) + (var(--peek-gap) * 3)); }
-      .stack-controls{ display:none; }
-      .grid-2, .program-cards, .foot { grid-template-columns: 1fr; text-align: center; }
+    /* Footer */
+    .site-footer{ color:#fff; background: var(--brand-gradient); padding: 4rem 0; text-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+    .foot{ display:grid; grid-template-columns: 1fr auto 1fr; align-items:center; gap: 2rem; }
+    .foot-socials{ display:flex; gap: 12px; justify-content:center; }
+    .foot-socials a{ width:42px; height:42px; border-radius:50%; background:rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); display:grid; place-items:center; }
+
+    @media (max-width: 960px) {
+      .nav-toggle { display: flex; }
+      .nav-menu { position:fixed; inset: 95px 20px auto; background:#fff; border:1px solid var(--line); border-radius:14px; display:none; flex-direction:column; padding:1.2rem; box-shadow:var(--shadow); }
+      .nav-menu.show { display: flex; }
     }
-    .reveal{ opacity: 0; transform: translateY(22px); transition: .75s ease; }
+    .reveal{ opacity: 0; transform: translateY(22px); transition: .8s ease; }
     .reveal.visible{ opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body>
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
-  <header class="site-header" id="siteHeader">
+  <header class="site-header" role="banner" id="siteHeader">
     <div class="nav container">
-      <a class="brand" href="#top"><img src="logo.svg" alt="Λογότυπο"></a>
-      <button class="nav-toggle"><span></span><span></span><span></span></button>
+      <a class="brand" href="#top"><img src="logo.svg" alt="Έλενα Κούσιου" width="120" height="80"></a>
+      <button class="nav-toggle" aria-expanded="false" aria-label="Μενού"><span></span><span></span><span></span></button>
       <nav id="nav-menu" class="nav-menu">
         <a href="#">Αρχική</a>
         <a href="#about">Βιογραφικό</a>
@@ -280,52 +300,53 @@
         <a href="#program">Θέσεις</a>
         <a href="#proposals">Προτάσεις</a>
         <a href="#media">Media</a>
-        <a href="#get-involved">Συμμετοχή</a>
+        <a href="#articles">Άρθρα</a>
+        <a href="#get-involved" class="btn btn-outline">Συμμετοχή</a>
       </nav>
     </div>
   </header>
 
-  <main id="top">
+  <main id="top" tabindex="-1">
     
-    <!-- HERO -->
+    <!-- 1. HERO -->
     <section class="hero" id="hero">
-      <img class="party-logo" src="party-logo.png" alt="Party" />
+      <img class="party-logo" src="party-logo.png" alt="Πολιτικός φορέας" />
       <img src="7.png" alt="7" class="hero-number-img" />
 
       <div class="hero-inner">
         <div class="hero-text-content" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
-          <img class="hero-logo" src="logo-hero.svg" alt="Elena Logo" />
-          <img class="hero-slogan" src="slogan-hero.png" alt="Campaign slogan" />
-          <div class="hero-cta" style="display:flex; gap:0.8rem; margin-top:2rem;">
+          <img class="hero-logo" src="logo-hero.svg" alt="Καμπάνια" />
+          <img class="hero-slogan" src="slogan-hero.png" alt="Σλόγκαν" />
+          <div class="hero-cta" style="display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin-top:2rem;">
             <a href="#program" class="btn btn-white">Δες το Πρόγραμμα</a>
             <a href="#get-involved" class="btn btn-blue">Δήλωσε Συμμετοχή</a>
-            <a href="#gnomi" class="btn btn-white" style="background:rgba(255,255,255,0.1); border-color:#fff; color:#fff;">Μοιράσου τη γνώμη σου</a>
+            <a href="#gnomi" class="btn btn-white" style="background:rgba(255,255,255,0.12); color:#fff; border-color:#fff">Μοιράσου τη γνώμη σου</a>
           </div>
         </div>
         <a href="#about" class="hero-portrait-link">
           <picture>
             <source srcset="portrait.avif" type="image/avif">
-            <img class="hero-portrait" src="portrait.jpg" alt="Portrait">
+            <img class="hero-portrait" id="heroPortrait" src="portrait.jpg" alt="Έλενα Κούσιου Χατζηδημητρίου" width="1600" height="2053" loading="eager">
           </picture>
-          <span class="portrait-prompt">Ποια είναι η Έλενα; <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14m0 0l-6-6m6 6l6-6"></path></svg></span>
+          <span class="portrait-prompt">Ποια είναι η Έλενα;</span>
         </a>
       </div>
     </section>
 
-    <!-- BIO -->
+    <!-- 2. BIO -->
     <section id="about" class="section about">
       <div class="container grid-2">
-        <div><img class="portrait" src="Elena_2.webp" alt="Elena Bio" loading="lazy"></div>
+        <div><img class="portrait" src="Elena_2.webp" alt="Έλενα Βιογραφικό" loading="lazy"></div>
         <div class="about-card reveal">
-          <h1 class="h-section">Με Δυναμική. Για Εμάς.</h1>
+          <h1 class="h-section">Με Δυναμική. Για Εμάς.<br></h1>
           <p>Ξεκινώ αυτή τη διαδρομή πιστεύοντας ότι τίποτα δεν αλλάζει χωρίς εσένα. Θέλω να σε ακούσω, να ανταλλάξουμε ιδέες και να βρούμε λύσεις στα καθημερινά μας ζητήματα. Η ενασχόλησή μου με την πολιτική θα είναι λειτούργημα και ευθύνη απέναντί σου.</p>
           <p>Μαζί, με θέληση, πίστη και θάρρος, ας φέρουμε τις αλλαγές που χρειάζονται. Είμαι εδώ, για εμάς.</p>
-          <a href="bio.html" class="btn btn-outline" style="margin-top: 1rem;">Αναλυτικό Βιογραφικό</a>
+          <a href="bio.html" class="btn btn-outline" style="margin-top: 1.5rem;">Αναλυτικό Βιογραφικό</a>
         </div>
       </div>
     </section>
 
-    <!-- CALENDAR -->
+    <!-- 3. CALENDAR (UPCOMING EVENTS) -->
     <section id="events" class="section section-bg-paper">
       <div class="container">
         <h2 class="h-section center reveal">Προσεχείς Εκδηλώσεις</h2>
@@ -335,46 +356,54 @@
       </div>
     </section>
 
-    <!-- PROGRAM -->
+    <!-- 4. PROGRAM -->
     <section id="program" class="section">
       <div class="container">
         <h2 class="h-section center reveal">Θέσεις & Πρόγραμμα</h2>
+        <p class="section-subtitle center reveal">Προτεραιότητες για μια Κύπρο που προχωρά μπροστά, με ασφάλεια και ευκαιρίες για όλους.</p>
         <div class="program-cards">
+          
           <a href="program-justice.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/></svg> Δικαιοσύνη</h3>
+            <h3><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path></svg> Δικαιοσύνη</h3>
             <p>Για ένα κράτος δικαίου που λειτουργεί δίκαια, γρήγορα και με διαφάνεια.</p>
             <span style="color:var(--brand-blue); font-weight:900;">Διαβάστε Αναλυτικά →</span>
           </a>
+
           <a href="program-health.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg> Υγεία & Πρόνοια</h3>
+            <h3><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg> Υγεία & Πρόνοια</h3>
             <p>Για ποιοτικές υπηρεσίες υγείας και αξιοπρέπεια για όλους τους πολίτες.</p>
             <span style="color:var(--brand-blue); font-weight:900;">Διαβάστε Αναλυτικά →</span>
           </a>
+
           <a href="program-housing.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg> Στέγαση</h3>
-            <p>Λύσεις στη στέγαση, μείωση του κόστους ζωής και ενίσχυση στον πολίτη.</p>
+            <h3><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg> Στέγαση</h3>
+            <p>Λύσεις στη στέγαση, μείωση κόστους ζωής και ενίσχυση στον πολίτη.</p>
             <span style="color:var(--brand-blue); font-weight:900;">Διαβάστε Αναλυτικά →</span>
           </a>
+
           <a href="program-development.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Ανάπτυξη</h3>
+            <h3><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"></path></svg> Ανάπτυξη</h3>
             <p>Οικονομία που στηρίζει τις ΜμΕ και κρατά τους νέους στην Κύπρο.</p>
             <span style="color:var(--brand-blue); font-weight:900;">Διαβάστε Αναλυτικά →</span>
           </a>
+
           <a href="program-education.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 5 4 5 6 5s6-0 6-5v-5"/></svg> Παιδεία</h3>
+            <h3><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path></svg> Παιδεία</h3>
             <p>Μια παιδεία που διαπαιδαγωγεί για τη ζωή, όχι μόνο για τις γνώσεις.</p>
             <span style="color:var(--brand-blue); font-weight:900;">Διαβάστε Αναλυτικά →</span>
           </a>
+
           <a href="program-admin.html" class="program-card reveal">
-            <h3><svg class="program-card-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg> Δημόσια Διοίκηση</h3>
-            <p>Υπευθυνότητα, αξιολόγηση και λογοδοσία σε όλο το δημόσιο.</p>
+            <h3><svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg> Δημόσια Διοίκηση</h3>
+            <p>Για ένα κράτος με υπευθυνότητα, αξιολόγηση και πραγματική λογοδοσία.</p>
             <span style="color:var(--brand-blue); font-weight:900;">Διαβάστε Αναλυτικά →</span>
           </a>
+
         </div>
       </div>
     </section>
 
-    <!-- 5. STACKED PROPOSALS (PREMIUM) -->
+    <!-- 5. FINAL FOCUS-FIXED POLITICAL PROPOSALS STACK -->
     <section id="proposals" class="section-proposals">
       <div class="container proposals-flex-container reveal">
         <div class="proposals-label-side">Πολιτικές<br>Προτάσεις</div>
@@ -382,87 +411,152 @@
         <div class="proposals-stack-view">
           <div class="swiper proposals-swiper">
             <div class="swiper-wrapper">
-              <!-- Proposal items exactly as before with content hide patch -->
+              
               <div class="swiper-slide">
                 <a href="proposal-bullying.html" class="proposal-card-stack">
-                  <div class="card-inner-content">
-                    <div class="prop-icon-circle"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                    <span class="prop-title-stack">Ακαδημίες χωρίς Bullying & Ψυχολογική Βία</span>
-                    <svg class="prop-stack-arrow" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  <div class="card-inner-focus">
+                    <div class="prop-icon-final"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                    <span class="prop-title-final">Ακαδημίες χωρίς Bullying & Ψυχολογική Βία</span>
+                    <svg class="prop-arrow-final" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                   </div>
                 </a>
               </div>
+
               <div class="swiper-slide">
                 <a href="proposal-pensions-authority.html" class="proposal-card-stack">
-                  <div class="card-inner-content">
-                    <div class="prop-icon-circle"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg></div>
-                    <span class="prop-title-stack">Ενιαία Ανεξάρτητη Εποπτική Αρχή Συντάξεων</span>
-                    <svg class="prop-stack-arrow" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  <div class="card-inner-focus">
+                    <div class="prop-icon-final"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg></div>
+                    <span class="prop-title-final">Ενιαία Εποπτική Αρχή Συντάξεων</span>
+                    <svg class="prop-arrow-final" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                   </div>
                 </a>
               </div>
+
               <div class="swiper-slide">
                 <a href="proposal-doctor-neighborhood.html" class="proposal-card-stack">
-                  <div class="card-inner-content">
-                    <div class="prop-icon-circle"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364"/></svg></div>
-                    <span class="prop-title-stack">“Γιατρός στη Γειτονιά” – Πρωτοβάθμια Φροντίδα</span>
-                    <svg class="prop-stack-arrow" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  <div class="card-inner-focus">
+                    <div class="prop-icon-final"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364"/></svg></div>
+                    <span class="prop-title-final">“Γιατρός στη Γειτονιά” – Πρωτοβάθμια Φροντίδα</span>
+                    <svg class="prop-arrow-final" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                   </div>
                 </a>
               </div>
+
               <div class="swiper-slide">
                 <a href="proposal-early-pension.html" class="proposal-card-stack">
-                  <div class="card-inner-content">
-                    <div class="prop-icon-circle"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
-                    <span class="prop-title-stack">Δίκαιη Μεταρρύθμιση Πρόωρης Σύνταξης</span>
-                    <svg class="prop-stack-arrow" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  <div class="card-inner-focus">
+                    <div class="prop-icon-final"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+                    <span class="prop-title-final">Δίκαιη Μεταρρύθμιση της Πρόωρης Σύνταξης</span>
+                    <svg class="prop-arrow-final" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                   </div>
                 </a>
               </div>
+
+              <div class="swiper-slide">
+                <a href="proposal-mobile-kep.html" class="proposal-card-stack">
+                  <div class="card-inner-focus">
+                    <div class="prop-icon-final"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg></div>
+                    <span class="prop-title-final">Κινητά ΚΕΠ & Συνεργασία με Ταχυδρομεία</span>
+                    <svg class="prop-arrow-final" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
               <div class="swiper-slide">
                 <a href="proposal-working-age.html" class="proposal-card-stack">
-                  <div class="card-inner-content">
-                    <div class="prop-icon-circle"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>
-                    <span class="prop-title-stack">Κίνητρα για Παράταση Εργασιακού Βίου</span>
-                    <svg class="prop-stack-arrow" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  <div class="card-inner-focus">
+                    <div class="prop-icon-final"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>
+                    <span class="prop-title-final">Παράταση του Εργασιακού Βίου (67-68)</span>
+                    <svg class="prop-arrow-final" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                   </div>
                 </a>
               </div>
+
+              <div class="swiper-slide">
+                <a href="proposal-emotional-education.html" class="proposal-card-stack">
+                  <div class="card-inner-focus">
+                    <div class="prop-icon-final"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg></div>
+                    <span class="prop-title-final">Ένταξη Κοινωνικοσυναισθηματικής Αγωγής</span>
+                    <svg class="prop-arrow-final" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
+              <div class="swiper-slide">
+                <a href="proposal-social-housing.html" class="proposal-card-stack">
+                  <div class="card-inner-focus">
+                    <div class="prop-icon-final"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+                    <span class="prop-title-final">Υποχρεωτική Κοινωνική Στέγαση (Investors)</span>
+                    <svg class="prop-arrow-final" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
+              <div class="swiper-slide">
+                <a href="proposal-rent-control.html" class="proposal-card-stack">
+                  <div class="card-inner-focus">
+                    <div class="prop-icon-final"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+                    <span class="prop-title-final">Ρύθμιση αυξήσεων ενοικίων (Zoning Rules)</span>
+                    <svg class="prop-arrow-final" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
+              <div class="swiper-slide">
+                <a href="proposal-social-media-kids.html" class="proposal-card-stack">
+                  <div class="card-inner-focus">
+                    <div class="prop-icon-final"><svg fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14"/></svg></div>
+                    <span class="prop-title-final">Social Media κάτω των 16 ετών</span>
+                    <svg class="prop-arrow-final" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
             </div>
           </div>
         </div>
 
-        <div class="stack-controls">
-          <div class="stack-nav-btn prop-prev"><svg width="18" height="18" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7"/></svg></div>
-          <div class="stack-nav-btn prop-next"><svg width="18" height="18" fill="none" stroke="white" stroke-width="3" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
+        <div class="prop-controls">
+          <div class="prop-nav-btn prop-prev"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7"/></svg></div>
+          <div class="prop-nav-btn prop-next"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
         </div>
       </div>
     </section>
 
     <!-- 6. MEDIA -->
-    <section id="media" class="section">
+    <section id="media" class="section section-bg-paper">
       <div class="container">
-        <h2 class="h-section reveal">Media</h2>
+        <h2 class="h-section reveal">Media & Συνεντεύξεις</h2>
         <p class="section-subtitle reveal">Δείτε ομιλίες, συνεντεύξεις και παρεμβάσεις της Έλενας.</p>
         <div class="swiper watch-carousel reveal">
           <div class="swiper-wrapper">
              <div class="swiper-slide">
-                <a href="https://www.instagram.com/elena_koushou_dem/reel/DT5AKo7jFw1/" target="_blank" class="watch-card">
-                  <div class="watch-thumbnail" style="background-image: url('media-new-5.jpg');">
-                    <div class="platform-badge"><img src="si-instagram.svg" alt=""></div>
-                  </div>
+              <a href="https://www.instagram.com/elena_koushou_dem/reel/DT5AKo7jFw1/" target="_blank" class="watch-card">
+                <div class="watch-thumbnail" style="background-image: url('media-new-5.jpg');"><div class="platform-badge"><img src="si-instagram.svg" alt=""></div></div>
+                <div class="watch-info"><h3>Instagram Reel</h3></div>
+              </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="https://www.instagram.com/elena_koushou_dem/reel/DTx3EQejOto/" target="_blank" class="watch-card">
+                  <div class="watch-thumbnail" style="background-image: url('media-new-4.jpg');"><div class="platform-badge"><img src="si-instagram.svg" alt=""></div></div>
                   <div class="watch-info"><h3>Instagram Reel</h3></div>
                 </a>
-             </div>
-             <div class="swiper-slide">
-                <a href="https://www.youtube.com/watch?v=6gOvvM-5HO8&t=578s" target="_blank" class="watch-card">
-                  <div class="watch-thumbnail" style="background-image: url('video-thumb-4.jpg');">
-                    <div class="platform-badge" style="opacity:0.8"><img src="si-youtube.svg" alt="" style="width:40px;"></div>
-                  </div>
-                  <div class="watch-info"><h3>YouTube Συνέντευξη</h3></div>
+            </div>
+            <div class="swiper-slide">
+              <a href="https://www.youtube.com/watch?v=6gOvvM-5HO8&t=578s" target="_blank" class="watch-card">
+                <div class="watch-thumbnail" style="background-image: url('video-thumb-4.jpg');">
+                   <div class="platform-badge"><svg width="44" height="44" viewBox="0 0 24 24" fill="red"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg></div>
+                </div>
+                <div class="watch-info"><h3>Συνέντευξη για το Κράτος Δικαίου</h3></div>
+              </a>
+            </div>
+            <div class="swiper-slide">
+                <a href="https://www.instagram.com/elena_koushou_dem/reel/DS2jlSnjK3B/" target="_blank" class="watch-card">
+                  <div class="watch-thumbnail" style="background-image: url('video-thumb-8.jpg');"><div class="platform-badge"><img src="si-instagram.svg" alt=""></div></div>
+                  <div class="watch-info"><h3>Συνεχίζουμε μαζί...</h3></div>
                 </a>
-             </div>
-             <!-- ... all items from previous responses included ... -->
+            </div>
+            <!-- Additional items go here based on initial code... -->
           </div>
           <div class="nav-row"><div class="swiper-button-prev watch-prev"></div><div class="swiper-button-next watch-next"></div></div>
         </div>
@@ -470,7 +564,7 @@
     </section>
 
     <!-- 7. ARTICLES -->
-    <section id="articles" class="section section-bg-paper">
+    <section id="articles" class="section">
       <div class="container">
         <h2 class="h-section center reveal">Άρθρα & Παρεμβάσεις</h2>
         <div class="swiper articles-carousel reveal">
@@ -480,10 +574,20 @@
                 <div class="article-cover" style="background-image:url('article-new-1.jpg')"></div>
                 <div class="article-body">
                   <span class="tag">Πολιτική</span>
-                  <h3 class="article-title">Προχωρά με έργο αντί με λαικισμό</h3>
-                  <a href="article-ergo.html" style="color:var(--brand-blue); font-weight:900; margin-top:auto">Διαβάστε Περισσότερα →</a>
+                  <h3 class="article-title">Προχωρά με έργο αντί με λαϊκισμό</h3>
+                  <a href="article-ergo.html" style="color:var(--brand-blue); font-weight:900; margin-top:auto;">Διαβάστε Περισσότερα →</a>
                 </div>
               </article>
+            </div>
+            <div class="swiper-slide">
+                <article class="article-card">
+                  <div class="article-cover" style="background-image:url('article-sports-hero.jpg')"></div>
+                  <div class="article-body">
+                    <span class="tag">Αθλητισμός</span>
+                    <h3 class="article-title">Ακαδημίες χωρίς Bullying</h3>
+                    <a href="article-athlitismos-xwris-bullying.html" style="color:var(--brand-blue); font-weight:900; margin-top:auto;">Διαβάστε Περισσότερα →</a>
+                  </div>
+                </article>
             </div>
           </div>
           <div class="nav-row"><div class="swiper-button-prev articles-prev"></div><div class="swiper-button-next articles-next"></div></div>
@@ -491,28 +595,29 @@
       </div>
     </section>
 
-    <!-- 8. GNOMI -->
+    <!-- 8. GNOMI (OPINION) -->
     <section id="gnomi" class="section-gnomi section">
-        <div class="container reveal">
-          <div class="glass-card">
-            <h2 class="h-section" style="color:#fff">Μοιράσου τη γνώμη σου</h2>
-            <p style="font-size:1.15rem; opacity:0.95; margin-bottom:2rem;">Στόχος αυτού του ερωτηματολογίου είναι να ακούσω τη δική σας φωνή και να διαμορφώσω πολιτικές προτάσεις.</p>
-            <a href="https://docs.google.com/forms/..." target="_blank" class="btn btn-white" style="color:var(--brand-blue)">Συμπλήρωσε το ερωτηματολόγιο</a>
-          </div>
+      <div class="container center reveal">
+        <div class="glass-card">
+          <h2 class="h-section" style="color:#fff">Μοιράσου τη γνώμη σου</h2>
+          <p style="font-size:1.15rem; opacity:.95; margin: 1.5rem auto 2.5rem; max-width:750px;">Στόχος αυτού του ερωτηματολογίου είναι να ακούσω τη δική σας φωνή και να διαμορφώσω πολιτικές προτάσεις που απαντούν σε πραγματικά προβλήματα.</p>
+          <a href="https://docs.google.com/forms/..." target="_blank" class="btn btn-white" style="color:var(--brand-blue); background:#fff;">Συμπλήρωσε το ερωτηματολόγιο</a>
         </div>
+      </div>
     </section>
 
-    <!-- 9. CONTACT -->
+    <!-- 9. CONTACT FORM -->
     <section id="get-involved" class="section">
-      <div class="container reveal">
-        <h2 class="h-section center">Γίνε Μέρος της Δυναμικής μας</h2>
-        <div class="involved-wrapper-stack">
-          <form id="involvedForm" class="form">
-             <div class="form-row"><label>Ονοματεπώνυμο</label><input type="text" required></div>
-             <div class="form-row"><label>Email</label><input type="email" required></div>
-             <button type="submit" class="btn btn-blue" style="width:100%; margin-top:1rem;">Δήλωσε Συμμετοχή</button>
+      <div class="container">
+        <h2 class="h-section center reveal">Γίνε Μέρος της Δυναμικής μας</h2>
+        <div class="involved-wrapper-stack reveal">
+          <form id="involvedForm" class="form" action="https://script.google.com/..." method="POST">
+             <div class="form-row"><label>Ονοματεπώνυμο</label><input type="text" name="name" required></div>
+             <div class="form-row"><label>Email</label><input type="email" name="email" required></div>
+             <button type="submit" class="btn btn-blue" id="involvedSubmitBtn" style="width:100%; margin-top:1rem;">Δήλωσε Συμμετοχή</button>
+             
              <div class="contact-bubbles">
-                <p>Ή επικοινώνησε απευθείας με την ομάδα:</p>
+                <p style="color:var(--muted); font-weight:700;">Ή επικοινώνησε απευθείας με την ομάδα:</p>
                 <div class="bubble-wrapper">
                   <a href="#" class="bubble"><img src="icon-viber.svg" alt="" width="20"> <span>Viber</span></a>
                   <a href="mailto:vote@elenakoushos.com" class="bubble"><img src="icon-email.svg" alt="" width="20"> <span>Email</span></a>
@@ -522,17 +627,18 @@
         </div>
       </div>
     </section>
-
   </main>
 
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="container foot">
-      <div><strong>Elena Koushou Hadjidemetriou</strong><br>Βουλευτικές Εκλογές 2026</div>
+      <div><strong>Elena Koushou Hadjidemetriou</strong><br>© 2026</div>
       <div class="foot-socials">
         <a href="#"><img src="si-facebook.svg" alt=""></a>
         <a href="#"><img src="si-instagram.svg" alt=""></a>
+        <a href="#"><img src="si-youtube.svg" alt=""></a>
       </div>
-      <div style="text-align: right">© 2025</div>
+      <div style="text-align: right">Λευκωσία, Κύπρος</div>
     </div>
   </footer>
 
@@ -545,61 +651,33 @@
       const header = document.getElementById('siteHeader'), hero = document.getElementById('hero');
       new IntersectionObserver(([e]) => header.classList.toggle('is-visible', !e.isIntersecting), {threshold: 0.1}).observe(hero);
 
-      // Reveal Logic
+      // Reveal-on-scroll
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }});
       }, {threshold: 0.1});
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-      // NEW STACKED DECK SWIPER (JS Patch)
-      const proposalsSwiper = new Swiper('.proposals-swiper', {
-        direction: 'vertical',
-        loop: true,
-        centeredSlides: true,
-        slidesPerView: 3,
-        spaceBetween: -52, 
-        speed: 650,
-        grabCursor: true,
-        watchSlidesProgress: true,
+      // NEW FOCUS-FIXED STACKED SWIPER
+      new Swiper('.proposals-swiper', {
+        effect: 'cards', grabCursor: true, direction: 'vertical', loop: true,
+        cardsEffect: { slideShadows: false, perSlideOffset: 12, rotate: false },
         navigation: { nextEl: '.prop-next', prevEl: '.prop-prev' },
-        autoplay: { delay: 4000 },
-        on: {
-          setTranslate(swiper) {
-            const { slides } = swiper;
-            for (let i = 0; i < slides.length; i++) {
-              const slide = slides[i];
-              const p = slide.progress;
-              const abs = Math.min(Math.abs(p), 3);
-              const y = abs * 16;
-              const scale = 1 - (abs * 0.06);
-              const opacity = 1 - (abs * 0.45); // Fade more aggressively
-              slide.style.zIndex = String(100 - Math.round(abs * 10));
-              slide.style.transform = `translate3d(0, ${y}px, 0) scale(${scale})`;
-              slide.style.opacity = String(opacity);
-              slide.style.pointerEvents = abs > 0.5 ? 'none' : 'auto';
-            }
-          },
-          setTransition(swiper, duration) {
-            swiper.slides.forEach(slide => {
-              slide.style.transitionDuration = `${duration}ms`;
-            });
-          }
-        }
+        autoplay: { delay: 4500 }
       });
 
-      // OTHER CAROUSELS
+      // OTHER SWIPERS
       new Swiper('.watch-carousel', {
         slidesPerView: 1.2, spaceBetween: 24, navigation: { nextEl: '.watch-next', prevEl: '.watch-prev' },
         breakpoints: { 640: { slidesPerView: 2.2 }, 1024: { slidesPerView: 3.5 } }
       });
       new Swiper('.articles-carousel', {
         slidesPerView: 1, spaceBetween: 24, navigation: { nextEl: '.articles-next', prevEl: '.articles-prev' },
-        breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+        breakpoints: { 768: { slidesPerView: 2 } }
       });
 
-      // Background logic intact...
+      // Interaction Logic
       const root = document.documentElement;
-      let target = {x:0.5, y:0.3}, curr = {x:0.5, y:0.3};
+      let target = {x:0.5, y:0.38}, curr = {x:0.5, y:0.38};
       function tick(){
         curr.x += (target.x - curr.x)*0.08; curr.y += (target.y - curr.y)*0.08;
         root.style.setProperty('--mx', (curr.x*100)+'%'); root.style.setProperty('--my', (curr.y*100)+'%');
