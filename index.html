@@ -485,62 +485,92 @@
     #media .h-section { font-size: clamp(37px, 5.5vw, 50px); line-height: 1.05; }
     #media .h-section-arrow { width: clamp(28px, 6vw, 42px); height: auto; color: var(--brand-blue); }
 
-/* =================== THE FINAL CLEAN STACK FIX =================== */
-.section-proposals { padding: 60px 0; background: var(--brand-gradient); overflow: hidden; position: relative; }
+/* =================== THE RESTORED ABSTRACT STACK =================== */
+.section-proposals { 
+    padding: clamp(60px, 8vw, 100px) 0; 
+    background: var(--brand-gradient); 
+    overflow: hidden; 
+    position: relative; 
+}
 
 .proposals-grid { 
     display: grid; grid-template-columns: 1fr 1.8fr 60px; align-items: center; 
     gap: 4rem; width: min(1200px, 92%); margin: 0 auto; 
 }
 
-.proposals-title-left h2 { color: #fff; margin: 0; font-family: "Peridot PE Variable", sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.4rem); line-height: 1.1; font-weight: 900; }
+.proposals-title-left h2 { 
+    color: #fff; margin: 0; 
+    font-family: "Peridot PE Variable", sans-serif; 
+    font-size: clamp(2rem, 3.5vw, 2.6rem); 
+    line-height: 1.1; font-weight: 900; 
+}
 
-.proposals-stack-view { height: 220px; position: relative; width: 100%; }
+/* Restored height for the "fanned" look */
+.proposals-stack-view { height: 240px; position: relative; width: 100%; }
 
 .proposals-swiper { width: 100%; height: 100%; overflow: visible !important; }
 
-/* Default state for all cards in the stack */
+/* 1. The Glass Card Shape (Always visible) */
 .proposal-card-stack {
-  height: 100%; width: 100%; display: flex; align-items: center; border-radius: 24px;
+  height: 100%; width: 100%; 
+  display: flex; align-items: center; 
+  border-radius: 24px;
   text-decoration: none; color: #fff;
-  /* Background cards are very faint */
-  background: rgba(255, 255, 255, 0.05); 
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  transition: all 0.5s ease;
+  
+  /* This creates the nice glass shell */
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  
+  transition: all 0.4s ease;
 }
 
-/* THE MAGIC FIX: The front card becomes less transparent to BLOCK the ones behind */
+/* 2. The Content Wrapper (Text + Icon) */
+.card-active-reveal {
+  display: flex; 
+  align-items: center; 
+  width: 100%; 
+  gap: 1.5rem; 
+  padding: 0 2.5rem;
+  
+  /* CRITICAL: Default state is HIDDEN */
+  opacity: 0; 
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* 3. THE FIX: Only show content when the slide is ACTIVE */
+.swiper-slide-active .card-active-reveal {
+  opacity: 1 !important;
+  transform: scale(1);
+}
+
+/* 4. Active Card Style - Make it "pop" more than the background ones */
 .swiper-slide-active .proposal-card-stack {
-  background: rgba(255, 255, 255, 0.25) !important; /* Higher opacity blocks the background cards */
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(30px) saturate(150%); /* Heavy blur makes it opaque to the text behind */
-  -webkit-backdrop-filter: blur(30px) saturate(150%);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.1) 100%);
+  border-color: rgba(255,255,255,0.6);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  backdrop-filter: blur(20px);
 }
 
-/* 1. COMPLETELY HIDE content on background slides */
-.swiper-slide:not(.swiper-slide-active) .card-active-reveal { 
-  opacity: 0 !important; 
-  visibility: hidden !important; 
+/* 5. Background Cards - Make them look like "ghost" plates */
+.swiper-slide:not(.swiper-slide-active) .proposal-card-stack {
+  opacity: 0.6; /* Visible enough to see the stack */
+  background: rgba(255,255,255,0.05);
 }
 
-/* 2. Style for the active card content */
-.swiper-slide-active .card-active-reveal { 
-  opacity: 1 !important; 
-  visibility: visible; 
-  display: flex; align-items: center; width: 100%; gap: 1.5rem; padding: 0 2.5rem;
-}
-
+/* Content Styling */
 .prop-icon-frame {
-  width: 60px; height: 60px; border-radius: 14px; background: rgba(255,255,255,0.2);
+  width: 60px; height: 60px; border-radius: 14px; 
+  background: rgba(255,255,255,0.2);
   display: grid; place-items: center; flex-shrink: 0;
 }
 .prop-icon-frame svg { width: 32px; height: 32px; color: #fff; }
 .prop-text-frame { flex: 1; font-family: "Peridot PE Variable", sans-serif; font-weight: 800; font-size: 1.4rem; line-height: 1.25; }
 .prop-arrow-frame { width: 28px; opacity: 0.7; }
 
-/* Navigation buttons */
+/* Navigation */
 .stack-nav-btns { display: flex; flex-direction: column; gap: 12px; }
 .stack-btn {
   width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3);
@@ -1294,10 +1324,11 @@
   loop: true,
   cardsEffect: { 
     slideShadows: false, 
-    perSlideOffset: 12, // Small offset keeps the cards tightly stacked
-    perSlideRotate: 0,  // NO rotation ensures background cards are hidden better
-    rotate: false,
+    perSlideOffset: 10,  // Tighter vertical spacing
+    perSlideRotate: 4,   // Restores the "abstract fan" rotation you liked
+    rotate: true         // Enables the rotation
   },
+  // This ensures the class "swiper-slide-active" updates instantly
   watchSlidesProgress: true,
   navigation: { 
     nextEl: '.prop-next', 
