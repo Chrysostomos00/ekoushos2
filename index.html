@@ -681,6 +681,117 @@
     /* (already centered on most viewports, but just in case) */
     .hero-cta{ justify-content: center; }
 
+    /* =================== BENTO GRID COLLAGE =================== */
+
+.bento-grid {
+  display: grid;
+  /* 4 Columns on Desktop */
+  grid-template-columns: repeat(4, 1fr);
+  /* The height of standard rows */
+  grid-auto-rows: 240px; 
+  gap: 16px;
+  width: 100%;
+}
+
+.bento-item {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--paper-2);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.bento-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(16,50,92,.18);
+  z-index: 2;
+}
+
+.bento-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.bento-item:hover img {
+  transform: scale(1.05);
+}
+
+/* --- SIZES --- */
+
+/* Large: 2x2 square */
+.item-large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* Wide: 2 columns wide */
+.item-wide {
+  grid-column: span 2;
+}
+
+/* Tall: 2 rows high */
+.item-tall {
+  grid-row: span 2;
+}
+
+/* --- OVERLAY TEXT (Optional) --- */
+.bento-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 1.5rem 1rem 1rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.bento-item:hover .bento-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- RESPONSIVE --- */
+
+@media (max-width: 960px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 Columns on Tablet */
+    grid-auto-rows: 200px;
+  }
+  
+  /* Reset "Tall" items on tablet to keep flow clean, or keep them if you prefer */
+  .item-large { grid-column: span 2; grid-row: span 2; }
+  .item-wide { grid-column: span 2; }
+  .item-tall { grid-row: span 2; }
+}
+
+@media (max-width: 600px) {
+  .bento-grid {
+    grid-template-columns: 1fr; /* 1 Column on Mobile */
+    grid-auto-rows: 250px; /* Taller rows for better mobile view */
+    gap: 12px;
+  }
+
+  /* On mobile, everything becomes a simple stack */
+  .item-large, .item-wide, .item-tall {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  
+  /* Optional: Make the "Large" item slightly taller on mobile */
+  .item-large {
+    grid-row: span 1; 
+    height: 320px;
+  }
+}
+
   </style>
   <noscript>
   <style>
@@ -967,6 +1078,49 @@
       </div>
     </section>
 
+
+    <section id="gallery" class="section section-bg-paper">
+  <div class="container">
+    <div class="h-section-wrapper reveal" style="display:flex; align-items:center; gap:.75rem; justify-content:center; margin-bottom: 2rem;">
+      <h2 class="h-section center">Στιγμές από την Πορεία</h2>
+    </div>
+
+    <div class="bento-grid reveal">
+      
+      <div class="bento-item item-large">
+        <img src="https://images.unsplash.com/photo-1577416412292-747c6607f055?q=80&w=1000&auto=format&fit=crop" alt="Main highlight" loading="lazy">
+        <div class="bento-overlay">
+          <span>Περιοδείες</span>
+        </div>
+      </div>
+
+      <div class="bento-item item-tall">
+        <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=1000&auto=format&fit=crop" alt="Portrait moment" loading="lazy">
+      </div>
+
+      <div class="bento-item">
+        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=1000&auto=format&fit=crop" alt="Meeting" loading="lazy">
+      </div>
+
+      <div class="bento-item">
+        <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1000&auto=format&fit=crop" alt="Handshake" loading="lazy">
+      </div>
+
+      <div class="bento-item item-wide">
+        <img src="https://images.unsplash.com/photo-1529101091760-6149390ea079?q=80&w=1000&auto=format&fit=crop" alt="Crowd shot" loading="lazy">
+        <div class="bento-overlay">
+          <span>Συζήτηση με πολίτες</span>
+        </div>
+      </div>
+
+      <div class="bento-item">
+        <img src="https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?q=80&w=1000&auto=format&fit=crop" alt="Discussion" loading="lazy">
+      </div>
+
+    </div>
+  </div>
+</section>
+    
     <section id="media" class="section">
       <div class="container">
         <div class="h-section-wrapper reveal" style="display:flex;align-items:center;gap:.75rem;">
