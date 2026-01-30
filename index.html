@@ -485,131 +485,72 @@
     #media .h-section { font-size: clamp(37px, 5.5vw, 50px); line-height: 1.05; }
     #media .h-section-arrow { width: clamp(28px, 6vw, 42px); height: auto; color: var(--brand-blue); }
 
-/* =================== THE CLEAN ABSTRACT STACK FIX =================== */
-.section-proposals { 
-    padding: clamp(60px, 8vw, 100px) 0; 
-    background: var(--brand-gradient); 
-    overflow: hidden; 
-    position: relative; 
-}
+/* =================== THE FINAL CLEAN STACK FIX =================== */
+.section-proposals { padding: 60px 0; background: var(--brand-gradient); overflow: hidden; position: relative; }
 
 .proposals-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1.8fr 60px; 
-    align-items: center; 
-    gap: clamp(2rem, 5vw, 4rem); 
-    width: min(1200px, 92%); 
-    margin: 0 auto; 
+    display: grid; grid-template-columns: 1fr 1.8fr 60px; align-items: center; 
+    gap: 4rem; width: min(1200px, 92%); margin: 0 auto; 
 }
 
-.proposals-title-left h2 { 
-    color: #fff; 
-    margin: 0; 
-    font-family: "Peridot PE Variable", sans-serif; 
-    font-size: clamp(2rem, 3.5vw, 2.6rem); 
-    line-height: 1.1; 
-    font-weight: 900; 
-}
+.proposals-title-left h2 { color: #fff; margin: 0; font-family: "Peridot PE Variable", sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.4rem); line-height: 1.1; font-weight: 900; }
 
-.proposals-stack-view { 
-    height: 220px; 
-    position: relative; 
-    width: 100%; 
-}
+.proposals-stack-view { height: 220px; position: relative; width: 100%; }
 
-.proposals-swiper { 
-    width: 100%; 
-    height: 100%; 
-    overflow: visible !important; 
-}
+.proposals-swiper { width: 100%; height: 100%; overflow: visible !important; }
 
+/* Default state for all cards in the stack */
 .proposal-card-stack {
-    height: 100%; 
-    width: 100%; 
-    display: flex; 
-    align-items: center; 
-    border-radius: 24px;
-    text-decoration: none; 
-    color: #fff;
-    /* Increased blur and slight solid tint to block background content */
-    background: rgba(255, 255, 255, 0.15); 
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(25px) saturate(110%); 
-    -webkit-backdrop-filter: blur(25px) saturate(110%);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); 
-    transition: all 0.5s ease;
+  height: 100%; width: 100%; display: flex; align-items: center; border-radius: 24px;
+  text-decoration: none; color: #fff;
+  /* Background cards are very faint */
+  background: rgba(255, 255, 255, 0.05); 
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  transition: all 0.5s ease;
 }
 
-/* --- THE FIX: CONTENT ISOLATION --- */
-
-/* 1. Hide the icons and text on EVERY slide by default */
-.swiper-slide .card-active-reveal { 
-    opacity: 0 !important; 
-    visibility: hidden; 
-    transition: opacity 0.3s ease;
-    display: flex; 
-    align-items: center; 
-    width: 100%; 
-    gap: 1.5rem; 
-    padding: 0 2.5rem;
+/* THE MAGIC FIX: The front card becomes less transparent to BLOCK the ones behind */
+.swiper-slide-active .proposal-card-stack {
+  background: rgba(255, 255, 255, 0.25) !important; /* Higher opacity blocks the background cards */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(30px) saturate(150%); /* Heavy blur makes it opaque to the text behind */
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
 }
 
-/* 2. ONLY show content for the ACTIVE card in front */
+/* 1. COMPLETELY HIDE content on background slides */
+.swiper-slide:not(.swiper-slide-active) .card-active-reveal { 
+  opacity: 0 !important; 
+  visibility: hidden !important; 
+}
+
+/* 2. Style for the active card content */
 .swiper-slide-active .card-active-reveal { 
-    opacity: 1 !important; 
-    visibility: visible; 
-}
-
-/* 3. Style for background cards: Faded glass shells only */
-.swiper-slide:not(.swiper-slide-active) .proposal-card-stack {
-    opacity: 0.5;
-    background: rgba(255, 255, 255, 0.08);
+  opacity: 1 !important; 
+  visibility: visible; 
+  display: flex; align-items: center; width: 100%; gap: 1.5rem; padding: 0 2.5rem;
 }
 
 .prop-icon-frame {
-    width: 60px; 
-    height: 60px; 
-    border-radius: 14px; 
-    background: rgba(255,255,255,0.2);
-    display: grid; 
-    place-items: center; 
-    flex-shrink: 0;
+  width: 60px; height: 60px; border-radius: 14px; background: rgba(255,255,255,0.2);
+  display: grid; place-items: center; flex-shrink: 0;
 }
-
 .prop-icon-frame svg { width: 32px; height: 32px; color: #fff; }
-
-.prop-text-frame { 
-    flex: 1; 
-    font-family: "Peridot PE Variable", sans-serif; 
-    font-weight: 800; 
-    font-size: 1.4rem; 
-    line-height: 1.25; 
-}
-
-.prop-arrow-frame { width: 28px; opacity: 0.7; transition: transform 0.3s ease; }
-.proposal-card-stack:hover .prop-arrow-frame { transform: translateX(5px); opacity: 1; }
+.prop-text-frame { flex: 1; font-family: "Peridot PE Variable", sans-serif; font-weight: 800; font-size: 1.4rem; line-height: 1.25; }
+.prop-arrow-frame { width: 28px; opacity: 0.7; }
 
 /* Navigation buttons */
 .stack-nav-btns { display: flex; flex-direction: column; gap: 12px; }
 .stack-btn {
-    width: 44px; 
-    height: 44px; 
-    border-radius: 50%; 
-    border: 1px solid rgba(255,255,255,0.3);
-    background: rgba(255,255,255,0.1); 
-    color: #fff; 
-    display: grid; 
-    place-items: center; 
-    cursor: pointer;
-    transition: all 0.2s ease;
+  width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.1); color: #fff; display: grid; place-items: center; cursor: pointer;
 }
-.stack-btn:hover { background: rgba(255,255,255,0.2); border-color: #fff; }
 
 @media (max-width: 960px) {
     .proposals-grid { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
     .proposals-stack-view { height: 180px; }
     .stack-nav-btns { flex-direction: row; justify-content: center; margin-top: 1rem; }
-    .prop-text-frame { font-size: 1.2rem; text-align: left; }
 }
 
     /* Responsive */
@@ -1353,8 +1294,9 @@
   loop: true,
   cardsEffect: { 
     slideShadows: false, 
-    perSlideOffset: 14, // Perfect abstract spacing for laptop
-    perSlideRotate: 2,  // Slight rotation for that fanned look
+    perSlideOffset: 12, // Small offset keeps the cards tightly stacked
+    perSlideRotate: 0,  // NO rotation ensures background cards are hidden better
+    rotate: false,
   },
   watchSlidesProgress: true,
   navigation: { 
@@ -1362,7 +1304,7 @@
     prevEl: '.prop-prev' 
   },
   autoplay: { 
-    delay: 4000, 
+    delay: 4500, 
     disableOnInteraction: false 
   }
 });
