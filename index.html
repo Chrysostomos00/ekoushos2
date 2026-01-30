@@ -485,102 +485,70 @@
     #media .h-section { font-size: clamp(37px, 5.5vw, 50px); line-height: 1.05; }
     #media .h-section-arrow { width: clamp(28px, 6vw, 42px); height: auto; color: var(--brand-blue); }
 
-/* =================== THE CLEAN STACKED CAROUSEL FIX =================== */
-.section-proposals { 
-    padding: clamp(50px, 7vw, 90px) 0; 
-    background: var(--brand-gradient); 
-    overflow: hidden; 
-}
+/* =================== THE REFINED ABSTRACT STACK FIX =================== */
+.section-proposals { padding: 60px 0; background: var(--brand-gradient); overflow: hidden; position: relative; }
 
 .proposals-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1.8fr 60px; 
-    align-items: center; 
-    gap: 4rem; 
-    width: min(1200px, 92%); 
-    margin: 0 auto; 
+    display: grid; grid-template-columns: 1fr 1.8fr 60px; align-items: center; 
+    gap: 4rem; width: min(1200px, 92%); margin: 0 auto; 
 }
 
-.proposals-title-left h2 { 
-    color: #fff; 
-    margin: 0; 
-    font-family: "Peridot PE Variable", sans-serif; 
-    font-size: clamp(1.8rem, 3.5vw, 2.4rem); 
-    line-height: 1.1; 
-    font-weight: 900; 
-}
+.proposals-title-left h2 { color: #fff; margin: 0; font-family: "Peridot PE Variable", sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.4rem); line-height: 1.1; font-weight: 900; }
 
-/* Height increased slightly to 200px to avoid text crowding */
-.proposals-stack-view { 
-    height: 200px; 
-    position: relative; 
-    width: 100%; 
-}
+.proposals-stack-view { height: 200px; position: relative; width: 100%; }
 
-.proposals-swiper { 
-    width: 100%; 
-    height: 100%; 
-    overflow: visible !important; 
-}
+.proposals-swiper { width: 100%; height: 100%; overflow: visible !important; }
 
 .proposal-card-stack {
-    height: 100%; width: 100%; 
-    display: flex; align-items: center; 
-    border-radius: 20px;
-    text-decoration: none; color: #fff;
-    background: rgba(255, 255, 255, 0.12); 
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
-    transition: all 0.4s ease;
+  height: 100%; width: 100%; display: flex; align-items: center; border-radius: 20px;
+  text-decoration: none; color: #fff;
+  background: rgba(255, 255, 255, 0.1); 
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); transition: all 0.5s ease;
 }
 
-/* THE FIX: Only the active slide shows content. Background slides fade out completely. */
+/* --- THE CRITICAL VISIBILITY FIX --- */
+
+/* 1. Hide the icons and text on EVERY slide by default */
 .swiper-slide .card-active-reveal { 
-    opacity: 0; 
-    visibility: hidden; 
-    display: flex; 
-    align-items: center; 
-    width: 100%; 
-    gap: 1.5rem; 
-    padding: 0 2rem;
-    transition: opacity 0.3s ease;
+  opacity: 0 !important; 
+  visibility: hidden; 
+  transition: opacity 0.3s ease;
+  display: flex; align-items: center; width: 100%; gap: 1.5rem; padding: 0 2rem;
 }
 
+/* 2. ONLY show icons and text for the front (active) card */
 .swiper-slide-active .card-active-reveal { 
-    opacity: 1; 
-    visibility: visible; 
+  opacity: 1 !important; 
+  visibility: visible; 
 }
 
-/* Subtle background card styling so they don't look "messy" */
+/* 3. Make background cards slightly more transparent so the stack looks "deep" */
 .swiper-slide:not(.swiper-slide-active) .proposal-card-stack {
-    opacity: 0.4;
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.1);
+  opacity: 0.4;
 }
 
+/* --- Content Styling --- */
 .prop-icon-frame {
-    width: 54px; height: 54px; border-radius: 12px; 
-    background: rgba(255,255,255,0.18);
-    display: grid; place-items: center; flex-shrink: 0;
+  width: 54px; height: 54px; border-radius: 12px; background: rgba(255,255,255,0.18);
+  display: grid; place-items: center; flex-shrink: 0;
 }
 .prop-icon-frame svg { width: 30px; height: 30px; color: #fff; }
 .prop-text-frame { flex: 1; font-family: "Peridot PE Variable", sans-serif; font-weight: 800; font-size: 1.35rem; line-height: 1.25; }
 .prop-arrow-frame { width: 26px; opacity: 0.6; }
 
+/* Navigation */
 .stack-nav-btns { display: flex; flex-direction: column; gap: 10px; }
 .stack-btn {
-    width: 40px; height: 40px; border-radius: 50%; 
-    border: 1px solid rgba(255,255,255,0.25);
-    background: rgba(255,255,255,0.12); color: #fff; 
-    display: grid; place-items: center; cursor: pointer; transition: .2s;
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.12); color: #fff; display: grid; place-items: center; cursor: pointer; transition: .2s;
 }
 
 @media (max-width: 960px) {
     .proposals-grid { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
     .proposals-stack-view { height: 160px; }
     .stack-nav-btns { display: none; }
-    .prop-text-frame { font-size: 1.1rem; }
 }
 
     /* Responsive */
@@ -1324,11 +1292,10 @@
   loop: true,
   cardsEffect: { 
       slideShadows: false, 
-      perSlideOffset: 10, // Keeps the stack tight and clean
-      perSlideRotate: 0,  // Keeps cards straight (cleaner look)
-      rotate: false       // Prevents the "fan" effect that causes confusion
+      perSlideOffset: 15, // This gives it that "stepped" abstract look
+      perSlideRotate: 2,  // Slight rotation adds the "fanned" abstract feel
   },
-  // This limits the engine to only render the necessary slides
+  // Ensure the engine only cares about the top layers
   watchSlidesProgress: true,
   navigation: { nextEl: '.prop-next', prevEl: '.prop-prev' },
   autoplay: { delay: 4000 }
