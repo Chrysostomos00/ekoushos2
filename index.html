@@ -594,13 +594,25 @@
   background: rgba(255,255,255,0.1); color: #fff; display: grid; place-items: center; cursor: pointer;
 }
 
+/* --- MOBILE SPECIFIC FIXES --- */
 @media (max-width: 960px) {
     .proposals-grid { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
     .proposals-stack-view { height: 180px; }
-    .stack-nav-btns { flex-direction: row; justify-content: center; margin-top: 1rem; }
-    .prop-text-frame { font-size: 1.2rem; text-align: left; }
+    
+    /* FIX: Reduce width to 90% so the rotation doesn't hit the screen edge */
+    .proposal-card-stack {
+        width: 90% !important; 
+        margin: 0 auto; /* Centers the card */
+    }
+    
+    .stack-nav-btns { flex-direction: row; justify-content: center; margin-top: 1.5rem; }
+    .prop-text-frame { font-size: 1.15rem; text-align: left; }
+    .card-active-reveal { padding: 0 1.5rem; gap: 1rem; }
+    
+    /* Slightly smaller icon on mobile */
+    .prop-icon-frame { width: 48px; height: 48px; }
+    .prop-icon-frame svg { width: 24px; height: 24px; }
 }
-
     /* Responsive */
     @media (max-width: 960px){
       .nav-toggle{display:flex}
