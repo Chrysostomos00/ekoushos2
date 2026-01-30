@@ -485,19 +485,18 @@
     #media .h-section { font-size: clamp(37px, 5.5vw, 50px); line-height: 1.05; }
     #media .h-section-arrow { width: clamp(28px, 6vw, 42px); height: auto; color: var(--brand-blue); }
 
-/* =================== THE PROFESSIONAL STACKED CAROUSEL FIX =================== */
+/* =================== THE CLEAN STACKED CAROUSEL FIX =================== */
 .section-proposals { 
-    padding: clamp(60px, 8vw, 100px) 0; 
+    padding: clamp(50px, 7vw, 90px) 0; 
     background: var(--brand-gradient); 
     overflow: hidden; 
-    position: relative; 
 }
 
 .proposals-grid { 
     display: grid; 
     grid-template-columns: 1fr 1.8fr 60px; 
     align-items: center; 
-    gap: clamp(2rem, 5vw, 4rem); 
+    gap: 4rem; 
     width: min(1200px, 92%); 
     margin: 0 auto; 
 }
@@ -506,14 +505,14 @@
     color: #fff; 
     margin: 0; 
     font-family: "Peridot PE Variable", sans-serif; 
-    font-size: clamp(2rem, 4vw, 2.8rem); 
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem); 
     line-height: 1.1; 
     font-weight: 900; 
 }
 
-/* We increase height to 240px to give the cards "air" */
+/* Height increased slightly to 200px to avoid text crowding */
 .proposals-stack-view { 
-    height: 240px; 
+    height: 200px; 
     position: relative; 
     width: 100%; 
 }
@@ -524,81 +523,64 @@
     overflow: visible !important; 
 }
 
-/* This is the main card container */
 .proposal-card-stack {
-    height: 100%; 
-    width: 100%; 
-    display: flex; 
-    align-items: center; 
-    border-radius: 24px;
-    text-decoration: none; 
-    color: #fff;
+    height: 100%; width: 100%; 
+    display: flex; align-items: center; 
+    border-radius: 20px;
+    text-decoration: none; color: #fff;
     background: rgba(255, 255, 255, 0.12); 
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(20px); 
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); 
-    transition: all 0.5s ease;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
+    transition: all 0.4s ease;
 }
 
-/* FIX: Hide content on all slides except the active one to stop the "smashing" */
+/* THE FIX: Only the active slide shows content. Background slides fade out completely. */
 .swiper-slide .card-active-reveal { 
-    opacity: 0 !important; 
+    opacity: 0; 
     visibility: hidden; 
     display: flex; 
     align-items: center; 
     width: 100%; 
     gap: 1.5rem; 
-    padding: 0 2.5rem;
+    padding: 0 2rem;
+    transition: opacity 0.3s ease;
 }
 
-/* FIX: Only show the content of the card currently in front */
 .swiper-slide-active .card-active-reveal { 
-    opacity: 1 !important; 
+    opacity: 1; 
     visibility: visible; 
 }
 
-/* Styling for the content */
+/* Subtle background card styling so they don't look "messy" */
+.swiper-slide:not(.swiper-slide-active) .proposal-card-stack {
+    opacity: 0.4;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
 .prop-icon-frame {
-    width: 64px; 
-    height: 64px; 
-    border-radius: 16px; 
-    background: rgba(255,255,255,0.15);
-    display: grid; 
-    place-items: center; 
-    flex-shrink: 0;
+    width: 54px; height: 54px; border-radius: 12px; 
+    background: rgba(255,255,255,0.18);
+    display: grid; place-items: center; flex-shrink: 0;
 }
+.prop-icon-frame svg { width: 30px; height: 30px; color: #fff; }
+.prop-text-frame { flex: 1; font-family: "Peridot PE Variable", sans-serif; font-weight: 800; font-size: 1.35rem; line-height: 1.25; }
+.prop-arrow-frame { width: 26px; opacity: 0.6; }
 
-.prop-icon-frame svg { width: 34px; height: 34px; color: #fff; }
-
-.prop-text-frame { 
-    flex: 1; 
-    font-family: "Peridot PE Variable", sans-serif; 
-    font-weight: 800; 
-    font-size: 1.4rem; 
-    line-height: 1.3; 
-}
-
-.prop-arrow-frame { width: 28px; opacity: 0.7; }
-
-/* Navigation buttons */
-.stack-nav-btns { display: flex; flex-direction: column; gap: 12px; }
+.stack-nav-btns { display: flex; flex-direction: column; gap: 10px; }
 .stack-btn {
-    width: 44px; 
-    height: 44px; 
-    border-radius: 50%; 
-    border: 1px solid rgba(255,255,255,0.3);
-    background: rgba(255,255,255,0.1); 
-    color: #fff; 
-    display: grid; 
-    place-items: center; 
-    cursor: pointer;
+    width: 40px; height: 40px; border-radius: 50%; 
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.12); color: #fff; 
+    display: grid; place-items: center; cursor: pointer; transition: .2s;
 }
 
 @media (max-width: 960px) {
-    .proposals-grid { grid-template-columns: 1fr; text-align: center; }
-    .proposals-stack-view { height: 180px; }
-    .stack-nav-btns { flex-direction: row; justify-content: center; }
+    .proposals-grid { grid-template-columns: 1fr; text-align: center; gap: 2rem; }
+    .proposals-stack-view { height: 160px; }
+    .stack-nav-btns { display: none; }
+    .prop-text-frame { font-size: 1.1rem; }
 }
 
     /* Responsive */
@@ -1341,21 +1323,15 @@
   direction: 'vertical',
   loop: true,
   cardsEffect: { 
-    slideShadows: false, 
-    perSlideOffset: 14, // Space between cards
-    perSlideRotate: 0,  // Keep them straight to look cleaner
-    rotate: false,      // Disable rotation for a professional look
+      slideShadows: false, 
+      perSlideOffset: 10, // Keeps the stack tight and clean
+      perSlideRotate: 0,  // Keeps cards straight (cleaner look)
+      rotate: false       // Prevents the "fan" effect that causes confusion
   },
-  // Only show the top card + 2 background cards
-  watchSlidesProgress: true, 
-  navigation: { 
-    nextEl: '.prop-next', 
-    prevEl: '.prop-prev' 
-  },
-  autoplay: { 
-    delay: 4000, 
-    disableOnInteraction: false 
-  }
+  // This limits the engine to only render the necessary slides
+  watchSlidesProgress: true,
+  navigation: { nextEl: '.prop-next', prevEl: '.prop-prev' },
+  autoplay: { delay: 4000 }
 });
 
       new Swiper('.articles-carousel', {
