@@ -681,6 +681,64 @@
     /* (already centered on most viewports, but just in case) */
     .hero-cta{ justify-content: center; }
 
+
+/* =================== SLIM PANORAMIC LOOP STYLES =================== */
+
+.panorama-wrapper {
+  width: 100%;
+  overflow: hidden;
+  /* Glass container styles */
+  border-top: 1px solid rgba(255,255,255,0.25);
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  
+  /* Remove extra internal padding so image fits tight */
+  padding: 0; 
+  position: relative;
+  
+  /* Hardware acceleration to prevent flickering */
+  transform: translate3d(0, 0, 0);
+}
+
+.panorama-track {
+  display: flex;
+  width: max-content; /* fits exactly 3 images width */
+  /* Slower speed (60s) for a smoother glide */
+  animation: scroll-left 60s linear infinite;
+  will-change: transform;
+}
+
+.panorama-track:hover {
+  animation-play-state: paused;
+}
+
+.panorama-track img {
+  /* Set your preferred height here. 
+     300px - 400px is usually the "sweet spot" for a slim strip. */
+  height: 350px; 
+  width: auto;
+  display: block;
+}
+
+/* THE SEAMLESS FIX */
+@keyframes scroll-left {
+  0% { 
+    transform: translateX(0); 
+  }
+  100% { 
+    /* We move exactly 1/3rd because we have 3 images. 
+       This snaps back instantly when Image 2 hits the start position. */
+    transform: translateX(-33.33333%); 
+  }
+}
+
+/* Mobile Adjustment */
+@media (max-width: 768px) {
+  .panorama-track img {
+    height: 220px; /* Smaller height for phones */
+  }
+}
   </style>
   <noscript>
   <style>
@@ -790,6 +848,17 @@
         </div>
       </div>
     </section>
+<section id="gallery-panorama" class="section brand-gradient-bg" style="padding: 20px 0;">
+  
+  <div class="panorama-wrapper reveal">
+    <div class="panorama-track">
+      <img src="panorama-final.jpg" alt="Campaign Collage" loading="eager">
+      <img src="panorama-final.jpg" alt="" aria-hidden="true">
+      <img src="panorama-final.jpg" alt="" aria-hidden="true">
+    </div>
+  </div>
+
+</section>
 
     <section id="program" class="section">
       <div class="container">
