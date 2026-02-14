@@ -90,22 +90,24 @@
     .btn-outline{border-color:var(--brand-blue); color:var(--ink-2)}
     .btn-outline:hover{background:rgba(0,69,136,.12); transform: translateY(-2px); text-decoration: none;}
 
-    /* Footer (Exact match) */
+    /* Footer */
     .site-footer{
       color:#fff;
-      background: var(--brand-gradient);
+      background: linear-gradient(112deg, color-mix(in srgb, var(--brand-blue) 95%, black 5%) 0%, color-mix(in srgb, var(--brand-blue) 84%, white 16%) 40%, color-mix(in srgb, var(--brand-accent) 68%, white 32%) 72%, color-mix(in srgb, var(--brand-plum) 66%, white 34%) 100%);
       text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-      margin-top: clamp(60px, 8vw, 100px);
     }    
     .foot{display:grid; gap:2rem; grid-template-columns:1fr auto 1fr; padding:3rem 0; align-items:center;}
-    .foot a { color: #fff; opacity: 0.92; transition: opacity .2s; text-decoration: none;}
-    .foot a:hover { opacity: 1; text-decoration: underline;}
+    .foot a { color: #fff; opacity: 0.92; transition: opacity .2s; }
+    .foot a:hover { opacity: 1; }
+
     .foot-brand{display:flex; gap:.7rem; align-items:center}
     .foot-brand img{width:44px; height:44px}
+
     .foot-socials { display: flex; justify-content: center; gap: .75rem; align-items: center; }
     .foot-socials a { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); }
     .foot-socials a:hover { background: rgba(255,255,255,.18); }
     .foot-socials img { width:22px; height:22px; display:block; }
+
     .foot-legal{opacity:.92; text-align: right;}
     
     /* Animations */
