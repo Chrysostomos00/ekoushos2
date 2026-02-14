@@ -56,14 +56,22 @@
 </head>
 <body>
   
-  <header class="site-header">
+  <!-- Header -->
+  <header class="site-header" role="banner" id="siteHeader">
     <div class="nav container">
-      <a class="brand" href="index.html"><img src="logo.svg" alt="Λογότυπο" /></a>
-      <button class="nav-toggle"><span></span><span></span><span></span></button>
-      <nav id="nav-menu" class="nav-menu">
-        <a href="index.html">Αρχική</a>
-        <a href="index.html#program">Θέσεις</a>
-        <a href="index.html#get-involved" class="btn btn-outline">Συμμετοχή</a>
+      <a class="brand" href="#top">
+        <img src="logo.svg" alt="Λογότυπο Έλενας Κούσιου Χατζηδημητρίου" width="120" height="80" decoding="async">
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Άνοιγμα μενού">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="nav-menu" class="nav-menu" role="navigation" aria-label="Κύρια Πλοήγηση">
+        <a href="#">Αρχική</a>
+        <a href="#about">Βιογραφικό</a>
+        <a href="#media">Media</a>
+        <a href="#program">Θέσεις</a>
+        <a href="#articles">Άρθρα</a>
+        <a href="#get-involved" class="btn btn-outline" style="width:100%; text-align:center;">Συμμετοχή</a>
       </nav>
     </div>
   </header>
