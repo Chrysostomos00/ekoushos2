@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="el" data-theme="sky">
 <head>
@@ -10,7 +11,6 @@
   <meta property="og:image" content="portrait.png" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
-  <!-- Local variable font -->
   <style>
     @font-face{
       font-family:"Peridot PE Variable";
@@ -21,17 +21,14 @@
     }
   </style>
 
-  <!-- External CSS deps -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-  <!-- Preloads -->
   <link rel="preload" as="image" href="logo-hero.svg">
   <link rel="preload" as="image" href="slogan-hero.png">
   <link rel="preload" as="image" href="portrait.avif">
   <link rel="preload" as="image" href="party-logo.png">
-  <!-- Preload the number image -->
   <link rel="preload" as="image" href="7.png">
 
   <style>
@@ -276,8 +273,8 @@
     .watch-info { padding: 1rem; margin-top:auto; }
     .watch-title { font-weight:900; font-size:1rem; color:var(--ink-2); margin:0 0 .25rem 0; }
     .watch-meta { font-size:.9rem; color:var(--muted); margin:0; }
-	
-	/* Platform badge overlay (hover) */
+    
+    /* Platform badge overlay (hover) */
     .platform-badge{
       position:absolute;
       top:50%; left:50%;
@@ -489,6 +486,134 @@
     #media .h-section { font-size: clamp(37px, 5.5vw, 50px); line-height: 1.05; }
     #media .h-section-arrow { width: clamp(28px, 6vw, 42px); height: auto; color: var(--brand-blue); }
 
+/* =================== THE FINAL GLITCH-FREE STACK =================== */
+.section-proposals { 
+    padding: clamp(60px, 8vw, 100px) 0; 
+    background: var(--brand-gradient); 
+    overflow: hidden; 
+    position: relative; 
+}
+
+.proposals-grid { 
+    display: grid; grid-template-columns: 1fr 1.8fr 60px; align-items: center; 
+    gap: 4rem; width: min(1200px, 92%); margin: 0 auto; 
+}
+
+.proposals-title-left h2 { 
+    color: #fff; margin: 0; 
+    font-family: "Peridot PE Variable", sans-serif; 
+    font-size: clamp(2rem, 3.5vw, 2.6rem); 
+    line-height: 1.1; font-weight: 900; 
+}
+
+.proposals-stack-view { height: 240px; position: relative; width: 100%; }
+
+.proposals-swiper { width: 100%; height: 100%; overflow: visible !important; }
+
+/* --- CARD BASE STYLING --- */
+.proposal-card-stack {
+  height: 100%; width: 100%; 
+  display: flex; align-items: center; 
+  text-decoration: none; color: #fff;
+  border-radius: 24px;
+  
+  /* CRITICAL FIX FOR CORNER GLITCH */
+  overflow: hidden; 
+  isolation: isolate; /* Creates a new stacking context */
+  /* This forces the browser to strictly clip the corners on Mac/Safari */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  transform: translate3d(0,0,0); /* Hardware acceleration */
+  
+  /* Default background (Inactive cards) */
+  background: rgba(255, 255, 255, 0.08); 
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  /* Note: mask-image might clip outer shadow, so we use a filter shadow here or accept subtle shadow clipping for perfect corners */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* --- ACTIVE CARD: THE "BLOCKER" (Opacity Logic you Liked) --- */
+.swiper-slide-active .proposal-card-stack {
+  /* High opacity to block lines behind */
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%) !important;
+  
+  /* Stronger border */
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+  
+  /* Turn off blur on active card to save resources & prevent glitches, since it is opaque anyway */
+  backdrop-filter: none; -webkit-backdrop-filter: none;
+  
+  /* Text color for contrast */
+  color: var(--brand-blue);
+}
+
+/* --- CONTENT VISIBILITY --- */
+.card-active-reveal {
+  display: flex; align-items: center; width: 100%; gap: 1.5rem; padding: 0 2.5rem;
+  opacity: 0; transition: opacity 0.2s ease;
+}
+
+/* Only show content on active slide */
+.swiper-slide-active .card-active-reveal { opacity: 1 !important; }
+
+/* Make background cards fainter */
+.swiper-slide:not(.swiper-slide-active) .proposal-card-stack { opacity: 0.5; }
+
+
+/* --- INNER ELEMENTS --- */
+.prop-icon-frame {
+  width: 60px; height: 60px; border-radius: 14px; 
+  background: rgba(255,255,255,0.2);
+  display: grid; place-items: center; flex-shrink: 0;
+}
+/* Active card icon color */
+.swiper-slide-active .prop-icon-frame svg { color: var(--brand-blue); }
+.swiper-slide-active .prop-icon-frame { background: rgba(0,69,136,0.1); }
+/* Inactive card icon color */
+.swiper-slide:not(.swiper-slide-active) .prop-icon-frame svg { color: #fff; }
+
+.prop-icon-frame svg { width: 32px; height: 32px; transition: color 0.3s ease; }
+
+.prop-text-frame { 
+  flex: 1; 
+  font-family: "Peridot PE Variable", sans-serif; 
+  font-weight: 800; 
+  font-size: 1.4rem; 
+  line-height: 1.25; 
+}
+
+.prop-arrow-frame { width: 28px; opacity: 0.7; }
+
+/* Navigation */
+.stack-nav-btns { display: flex; flex-direction: column; gap: 12px; }
+.stack-btn {
+  width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.1); color: #fff; display: grid; place-items: center; cursor: pointer;
+}
+
+/* --- MOBILE SPECIFIC FIXES --- */
+@media (max-width: 960px) {
+    .proposals-grid { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
+    .proposals-stack-view { height: 180px; }
+    
+    /* FIX: Reduce width to 90% so the rotation doesn't hit the screen edge */
+    .proposal-card-stack {
+        width: 90% !important; 
+        margin: 0 auto; /* Centers the card */
+    }
+    
+    .stack-nav-btns { flex-direction: row; justify-content: center; margin-top: 1.5rem; }
+    .prop-text-frame { font-size: 1.15rem; text-align: left; }
+    .card-active-reveal { padding: 0 1.5rem; gap: 1rem; }
+    
+    /* Slightly smaller icon on mobile */
+    .prop-icon-frame { width: 48px; height: 48px; }
+    .prop-icon-frame svg { width: 24px; height: 24px; }
+}
     /* Responsive */
     @media (max-width: 960px){
       .nav-toggle{display:flex}
@@ -557,6 +682,64 @@
     /* (already centered on most viewports, but just in case) */
     .hero-cta{ justify-content: center; }
 
+
+/* =================== SLIM PANORAMIC LOOP STYLES =================== */
+
+.panorama-wrapper {
+  width: 100%;
+  overflow: hidden;
+  /* Glass container styles */
+  border-top: 1px solid rgba(255,255,255,0.25);
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  
+  /* Remove extra internal padding so image fits tight */
+  padding: 0; 
+  position: relative;
+  
+  /* Hardware acceleration to prevent flickering */
+  transform: translate3d(0, 0, 0);
+}
+
+.panorama-track {
+  display: flex;
+  width: max-content; /* fits exactly 3 images width */
+  /* Slower speed (60s) for a smoother glide */
+  animation: scroll-left 60s linear infinite;
+  will-change: transform;
+}
+
+.panorama-track:hover {
+  animation-play-state: paused;
+}
+
+.panorama-track img {
+  /* Set your preferred height here. 
+     300px - 400px is usually the "sweet spot" for a slim strip. */
+  height: 350px; 
+  width: auto;
+  display: block;
+}
+
+/* THE SEAMLESS FIX */
+@keyframes scroll-left {
+  0% { 
+    transform: translateX(0); 
+  }
+  100% { 
+    /* We move exactly 1/3rd because we have 3 images. 
+       This snaps back instantly when Image 2 hits the start position. */
+    transform: translateX(-33.33333%); 
+  }
+}
+
+/* Mobile Adjustment */
+@media (max-width: 768px) {
+  .panorama-track img {
+    height: 220px; /* Smaller height for phones */
+  }
+}
   </style>
   <noscript>
   <style>
@@ -573,10 +756,8 @@
 </noscript>
 </head>
 <body>
-  <!-- Progress bar -->
   <div class="scroll-progress" aria-hidden="true"><span></span></div>
 
-  <!-- Header -->
   <header class="site-header" role="banner" id="siteHeader">
     <div class="nav container">
       <a class="brand" href="#top">
@@ -596,15 +777,12 @@
     </div>
   </header>
 
-  <!-- Main -->
   <main id="top" tabindex="-1">
     
-    <!-- HERO -->
     <section class="hero" id="hero">
       <h1 class="sr-only">Elena Koushou Hadjidemetriou — Βουλευτικές Εκλογές 2026</h1>
       <img class="party-logo" src="party-logo.png" alt="Λογότυπο πολιτικού φορέα" />
       
-      <!-- Ballot Number (Image based - RIGHT SIDE with spacing fix) -->
       <img src="7.png" alt="Αριθμός 7" class="hero-number-img" />
 
       <div class="hero-inner">
@@ -644,7 +822,6 @@
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section id="about" class="section about">
       <div class="container grid-2">
         <div>
@@ -662,7 +839,203 @@
       </div>
     </section>
 
-    <!-- MEDIA / WATCH (Replaced Quote Section) -->
+    <section id="events" class="section section-bg-paper">
+      <div class="container">
+        <h2 class="h-section center reveal">Προσεχείς Εκδηλώσεις</h2>
+        <div class="calendar-container reveal" style="margin-top:2rem;">
+          <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FNicosia&showPrint=0&src=Y19lYjNhZTk3ZTI4NmVlMDQzYzU5OGFlMWM5YTU0NmZiODQzNmYzZGQ2YTM1ZGQwYzQ1Mzc1Yzk5OGJjOTNjYWFiQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23f6bf26" style="border:0; width:100%; height:100%;" frameborder="0" scrolling="no"></iframe>
+        </div>
+      </div>
+    </section>
+   
+<!-- <section id="gallery-panorama" class="section brand-gradient-bg" style="padding: 20px 0;">
+  
+  <div class="panorama-wrapper reveal">
+    <div class="panorama-track">
+      <img src="panorama-final.jpg" alt="Campaign Collage" loading="eager">
+      <img src="panorama-final.jpg" alt="" aria-hidden="true">
+      <img src="panorama-final.jpg" alt="" aria-hidden="true">
+    </div>
+  </div>
+
+</section> -->
+
+    <section id="program" class="section">
+      <div class="container">
+        <h2 class="h-section center reveal">Θέσεις & Πρόγραμμα</h2>
+        <p class="section-subtitle center reveal">Οι προτεραιότητές μας για μια Κύπρο που προχωρά μπροστά, με ασφάλεια και ευκαιρίες για όλους.</p>
+
+        <div class="program-cards">
+          <a href="program-justice.html" class="program-card reveal">
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+              Δικαιοσύνη & Θεσμική Μεταρρύθμιση
+            </h3>
+            <p>Για ένα κράτος δικαίου που λειτουργεί δίκαια, γρήγορα και με διαφάνεια.</p>
+            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
+          </a>
+
+          <a href="program-health.html" class="program-card reveal">
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+              Υγεία & Πρόνοια
+            </h3>
+            <p>Για ποιοτικές υπηρεσίες υγείας, προστασία των ευάλωτων και αξιοπρέπεια για όλους.</p>
+            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
+          </a>
+
+          <a href="program-development.html" class="program-card reveal">
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              Ανάπτυξη - Επιχειρηματικότητα - Καινοτομία
+            </h3>
+            <p>Για μια οικονομία που δημιουργεί ευκαιρίες, στηρίζει τις ΜμΕ και κρατά τους νέους στην Κύπρο.</p>
+            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
+          </a>
+
+          <a href="program-education.html" class="program-card reveal">
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 5 4 5 6 5s6-0 6-5v-5"></path></svg>
+              Παιδεία & Εκπαίδευση
+            </h3>
+            <p>Μια παιδεία που δεν θα δίνει μόνο γνώσεις, αλλά θα διαπαιδαγωγεί για τη ζωή.</p>
+            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
+          </a>
+
+          <a href="program-admin.html" class="program-card reveal">
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              Δημόσια Διοίκηση & Ξεκάθαροι Κανόνες
+            </h3>
+            <p>Για ένα κράτος που λειτουργεί με υπευθυνότητα, αξιολόγηση και λογοδοσία.</p>
+            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
+          </a>
+
+          <a href="program-housing.html" class="program-card reveal">
+            <h3>
+              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+              Στέγαση
+            </h3>
+            <p>Για λύσεις στη στέγαση, μείωση του κόστους ζωής και πραγματική ενίσχυση στον κάθε πολίτη.</p>
+            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="proposals" class="section-proposals">
+      <div class="container proposals-grid reveal">
+        <div class="proposals-title-left">
+          <h2>Πολιτικές Προτάσεις</h2>
+        </div>
+        
+        <div class="proposals-stack-view">
+          <div class="swiper proposals-swiper">
+            <div class="swiper-wrapper">
+              
+              <div class="swiper-slide">
+                <a href="proposal-bullying.html" class="proposal-card-stack">
+                  <div class="card-active-reveal">
+                    <div class="prop-icon-frame"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>
+                    <span class="prop-text-frame">Ακαδημίες χωρίς Bullying & Ψυχολογική Βία</span>
+                    <svg class="prop-arrow-frame" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
+              <div class="swiper-slide">
+                <a href="proposal-pensions-authority.html" class="proposal-card-stack">
+                  <div class="card-active-reveal">
+                    <div class="prop-icon-frame"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/></svg></div>
+                    <span class="prop-text-frame">Ενιαία Ανεξάρτητη Εποπτική Αρχή Συντάξεων</span>
+                    <svg class="prop-arrow-frame" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
+              <div class="swiper-slide">
+                <a href="proposal-doctor-neighborhood.html" class="proposal-card-stack">
+                  <div class="card-active-reveal">
+                    <div class="prop-icon-frame"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364"/></svg></div>
+                    <span class="prop-text-frame">“Γιατρός στη Γειτονιά” – Πρωτοβάθμια Φροντίδα</span>
+                    <svg class="prop-arrow-frame" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
+              <div class="swiper-slide">
+                <a href="proposal-early-pension.html" class="proposal-card-stack">
+                  <div class="card-active-reveal">
+                    <div class="prop-icon-frame"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+                    <span class="prop-text-frame">Δίκαιη Μεταρρύθμιση Πρόωρης Σύνταξης στη Κύπρο</span>
+                    <svg class="prop-arrow-frame" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
+              <div class="swiper-slide">
+                <a href="proposal-working-age.html" class="proposal-card-stack">
+                  <div class="card-active-reveal">
+                    <div class="prop-icon-frame"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg></div>
+                    <span class="prop-text-frame">Κίνητρα για Παράταση του Εργασιακού Βίου εως τα 67-68</span>
+                    <svg class="prop-arrow-frame" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
+              <div class="swiper-slide">
+                <a href="proposal-emotional-education.html" class="proposal-card-stack">
+                  <div class="card-active-reveal">
+                    <div class="prop-icon-frame"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14"/></svg></div>
+                    <span class="prop-text-frame">Ένταξη της κοινωνικοσυναισθηματικής Αγωγής στο εκπαιδευτικό σύστημα</span>
+                    <svg class="prop-arrow-frame" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
+
+              <div class="swiper-slide">
+                <a href="proposal-social-housing.html" class="proposal-card-stack">
+                  <div class="card-active-reveal">
+                    <div class="prop-icon-frame"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14"/></svg></div>
+                    <span class="prop-text-frame">Υποχρεωτική κοινωνική στέγαση απο αχρησιμοποίητα επενδυτικά ακίνητα</span>
+                    <svg class="prop-arrow-frame" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
+
+              <div class="swiper-slide">
+                <a href="proposal-rent-control.html" class="proposal-card-stack">
+                  <div class="card-active-reveal">
+                    <div class="prop-icon-frame"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14"/></svg></div>
+                    <span class="prop-text-frame">Ρύθμιση αυξήσεων ενοικίων σε περιοχές υψηλής ζήτησης</span>
+                    <svg class="prop-arrow-frame" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+              
+              <div class="swiper-slide">
+                <a href="proposal-social-media-kids.html" class="proposal-card-stack">
+                  <div class="card-active-reveal">
+                    <div class="prop-icon-frame"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14"/></svg></div>
+                    <span class="prop-text-frame">Περιορισμός χρήσης κοινωνικών δικτύων απο παιδιά κάτω των 16 ετών</span>
+                    <svg class="prop-arrow-frame" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                  </div>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="stack-nav-btns">
+          <div class="stack-btn prop-prev"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 15l7-7 7 7"/></svg></div>
+          <div class="stack-btn prop-next"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg></div>
+        </div>
+      </div>
+    </section>
+
     <section id="media" class="section">
       <div class="container">
         <div class="h-section-wrapper reveal" style="display:flex;align-items:center;gap:.75rem;">
@@ -674,8 +1047,6 @@
 
       <div class="swiper watch-carousel reveal">
         <div class="swiper-wrapper">
-
-          <!-- NEW Reels (Top Priority) -->
 
 
 			<div class="swiper-slide">
@@ -713,7 +1084,7 @@
               <div class="watch-info"><h3 class="watch-title">Instagram Reel</h3></div>
             </a>
           </div>
-			
+
           <div class="swiper-slide">
             <a href="https://www.instagram.com/elena_koushou_dem/reel/DT5AKo7jFw1/" target="_blank" rel="noopener" class="watch-card">
               <div class="watch-thumbnail" style="background-image: url('media-new-5.jpg');">
@@ -759,7 +1130,6 @@
             </a>
           </div>
 
-          <!-- Existing Reels (Appended) -->
           <div class="swiper-slide">
             <a href="https://www.instagram.com/elena_koushou_dem/reel/DS2jlSnjK3B/" target="_blank" rel="noopener" class="watch-card">
               <div class="watch-thumbnail" style="background-image: url('video-thumb-8.jpg');">
@@ -865,78 +1235,12 @@
         </div>
       </div>
 
-      <!-- Watch nav buttons -->
       <div class="nav-row">
         <div class="swiper-button-prev watch-prev"></div>
         <div class="swiper-button-next watch-next"></div>
       </div>
     </section>
 
-    <!-- PROGRAM CARDS (Skipped Proposals List) -->
-    <section id="program" class="section">
-      <div class="container">
-        <h2 class="h-section center reveal">Θέσεις & Πρόγραμμα</h2>
-        <p class="section-subtitle center reveal">Οι προτεραιότητές μας για μια Κύπρο που προχωρά μπροστά, με ασφάλεια και ευκαιρίες για όλους.</p>
-
-        <div class="program-cards">
-          <a href="program-justice.html" class="program-card reveal">
-            <h3>
-              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
-              Δικαιοσύνη & Θεσμική Μεταρρύθμιση
-            </h3>
-            <p>Για ένα κράτος δικαίου που λειτουργεί δίκαια, γρήγορα και με διαφάνεια.</p>
-            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
-          </a>
-
-          <a href="program-health.html" class="program-card reveal">
-            <h3>
-              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-              Υγεία & Πρόνοια
-            </h3>
-            <p>Για ποιοτικές υπηρεσίες υγείας, προστασία των ευάλωτων και αξιοπρέπεια για όλους.</p>
-            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
-          </a>
-
-          <a href="program-development.html" class="program-card reveal">
-            <h3>
-              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-              Ανάπτυξη - Επιχειρηματικότητα - Καινοτομία
-            </h3>
-            <p>Για μια οικονομία που δημιουργεί ευκαιρίες, στηρίζει τις ΜμΕ και κρατά τους νέους στην Κύπρο.</p>
-            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
-          </a>
-
-          <a href="program-education.html" class="program-card reveal">
-            <h3>
-              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 5 4 5 6 5s6-0 6-5v-5"></path></svg>
-              Παιδεία & Εκπαίδευση
-            </h3>
-            <p>Μια παιδεία που δεν θα δίνει μόνο γνώσεις, αλλά θα διαπαιδαγωγεί για τη ζωή.</p>
-            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
-          </a>
-
-          <a href="program-admin.html" class="program-card reveal">
-            <h3>
-              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-              Δημόσια Διοίκηση & Ξεκάθαροι Κανόνες
-            </h3>
-            <p>Για ένα κράτος που λειτουργεί με υπευθυνότητα, αξιολόγηση και λογοδοσία.</p>
-            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
-          </a>
-
-          <a href="program-housing.html" class="program-card reveal">
-            <h3>
-              <svg class="program-card-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-              Στέγαση
-            </h3>
-            <p>Για λύσεις στη στέγαση, μείωση του κόστους ζωής και πραγματική ενίσχυση στον κάθε πολίτη.</p>
-            <span class="read-more-prompt">Διαβάστε Αναλυτικά</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ARTICLES -->
     <section id="articles" class="section section-bg-paper articles">
       <div class="container">
         <h2 class="h-section center reveal">Άρθρα & Παρεμβάσεις</h2>
@@ -944,20 +1248,30 @@
         <div class="swiper articles-carousel reveal">
           <div class="swiper-wrapper">
 
-            <!-- New Article 1: Ergo vs Laikismos -->
-            <div class="swiper-slide">
+           <div class="swiper-slide">
               <article class="article-card">
-                <div class="article-cover" style="background-image:url('article-new-1.jpg')"></div>
+                <div class="article-cover" style="background-image:url('article-investments.jpg')"></div>
                 <div class="article-body">
-                  <div class="article-meta"><span class="tag">Πολιτική</span><time datetime="2026-01-20">21 Ιαν 2026</time></div>
-                  <h3 class="article-title">Προχωρά με έργο αντί με λαικισμό</h3>
-                  <p class="article-excerpt">Η ουσιαστική πολιτική απαιτεί λύσεις και αποτελέσματα, όχι εύκολα λόγια.</p>
-                  <div class="article-actions"><a href="article-ergo.html" class="btn-link">Διαβάστε το Άρθρο</a></div>
+                  <div class="article-meta"><span class="tag">Οικονομία</span><time datetime="2026-02-12">12 Φεβ 2026</time></div>
+                  <h3 class="article-title">Επενδύσεις με κοινωνικό αποτύπωμα</h3>
+                  <p class="article-excerpt">Πώς μπορούμε να εντάξουμε τις επενδύσεις σε ένα πλαίσιο που ωφελεί και την κοινωνία, χωρίς να περιορίσουμε την ανάπτυξη.</p>
+                  <div class="article-actions"><a href="article-ependyseis.html" class="btn-link">Διαβάστε το Άρθρο</a></div>
                 </div>
               </article>
             </div>
 
-            <!-- New Article 2: Sports/Bullying -->
+            <div class="swiper-slide">
+              <article class="article-card">
+                <div class="article-cover" style="background-image:url('article-rent-control.jpg')"></div>
+                <div class="article-body">
+                  <div class="article-meta"><span class="tag">Στέγαση</span><time datetime="2026-02-07">07 Φεβ 2026</time></div>
+                  <h3 class="article-title">Στέγη με κοινωνικό αποτύπωμα</h3>
+                  <p class="article-excerpt">Μια ρεαλιστική απάντηση στις αυξήσεις ενοικίων στις περιοχές υψηλής ζήτησης. Πολιτική ισορροπίας, όχι αντιπαράθεσης.</p>
+                  <div class="article-actions"><a href="article-enoikia.html" class="btn-link">Διαβάστε το Άρθρο</a></div>
+                </div>
+              </article>
+            </div>
+
             <div class="swiper-slide">
               <article class="article-card">
                 <div class="article-cover" style="background-image:url('article-sports-hero.jpg')"></div>
@@ -970,7 +1284,7 @@
               </article>
             </div>
 
-        	<div class="swiper-slide">
+            <div class="swiper-slide">
               <article class="article-card">
                 <div class="article-cover" style="background-image:url('article-3.webp')"></div>
                 <div class="article-body">
@@ -992,7 +1306,7 @@
                 </div>
               </article>
             </div>
-			  
+            
             <div class="swiper-slide">
               <article class="article-card">
                 <div class="article-cover" style="background-image:url('article-1.jpg')"></div>
@@ -1026,36 +1340,34 @@
       </div>
     </section>
 
-<!-- ===== Share Your Voice (Brand gradient + glass card) ===== -->
-<section id="gnomi" class="brand-gradient-bg section-gnomi" aria-labelledby="gnomi-heading">
-  <div class="gnomi-container">
-    <div class="glass-card reveal">
-      <span class="eyebrow">Η γνώμη σου μετρά</span>
-      <h2 id="gnomi-heading">Μοιράσου τη γνώμη σου</h2>
+    <section id="gnomi" class="brand-gradient-bg section-gnomi" aria-labelledby="gnomi-heading">
+      <div class="gnomi-container">
+        <div class="glass-card reveal">
+          <span class="eyebrow">Η γνώμη σου μετρά</span>
+          <h2 id="gnomi-heading">Μοιράσου τη γνώμη σου</h2>
 
-      <p class="lead">
-        Στόχος αυτού του ερωτηματολογίου είναι να ακούσω τη δική σας φωνή, να κατανοήσω
-        τις ανάγκες και τις προτεραιότητές σας και να διαμορφώσω πολιτικές προτάσεις
-        που απαντούν σε πραγματικά προβλήματα.
-      </p>
+          <p class="lead">
+            Στόχος αυτού του ερωτηματολογίου είναι να ακούσω τη δική σας φωνή, να κατανοήσω
+            τις ανάγκες και τις προτεραιότητές σας και να διαμορφώσω πολιτικές προτάσεις
+            που απαντούν σε πραγματικά προβλήματα.
+          </p>
 
-      <div class="cta-row">
-        <a class="btn-form"
-           href="https://docs.google.com/forms/d/e/1FAIpQLSexwEYiNsY_tZa_Hr37djOBaCDfz6q3MRatPjfZjaxEU0wEug/viewform"
-           target="_blank" rel="noopener noreferrer">
-          Συμπλήρωσε το ερωτηματολόγιο
-        </a>
+          <div class="cta-row">
+            <a class="btn-form"
+               href="https://docs.google.com/forms/d/e/1FAIpQLSexwEYiNsY_tZa_Hr37djOBaCDfz6q3MRatPjfZjaxEU0wEug/viewform"
+               target="_blank" rel="noopener noreferrer">
+              Συμπλήρωσε το ερωτηματολόγιο
+            </a>
+          </div>
+
+          <p class="subtle">
+            Οι δικές σας απαντήσεις θα έχουν μεγάλη βαρύτητα και αξία για εμένα.
+          </p>
+        </div>
       </div>
-
-      <p class="subtle">
-        Οι δικές σας απαντήσεις θα έχουν μεγάλη βαρύτητα και αξία για εμένα.
-      </p>
-    </div>
-  </div>
-</section>
+    </section>
 
 
-    <!-- GET INVOLVED + CALENDAR (RESTRUCTURED STACKED LAYOUT) -->
     <section id="get-involved" class="section section-bg-paper">
       <div class="container">
         <h2 class="h-section center reveal">Γίνε Μέρος της Δυναμικής μας</h2>
@@ -1063,7 +1375,6 @@
         
         <div class="involved-wrapper-stack reveal">
           
-          <!-- Contact Form with Bubbles Inside -->
           <form id="involvedForm" class="form" aria-label="Φόρμα εθελοντισμού"
                 action="https://script.google.com/macros/s/AKfycbwDAKkOhQT_ict2a1ckUJBYqajrCFlid_J5kmU0pYpCNbfWsU7FWmu4PPllxwmbqVZk/exec"
                 method="POST" novalidate>
@@ -1076,7 +1387,6 @@
               <input id="email" name="email" type="email" autocomplete="email" required />
             </div>
             
-            <!-- Hidden bot field -->
             <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;height:0;width:0;padding:0;margin:0;border:0;"/>
             
             <div class="g-recaptcha" data-sitekey="6LfjFtsrAAAAAAwaAAFLT2s_f47FaidIJjIae6Pn" style="margin: 1rem 0; transform:scale(0.9); transform-origin:0 0;"></div>
@@ -1084,7 +1394,6 @@
             <button type="submit" class="btn btn-blue" id="involvedSubmitBtn" style="width: 100%;">Δήλωσε Συμμετοχή</button>
             <p class="form-msg" role="status" aria-live="polite"></p>
 
-            <!-- Contact Bubbles (Moved INSIDE form, below button) -->
             <div class="contact-bubbles">
                 <p>Ή επικοινώνησε απευθείας με την ομάδα:</p>
                 <div class="bubble-wrapper">
@@ -1098,17 +1407,11 @@
             </div>
           </form>
 
-          <!-- Calendar (Stacked below form) -->
-          <div class="calendar-container">
-            <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FNicosia&showPrint=0&src=Y19lYjNhZTk3ZTI4NmVlMDQzYzU5OGFlMWM5YTU0NmZiODQzNmYzZGQ2YTM1ZGQwYzQ1Mzc1Yzk5OGJjOTNjYWFiQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23f6bf26" style="border:0; width:100%; height:500px;" frameborder="0" scrolling="no"></iframe>
-          </div>
-
         </div>
       </div>
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container foot">
       <div class="foot-brand">
@@ -1116,7 +1419,6 @@
         <div><strong>Elena Koushou Hadjidemetriou</strong><br />Βουλευτικές Εκλογές 2026</div>
       </div>
 
-      <!-- Socials -->
       <div class="foot-socials">
         <a href="https://www.facebook.com/ekoushos/" aria-label="Facebook" target="_blank" rel="noopener"><img src="si-facebook.svg" alt="" /></a>
         <a href="https://www.instagram.com/elena_koushou_dem/" aria-label="Instagram" target="_blank" rel="noopener"><img src="si-instagram.svg" alt="" /></a>
@@ -1130,16 +1432,14 @@
     </div>
   </footer>
 
-  <!-- JS deps -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-  <!-- App JS -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       document.documentElement.classList.add('enter');
 
-	  const ENABLE_PORTRAIT_MORPH = false;
+      const ENABLE_PORTRAIT_MORPH = false;
       
       /* ===== Nav toggle ===== */
       const navToggle = document.querySelector('.nav-toggle'),
@@ -1196,6 +1496,30 @@
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
       /* ===== Carousels ===== */
+      // NEW PROPOSALS STACKED SWIPER
+   new Swiper('.proposals-swiper', {
+  effect: 'cards',
+  grabCursor: true,
+  direction: 'vertical',
+  loop: true,
+  cardsEffect: { 
+    slideShadows: false, 
+    perSlideOffset: 10,  // Tighter vertical spacing
+    perSlideRotate: 4,   // Restores the "abstract fan" rotation you liked
+    rotate: true         // Enables the rotation
+  },
+  // This ensures the class "swiper-slide-active" updates instantly
+  watchSlidesProgress: true,
+  navigation: { 
+    nextEl: '.prop-next', 
+    prevEl: '.prop-prev' 
+  },
+  autoplay: { 
+    delay: 4500, 
+    disableOnInteraction: false 
+  }
+});
+
       new Swiper('.articles-carousel', {
         loop: false, watchOverflow: true, spaceBetween: 24,
         navigation: { nextEl: '.articles-next', prevEl: '.articles-prev' },
@@ -1259,7 +1583,7 @@
 
       /* ===== Sticky header shows after hero ===== */
       const siteHeader = document.getElementById('siteHeader'),
-            hero       = document.getElementById('hero');
+            hero        = document.getElementById('hero');
       new IntersectionObserver(([e]) => siteHeader.classList.toggle('is-visible', !e.isIntersecting), { threshold: 0.2 }).observe(hero);
 
       /* ===== HERO background interaction ===== */
@@ -1347,8 +1671,7 @@
       }
     });
   </script>
-	<!-- Vercel Web Analytics -->
-<script>
+    <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
