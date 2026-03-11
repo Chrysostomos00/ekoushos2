@@ -15,7 +15,7 @@
   <meta name="description" content="Η Έλενα Κούσιου Χατζηδημητρίου σας προσκαλεί σε μια ανοιχτή συζήτηση ουσίας για τις προκλήσεις, τις ανάγκες και τις πραγματικές λύσεις που χρειάζεται το κυπριακό επιχειρείν σήμερα." />
   <meta property="og:title" content="Ανοιχτή Συζήτηση - Επιχειρείν στην Κύπρο" />
   <meta property="og:description" content="Για μια οικονομία που δημιουργεί ευκαιρίες, στηρίζει τις ΜμΕ και κρατά τους νέους στην Κύπρο." />
-  <meta property="og:image" content="event-invitation.png" />
+  <meta property="og:image" content="event-hero.jpg" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 
   <style>
@@ -132,39 +132,38 @@
     }
     
     /* =====================================================
-       EVENT PAGE SPECIFIC STYLES
+       NEW EVENT PAGE SPECIFIC STYLES
        ===================================================== */
-    .article-header {
-        padding: clamp(60px, 10vw, 120px) 0;
-        text-align: center;
-        background: var(--brand-blue);
-        color: #fff;
-        position: relative;
-        overflow: hidden;
+    .event-top-section {
+        padding: clamp(40px, 6vw, 60px) 0 20px 0;
     }
-    .article-header::before {
-        content: ''; position: absolute; inset: 0;
-        /* Πρόσθεσε εδώ την εικόνα banner που έχεις για την εκδήλωση αν θέλεις */
-        background-image: url('event-hero.jpg');
-        background-size: cover; background-position: center;
-        opacity: 0.18; transform: scale(1.05);
+    .event-banner {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto 2rem auto;
+        display: block;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
     }
-    .article-header-content { position: relative; z-index: 2; }
-    .article-meta{
-        display: inline-flex; gap:.6rem; align-items:center;
-        color: var(--paper-3); font-size:1rem; margin-bottom: 1rem;
+    .event-meta {
+        display: flex; gap: .6rem; align-items: center; justify-content: center;
+        color: var(--muted); font-size: 1rem; margin-bottom: 1rem;
     }
-    .tag{
-        padding:.3rem .75rem; border-radius:999px; background:rgba(255,255,255,0.1);
-        border:1px solid rgba(255,255,255,0.2); font-weight:700; font-size:.8rem;
+    .event-tag {
+        padding: .3rem .75rem; border-radius: 999px; 
+        background: rgba(0, 69, 136, 0.08); /* Light blue tint */
+        color: var(--brand-blue);
+        border: 1px solid rgba(0, 69, 136, 0.2); 
+        font-weight: 700; font-size: .8rem;
     }
-    .article-title-main {
+    .event-title {
         font-size: clamp(2.2rem, 5vw, 3.5rem);
         line-height: 1.15; max-width: 900px; margin: 0 auto;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        color: var(--ink-2); text-align: center;
     }
+    
     .article-body-container {
-        padding: clamp(40px, 6vw, 80px) 0;
+        padding: clamp(20px, 4vw, 60px) 0;
     }
     .article-content { max-width: 720px; margin: 0 auto; }
     
@@ -275,15 +274,16 @@
 
   <main>
     <article>
-        <header class="article-header">
-            <div class="article-header-content container">
-                <div class="article-meta">
-                    <span class="tag">Εκδήλωση</span>
-                    <time datetime="2026-03-17">17 Μαρτίου 2026</time>
-                </div>
-                <h1 class="article-title-main">Ανοιχτή Συζήτηση - Επιχειρείν στην Κύπρο</h1>
+        
+        <div class="event-top-section container">
+            <img src="event-hero.jpg" alt="Ανοιχτή Συζήτηση - Επιχειρείν στην Κύπρο" class="event-banner" />
+            
+            <div class="event-meta">
+                <span class="event-tag">Εκδήλωση</span>
+                <time datetime="2026-03-17">17 Μαρτίου 2026</time>
             </div>
-        </header>
+            <h1 class="event-title">Ανοιχτή Συζήτηση - Επιχειρείν στην Κύπρο</h1>
+        </div>
 
         <div class="article-body-container">
             <div class="article-content">
