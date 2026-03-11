@@ -693,6 +693,81 @@
     .hero-cta{ justify-content: center; }
 
 
+/* =====================================================
+       FEATURED EVENT CARD (Below Calendar)
+       ===================================================== */
+    .featured-event-card {
+      display: flex;
+      flex-direction: row;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin: 3.5rem auto 1rem;
+      max-width: 900px;
+      text-decoration: none;
+      transition: transform .3s ease, box-shadow .3s ease;
+      text-align: left;
+    }
+    .featured-event-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 32px rgba(16,50,92,.14);
+    }
+    .featured-event-img {
+      flex: 0 0 40%;
+      background-image: url('event-invitation.png'); /* Ή event-hero.jpg αν ταιριάζει καλύτερα στις αναλογίες */
+      background-size: cover;
+      background-position: center top;
+      background-color: var(--paper-3);
+    }
+    .featured-event-info {
+      flex: 1;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .featured-event-info .article-meta {
+      margin-bottom: 0.8rem;
+    }
+    .featured-event-title {
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      color: var(--ink-2);
+      margin: 0 0 1rem 0;
+      line-height: 1.2;
+      font-weight: 900;
+      font-family: "Peridot PE Variable", "Roboto", sans-serif;
+    }
+    .featured-event-desc {
+      color: var(--ink);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .featured-event-btn {
+      align-self: flex-start;
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      .featured-event-card {
+        flex-direction: column;
+      }
+      .featured-event-img {
+        aspect-ratio: 16 / 9;
+      }
+      .featured-event-info {
+        padding: 1.5rem;
+      }
+      .featured-event-btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+	  
+
+	  
 /* =================== SLIM PANORAMIC LOOP STYLES =================== */
 
 .panorama-wrapper {
@@ -852,10 +927,24 @@
     <section id="events" class="section section-bg-paper">
       <div class="container">
         <h2 class="h-section center reveal">Προσεχείς Εκδηλώσεις</h2>
+        
         <div class="calendar-container reveal" style="margin-top:2rem;">
           <iframe src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=Asia%2FNicosia&showPrint=0&src=Y19lYjNhZTk3ZTI4NmVlMDQzYzU5OGFlMWM5YTU0NmZiODQzNmYzZGQ2YTM1ZGQwYzQ1Mzc1Yzk5OGJjOTNjYWFiQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23f6bf26" style="border:0; width:100%; height:100%;" frameborder="0" scrolling="no"></iframe>
         </div>
-      </div>
+
+        <a href="event-epixeirein.html" class="featured-event-card reveal">
+          <div class="featured-event-img"></div>
+          <div class="featured-event-info">
+            <div class="article-meta">
+              <span class="tag">Νέα Εκδήλωση</span>
+              <time datetime="2026-03-17">17 Μαρ 2026</time>
+            </div>
+            <h3 class="featured-event-title">Ανοιχτή Συζήτηση: Επιχειρείν στην Κύπρο</h3>
+            <p class="featured-event-desc">Η Έλενα Κούσιου Χατζηδημητρίου σας προσκαλεί σε μια ανοιχτή συζήτηση ουσίας για τις προκλήσεις και τις πραγματικές λύσεις που χρειάζεται το κυπριακό επιχειρείν σήμερα.</p>
+            <span class="btn btn-blue featured-event-btn">Δείτε την Πρόσκληση & Εγγραφείτε</span>
+          </div>
+        </a>
+        </div>
     </section>
    
 <section id="gallery-panorama" class="section brand-gradient-bg" style="padding: 20px 0;">
